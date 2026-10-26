@@ -15,9 +15,7 @@
 - **Total Learning Time:** 4 hours
 - **Power Source:** Batteries
 - **Learning Approach:** Basic theory, hands-on experiments, troubleshooting, and STEM challenges
-- **Programming Required:** No
-- **Arduino Required:** No
-- **Soldering Required:** No
+- **Aim** To make Students ready familiar with basic concepts of electronics and ready for future robotics and automation courses.
 
 ## Programme Objectives
 

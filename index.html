@@ -1,0 +1,2797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electronics STEM Kit for Kids (Ages 8–12) | Proposal by Corvit Systems Rawalpindi</title>
+  <meta name="description" content="Official Training Proposal: Hands-on 4-Hour Electronics STEM Programme for Kids (Ages 8–12) offered by Corvit Systems Rawalpindi. Trainers: Engr. Aamir Jamil & Miss Zia Ul Ain.">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS VARIABLES (LIGHT THEME)
+       ========================================================================== */
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --primary-glow: rgba(37, 99, 235, 0.18);
+      
+      --secondary: #0d9488;
+      --secondary-light: #f0fdfa;
+      
+      --accent: #f59e0b;
+      --accent-light: #fffbeb;
+      
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+
+      --bg-canvas: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #ffffff;
+      --bg-muted: #f1f5f9;
+      --bg-subtle: #f8fafc;
+
+      --text-main: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --text-inverted: #ffffff;
+
+      --border-subtle: #e2e8f0;
+      --border-medium: #cbd5e1;
+      --border-focus: #93c5fd;
+
+      --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+      --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.07), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+      --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      --shadow-card: 0 12px 32px -4px rgba(15, 23, 42, 0.06);
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* CSS Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      color-scheme: light;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ==========================================================================
+       CONTAINER & GRID UTILITIES
+       ========================================================================== */
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .section-spacing {
+      padding-top: 5.5rem;
+      padding-bottom: 5.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .badge-primary {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+    }
+
+    .badge-success {
+      background: var(--success-light);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .badge-accent {
+      background: var(--accent-light);
+      color: #b45309;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    .badge-secondary {
+      background: var(--secondary-light);
+      color: var(--secondary);
+      border: 1px solid rgba(13, 148, 136, 0.2);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 3.5rem auto;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      margin-top: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.4rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all var(--transition-normal);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--text-inverted);
+      box-shadow: 0 4px 14px 0 var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px 0 rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-outline {
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      border-color: var(--border-medium);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-muted);
+      color: var(--text-main);
+      border-color: var(--border-medium);
+      transform: translateY(-2px);
+    }
+
+    .btn-sm {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.8125rem;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all var(--transition-fast);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-logo-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: -0.05em;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .brand-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.15;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.03em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: color var(--transition-fast);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* ==========================================================================
+       HERO BANNER SECTION
+       ========================================================================== */
+    .hero-section {
+      position: relative;
+      background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(13, 148, 136, 0.05) 0%, transparent 40%),
+                  #ffffff;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 4.5rem 0 4rem 0;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .hero-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #0f172a 30%, #1e3a8a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-aim-box {
+      background: linear-gradient(135deg, rgba(239, 246, 255, 0.7), rgba(240, 253, 250, 0.7));
+      border: 1px solid rgba(147, 197, 253, 0.5);
+      border-left: 4px solid var(--primary);
+      padding: 1.15rem 1.4rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .hero-aim-box strong {
+      color: var(--primary);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .hero-meta-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.9125rem;
+      color: var(--text-secondary);
+    }
+
+    .hero-meta-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--primary);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .hero-meta-item strong {
+      color: var(--text-main);
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Hero Right Card: Live Workshop Snapshot */
+    .hero-feature-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-img-wrapper {
+      position: relative;
+      overflow: hidden;
+      height: 270px;
+    }
+
+    .hero-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-smooth);
+    }
+
+    .hero-feature-card:hover .hero-img-wrapper img {
+      transform: scale(1.03);
+    }
+
+    .hero-img-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.85), transparent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hero-card-body {
+      padding: 1.5rem;
+    }
+
+    .stat-pills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .stat-pill {
+      background: var(--bg-canvas);
+      padding: 0.75rem 0.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .stat-pill-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .stat-pill-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 0.25rem;
+    }
+
+    .hero-zero-reqs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .zero-check {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       TRAINERS SECTION (LEAD FACILITATORS)
+       ========================================================================== */
+    .trainers-section {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .trainers-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.25rem;
+    }
+
+    .trainer-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      gap: 1.75rem;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+      position: relative;
+    }
+
+    .trainer-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-focus);
+    }
+
+    .trainer-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 140px;
+      height: 140px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 3px solid #ffffff;
+      outline: 2px solid var(--border-subtle);
+    }
+
+    .trainer-avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .trainer-info {
+      flex: 1;
+    }
+
+    .trainer-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .trainer-role {
+      font-size: 0.875rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .trainer-affiliation {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      background: var(--bg-muted);
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.85rem;
+    }
+
+    .trainer-bio {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       PROGRAMME OBJECTIVES GRID
+       ========================================================================== */
+    .objectives-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .objective-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      transition: all var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .objective-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .objective-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .objective-card:nth-child(2) .objective-icon-box { background: var(--secondary-light); color: var(--secondary); }
+    .objective-card:nth-child(3) .objective-icon-box { background: var(--accent-light); color: var(--accent); }
+    .objective-card:nth-child(4) .objective-icon-box { background: var(--success-light); color: var(--success); }
+
+    .objective-title {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .objective-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       PROJECTS SHOWCASE SECTION (THE 6 PROJECTS WITH 1920x1080 ASSETS)
+       ========================================================================== */
+    .projects-section {
+      background: var(--bg-canvas);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .filter-tabs-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2.75rem;
+    }
+
+    .filter-tabs {
+      background: #ffffff;
+      padding: 0.4rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+      display: inline-flex;
+      gap: 0.35rem;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: none;
+      padding: 0.55rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 8px var(--primary-glow);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.25rem;
+    }
+
+    .project-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-normal);
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--border-focus);
+    }
+
+    .project-image-box {
+      position: relative;
+      height: 280px;
+      overflow: hidden;
+      background: #0f172a;
+      cursor: pointer;
+    }
+
+    .project-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-smooth);
+    }
+
+    .project-card:hover .project-image-box img {
+      transform: scale(1.04);
+    }
+
+    .project-badge-tag {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 2;
+    }
+
+    .project-zoom-hint {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.65);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .project-card:hover .project-zoom-hint {
+      opacity: 1;
+    }
+
+    .project-content {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .project-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .project-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .project-objective-box {
+      background: var(--bg-muted);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.15rem;
+      border-left: 3px solid var(--secondary);
+    }
+
+    .project-subhead {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-components-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .comp-pill {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .project-steps-list {
+      margin-left: 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .project-steps-list li {
+      margin-bottom: 0.35rem;
+    }
+
+    .project-outcome-box {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--success);
+      font-weight: 600;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    /* ==========================================================================
+       INTERACTIVE LAB SIMULATOR WIDGET (SURPRISE FEATURE!)
+       ========================================================================== */
+    .lab-widget-section {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .simulator-container {
+      background: linear-gradient(145deg, #ffffff, #f8fafc);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+    }
+
+    .sim-sidebar {
+      background: var(--bg-canvas);
+      border-right: 1px solid var(--border-subtle);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .sim-sidebar-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .sim-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-align: left;
+      transition: all var(--transition-fast);
+    }
+
+    .sim-tab-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+
+    .sim-tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .sim-stage-area {
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      min-height: 420px;
+    }
+
+    .sim-circuit-board {
+      width: 100%;
+      max-width: 580px;
+      background: #ffffff;
+      border: 2px dashed var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Simulation Elements */
+    .sim-led {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #94a3b8;
+      border: 4px solid #cbd5e1;
+      transition: all 0.25s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      margin-bottom: 1.5rem;
+    }
+
+    .sim-led.active {
+      background: #22c55e;
+      border-color: #86efac;
+      box-shadow: 0 0 35px #22c55e, 0 0 60px rgba(34, 197, 94, 0.4);
+    }
+
+    .sim-buzzer {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #1e293b;
+      border: 4px solid #475569;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .sim-buzzer.sounding {
+      animation: buzzerVibe 0.1s infinite alternate;
+      border-color: #ef4444;
+      background: #dc2626;
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.6);
+    }
+
+    @keyframes buzzerVibe {
+      0% { transform: scale(1) rotate(-2deg); }
+      100% { transform: scale(1.06) rotate(2deg); }
+    }
+
+    .sim-fan-blade {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 4px dashed #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: transform 0.1s linear;
+    }
+
+    .sim-fan-blade.spinning {
+      animation: spinFan 0.2s linear infinite;
+      border-color: #2563eb;
+    }
+
+    @keyframes spinFan {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .sim-controls-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    /* Range slider style */
+    .sim-slider {
+      -webkit-appearance: none;
+      width: 220px;
+      height: 8px;
+      border-radius: 5px;
+      background: #e2e8f0;
+      outline: none;
+    }
+
+    .sim-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
+    }
+
+    .sim-status-text {
+      margin-top: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      background: var(--bg-canvas);
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* ==========================================================================
+       LESSON SCHEDULE & TIMELINE (INTERACTIVE)
+       ========================================================================== */
+    .schedule-section {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .schedule-lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+    }
+
+    .lesson-schedule-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lesson-badge-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .lesson-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .lesson-topics-wrap {
+      margin-bottom: 1.75rem;
+      background: var(--bg-canvas);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .lesson-topics-wrap ul {
+      margin-left: 1.2rem;
+      margin-top: 0.4rem;
+    }
+
+    .timeline-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .timeline-table th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      background: var(--bg-muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border-medium);
+    }
+
+    .timeline-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .timeline-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .time-slot {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       KIT COMPONENTS SECTION (SEARCHABLE MATRIX - NO PRICES)
+       ========================================================================== */
+    .components-section {
+      background: var(--bg-canvas);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .components-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .components-filter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.65rem 1rem 0.65rem 2.4rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-medium);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.875rem;
+      background: var(--bg-canvas);
+      transition: all var(--transition-fast);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 16px;
+      height: 16px;
+    }
+
+    .components-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+
+    .components-table th {
+      background: var(--bg-muted);
+      padding: 0.85rem 1.25rem;
+      text-align: left;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border-medium);
+    }
+
+    .components-table th:last-child {
+      text-align: right;
+    }
+
+    .components-table td {
+      padding: 0.95rem 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .components-table tr:hover td {
+      background: var(--bg-subtle);
+    }
+
+    .components-table td:last-child {
+      text-align: right;
+    }
+
+    .qty-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .optional-extension-notice {
+      margin-top: 1.5rem;
+      background: var(--accent-light);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: #92400e;
+    }
+
+    /* ==========================================================================
+       SAFETY GUIDELINES & ASSESSMENT OUTCOMES
+       ========================================================================== */
+    .safety-assessment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .safety-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .safety-panel h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #b45309;
+    }
+
+    .safety-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .safety-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .safety-icon {
+      color: #d97706;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .outcomes-panel {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .outcomes-panel h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--success);
+    }
+
+    .outcomes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .outcomes-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .outcome-icon {
+      color: var(--success);
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ==========================================================================
+       SUMMARY TABLE & INSTITUTIONAL SIGN-OFF
+       ========================================================================== */
+    .summary-matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .summary-matrix-table th {
+      background: var(--bg-muted);
+      padding: 0.85rem 1.25rem;
+      text-align: left;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border-medium);
+    }
+
+    .summary-matrix-table td {
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.875rem;
+    }
+
+    .summary-matrix-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border-subtle);
+      padding: 3.5rem 0 2.5rem 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .footer-brand h4 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .footer-brand p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .footer-col h5 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-col a {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-col a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       IMAGE LIGHTBOX MODAL
+       ========================================================================== */
+    .lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 1100px;
+      width: 100%;
+      background: transparent;
+      text-align: center;
+    }
+
+    .lightbox-img {
+      max-height: 80vh;
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-caption {
+      margin-top: 1rem;
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-fast);
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* ==========================================================================
+       PRINT STYLESHEET (CLEAN EXECUTIVE DOSSIER)
+       ========================================================================== */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 12pt;
+      }
+      .header, .hero-cta-group, .lab-widget-section, .filter-tabs-wrapper, .footer, .btn, .project-zoom-hint {
+        display: none !important;
+      }
+      .section-spacing {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+      }
+      .project-card, .trainer-card, .objective-card {
+        break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #cccccc !important;
+      }
+      .projects-grid, .trainers-grid {
+        grid-template-columns: 1fr 1fr !important;
+      }
+      .project-image-box {
+        height: 180px !important;
+      }
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .trainers-grid, .projects-grid, .schedule-lessons-grid, .safety-assessment-grid {
+        grid-template-columns: 1fr;
+      }
+      .simulator-container {
+        grid-template-columns: 1fr;
+      }
+      .sim-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .objectives-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .hero-meta-list {
+        grid-template-columns: 1fr;
+      }
+      .objectives-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .trainer-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .trainer-avatar-wrap {
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       TOP EXECUTIVE NAVIGATION
+       ======================================================================== -->
+  <header class="header" id="topNav">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#hero" class="brand-group">
+          <div class="brand-logo-badge">CS</div>
+          <div class="brand-meta">
+            <span class="brand-title">Corvit Systems Rawalpindi</span>
+            <span class="brand-subtitle">STEM & Robotics Division</span>
+          </div>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#overview" class="nav-link">Overview</a></li>
+          <li><a href="#trainers" class="nav-link">Trainers</a></li>
+          <li><a href="#projects" class="nav-link">6 Projects</a></li>
+          <li><a href="#simulator" class="nav-link">Circuit Lab</a></li>
+          <li><a href="#schedule" class="nav-link">Schedule</a></li>
+          <li><a href="#components" class="nav-link">Kit Hardware</a></li>
+          <li><a href="#safety" class="nav-link">Safety</a></li>
+        </ul>
+
+        <div class="header-actions">
+          <button class="btn btn-outline btn-sm" onclick="window.print()" title="Print or save this proposal as a clean PDF">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            Print / PDF
+          </button>
+          <a href="#projects" class="btn btn-primary btn-sm">Explore Projects</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HERO BANNER
+       ======================================================================== -->
+  <section class="hero-section" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        
+        <!-- Left: Proposal Overview -->
+        <div class="hero-content-col" id="overview">
+          <div class="hero-badges-row">
+            <span class="badge badge-primary">Official Training Proposal</span>
+            <span class="badge badge-success">Hands-On STEM Kit</span>
+            <span class="badge badge-accent">Ages 8–12</span>
+          </div>
+
+          <h1 class="hero-title">Electronics STEM Kit for Kids (Ages 8–12)</h1>
+
+          <div class="hero-aim-box">
+            <strong>Educational Aim:</strong> To make students familiar with fundamental concepts of electronics and circuits, preparing them with confidence for future robotics, automation, and advanced engineering courses.
+          </div>
+
+          <div class="hero-meta-list">
+            <div class="hero-meta-item">
+              <svg class="hero-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+              <div><strong>Offered By:</strong> Corvit Systems Rawalpindi</div>
+            </div>
+
+            <div class="hero-meta-item">
+              <svg class="hero-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+              <div><strong>Trainers:</strong> Engr. Aamir Jamil &amp; Miss Zia Ul Ain</div>
+            </div>
+
+            <div class="hero-meta-item">
+              <svg class="hero-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <div><strong>Duration:</strong> 2 Lessons (2 Hours each = 4 Hours)</div>
+            </div>
+
+            <div class="hero-meta-item">
+              <svg class="hero-meta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <div><strong>Power Source:</strong> Safe Low-Voltage AA Batteries</div>
+            </div>
+          </div>
+
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn btn-primary">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              View 6 Practical Projects
+            </a>
+            <a href="#trainers" class="btn btn-outline">Meet the Facilitators</a>
+          </div>
+        </div>
+
+        <!-- Right: Live Workshop Feature Card -->
+        <div class="hero-feature-card">
+          <div class="hero-img-wrapper">
+            <img src="assets/project_1_mini_torch.jpg" alt="Students building electronics kits with Engr. Aamir Jamil">
+            <div class="hero-img-overlay">
+              <span style="font-weight: 600; font-size: 0.85rem;">Live STEM Workshop Session</span>
+              <span class="badge badge-success" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;">Active Lab</span>
+            </div>
+          </div>
+          <div class="hero-card-body">
+            <div class="stat-pills-grid">
+              <div class="stat-pill">
+                <div class="stat-pill-num">6</div>
+                <div class="stat-pill-label">Projects Built</div>
+              </div>
+              <div class="stat-pill">
+                <div class="stat-pill-num">4</div>
+                <div class="stat-pill-label">Learning Hours</div>
+              </div>
+              <div class="stat-pill">
+                <div class="stat-pill-num">13+</div>
+                <div class="stat-pill-label">Safe Kit Parts</div>
+              </div>
+            </div>
+
+            <div class="hero-zero-reqs">
+              <span class="zero-check"><svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Zero Coding</span>
+              <span class="zero-check"><svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> No Arduino</span>
+              <span class="zero-check"><svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> No Soldering</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TRAINERS SPOTLIGHT SECTION
+       ======================================================================== -->
+  <section class="section-spacing trainers-section" id="trainers">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-primary">Accredited Facilitators</span>
+        <h2>Meet the Lead Trainers</h2>
+        <p>Expert educators from Corvit Systems Rawalpindi specializing in experiential STEM, robotics foundations, and child-safe hardware prototyping.</p>
+      </div>
+
+      <div class="trainers-grid">
+        
+        <!-- Trainer 1: Engr. Aamir Jamil -->
+        <div class="trainer-card">
+          <div class="trainer-avatar-wrap">
+            <img src="assets/trainer_aamir_jamil.jpg" alt="Engr. Aamir Jamil - Lead STEM Trainer">
+          </div>
+          <div class="trainer-info">
+            <h3 class="trainer-name">Engr. Aamir Jamil</h3>
+            <div class="trainer-role">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Lead STEM &amp; Electronics Trainer
+            </div>
+            <div class="trainer-affiliation">
+              <span>Corvit Systems Rawalpindi</span>
+            </div>
+            <p class="trainer-bio">
+              Experienced engineer and lead robotics facilitator dedicated to demystifying electronics for young learners through hands-on project creation and intuitive scientific experiments.
+            </p>
+          </div>
+        </div>
+
+        <!-- Trainer 2: Miss Zia Ul Ain -->
+        <div class="trainer-card">
+          <div class="trainer-avatar-wrap">
+            <img src="assets/trainer_zia_ul_ain.jpg" alt="Miss Zia Ul Ain - Robotics Educator">
+          </div>
+          <div class="trainer-info">
+            <h3 class="trainer-name">Miss Zia Ul Ain</h3>
+            <div class="trainer-role">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Robotics &amp; STEM Educator
+            </div>
+            <div class="trainer-affiliation">
+              <span>Corvit Systems Rawalpindi</span>
+            </div>
+            <p class="trainer-bio">
+              Specialist in youth STEM pedagogy and hands-on lab supervision, empowering young students to grasp circuitry, sensory feedback, and real-world electrical physics with confidence.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       PROGRAMME OBJECTIVES
+       ======================================================================== -->
+  <section class="section-spacing" id="objectives">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-secondary">Core Competencies</span>
+        <h2>What Students Will Learn</h2>
+        <p>A proven progressive pathway covering circuit theory, active electronic components, sensors, and practical troubleshooting.</p>
+      </div>
+
+      <div class="objectives-grid">
+        <div class="objective-card">
+          <div class="objective-icon-box">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+          </div>
+          <h4 class="objective-title">Component Mastery</h4>
+          <p class="objective-desc">Identify breadboards, LEDs, resistors, switches, buzzers, tilt sensors, and DC motors by sight and function.</p>
+        </div>
+
+        <div class="objective-card">
+          <div class="objective-icon-box">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h4 class="objective-title">Circuit Principles</h4>
+          <p class="objective-desc">Understand voltage, current, resistance, LED polarity (anode/cathode), and the role of current-limiting resistors.</p>
+        </div>
+
+        <div class="objective-card">
+          <div class="objective-icon-box">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <h4 class="objective-title">Sensors &amp; Motion</h4>
+          <p class="objective-desc">Harness light sensors (LDRs) and orientation tilt switches to trigger real-world alarms and spin motor fans.</p>
+        </div>
+
+        <div class="objective-card">
+          <div class="objective-icon-box">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h4 class="objective-title">Fault Troubleshooting</h4>
+          <p class="objective-desc">Form scientific curiosity by debugging loose connections, reversed polarity, open loops, and loose jumper leads.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       PROJECTS SHOWCASE (6 PRACTICAL PROJECTS)
+       ======================================================================== -->
+  <section class="section-spacing projects-section" id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-primary">Curriculum Portfolio</span>
+        <h2>6 Hands-on Engineering Projects</h2>
+        <p>Step-by-step builds using child-safe components on a breadboard. Click any image to view in full resolution.</p>
+      </div>
+
+      <div class="filter-tabs-wrapper">
+        <div class="filter-tabs">
+          <button class="filter-btn active" onclick="filterProjects('all', this)">All Projects (6)</button>
+          <button class="filter-btn" onclick="filterProjects('lesson-1', this)">Lesson 1 (Circuits &amp; Sound)</button>
+          <button class="filter-btn" onclick="filterProjects('lesson-2', this)">Lesson 2 (Sensors &amp; Motion)</button>
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+        
+        <!-- Project 1 -->
+        <div class="project-card" data-category="lesson-1">
+          <div class="project-image-box" onclick="openLightbox('assets/project_1_mini_torch.jpg', 'Project 1: Mini LED Torch with Cardboard Mount')">
+            <img src="assets/project_1_mini_torch.jpg" alt="Project 1: Mini LED Torch">
+            <span class="badge badge-primary project-badge-tag">Project 1 • Lesson 1</span>
+            <div class="project-zoom-hint">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta-row">
+              <span>Time: 25 mins</span>
+              <span>Output: Light</span>
+            </div>
+            <h3 class="project-title">Mini LED Torch</h3>
+            <div class="project-objective-box">
+              <strong>Objective:</strong> Build a complete battery-powered handheld torch while mastering LED polarity and resistor protection.
+            </div>
+            
+            <div class="project-subhead">Components Used</div>
+            <div class="project-components-tags">
+              <span class="comp-pill">2 × AA Batteries</span>
+              <span class="comp-pill">Battery Holder</span>
+              <span class="comp-pill">1 × Red/White LED</span>
+              <span class="comp-pill">1 × 330Ω Resistor</span>
+              <span class="comp-pill">Jumper Wires</span>
+              <span class="comp-pill">Cardboard Housing</span>
+            </div>
+
+            <div class="project-subhead">Build Procedure</div>
+            <ol class="project-steps-list">
+              <li>Identify positive (+) and negative (-) battery terminals.</li>
+              <li>Determine LED anode (long leg) and cathode (short leg).</li>
+              <li>Wire battery positive to resistor, then to LED anode.</li>
+              <li>Connect LED cathode back to battery negative to close the circuit.</li>
+              <li>Mount securely into custom cardboard torch structure.</li>
+            </ol>
+
+            <div class="project-outcome-box">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Learning: Complete circuits, LED polarity &amp; resistor safety.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card" data-category="lesson-1">
+          <div class="project-image-box" onclick="openLightbox('assets/project_2_push_button_light.jpg', 'Project 2: Push-Button Light Switch')">
+            <img src="assets/project_2_push_button_light.jpg" alt="Project 2: Push-Button Light">
+            <span class="badge badge-primary project-badge-tag">Project 2 • Lesson 1</span>
+            <div class="project-zoom-hint">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta-row">
+              <span>Time: 25 mins</span>
+              <span>Output: Controlled Light</span>
+            </div>
+            <h3 class="project-title">Push-Button Light</h3>
+            <div class="project-objective-box">
+              <strong>Objective:</strong> Control an LED dynamically using an interactive push-button switch to grasp open vs. closed circuits.
+            </div>
+            
+            <div class="project-subhead">Components Used</div>
+            <div class="project-components-tags">
+              <span class="comp-pill">Mini Breadboard</span>
+              <span class="comp-pill">Push Button Switch</span>
+              <span class="comp-pill">1 × LED</span>
+              <span class="comp-pill">1 × 330Ω Resistor</span>
+              <span class="comp-pill">2 × AA Battery Pack</span>
+              <span class="comp-pill">Jumper Wires</span>
+            </div>
+
+            <div class="project-subhead">Build Procedure</div>
+            <ol class="project-steps-list">
+              <li>Place the push-button switch across the center divider of the breadboard.</li>
+              <li>Wire the switch in series with the resistor and LED.</li>
+              <li>Press the button to complete the loop (closed circuit) and illuminate LED.</li>
+              <li>Release the button to break the connection (open circuit).</li>
+            </ol>
+
+            <div class="project-outcome-box">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Learning: Understand manual switches &amp; current interruption.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card" data-category="lesson-1">
+          <div class="project-image-box" onclick="openLightbox('assets/project_3_electronic_quiz_buzzer.jpg', 'Project 3: Electronic Quiz Buzzer Box')">
+            <img src="assets/project_3_electronic_quiz_buzzer.jpg" alt="Project 3: Electronic Quiz Buzzer">
+            <span class="badge badge-primary project-badge-tag">Project 3 • Lesson 1</span>
+            <div class="project-zoom-hint">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta-row">
+              <span>Time: 25 mins</span>
+              <span>Output: Acoustic Sound (Buzzer)</span>
+            </div>
+            <h3 class="project-title">Electronic Quiz Buzzer</h3>
+            <div class="project-objective-box">
+              <strong>Objective:</strong> Convert electrical energy into audible sound waves for a fun, competitive classroom game quiz panel.
+            </div>
+            
+            <div class="project-subhead">Components Used</div>
+            <div class="project-components-tags">
+              <span class="comp-pill">Active Buzzer (Piezo)</span>
+              <span class="comp-pill">Tactile Push Button</span>
+              <span class="comp-pill">Battery Supply</span>
+              <span class="comp-pill">Jumper Wires</span>
+              <span class="comp-pill">Cardboard Quiz Console</span>
+            </div>
+
+            <div class="project-subhead">Build Procedure</div>
+            <ol class="project-steps-list">
+              <li>Verify the active buzzer's rated polarity (+ and - leads).</li>
+              <li>Connect the buzzer in series with the push button and battery.</li>
+              <li>Press button to produce an instant audible tone.</li>
+              <li>Decorate and install onto a cardboard quiz contestant console.</li>
+            </ol>
+
+            <div class="project-outcome-box">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Learning: Electrical-to-acoustic energy conversion &amp; signals.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card" data-category="lesson-2">
+          <div class="project-image-box" onclick="openLightbox('assets/project_4_tilt_activated_alarm.jpg', 'Project 4: Tilt-Activated Alarm System')">
+            <img src="assets/project_4_tilt_activated_alarm.jpg" alt="Project 4: Tilt-Activated Alarm">
+            <span class="badge badge-secondary project-badge-tag">Project 4 • Lesson 2</span>
+            <div class="project-zoom-hint">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta-row">
+              <span>Time: 25 mins</span>
+              <span>Output: Alarm Sound</span>
+            </div>
+            <h3 class="project-title">Tilt-Activated Alarm</h3>
+            <div class="project-objective-box">
+              <strong>Objective:</strong> Engineer an orientation-sensitive security alarm using a mechanical ball-tilt switch sensor.
+            </div>
+            
+            <div class="project-subhead">Components Used</div>
+            <div class="project-components-tags">
+              <span class="comp-pill">Metallic Tilt Switch</span>
+              <span class="comp-pill">Active Buzzer</span>
+              <span class="comp-pill">Mini Breadboard</span>
+              <span class="comp-pill">Battery Supply</span>
+              <span class="comp-pill">Jumper Leads</span>
+            </div>
+
+            <div class="project-subhead">Build Procedure</div>
+            <ol class="project-steps-list">
+              <li>Mount the cylindrical tilt switch vertically on the breadboard.</li>
+              <li>Connect in series with the buzzer and battery power source.</li>
+              <li>Observe conductibility as internal metallic ball rolls with gravity.</li>
+              <li>Gently tilt the circuit past 45° to sound the intrusion alarm.</li>
+            </ol>
+
+            <div class="project-outcome-box">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Learning: Sensor triggering, motion detection, and security circuits.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="project-card" data-category="lesson-2">
+          <div class="project-image-box" onclick="openLightbox('assets/project_5_light_detector.jpg', 'Project 5: Light-Dependent Resistor (LDR) Detector')">
+            <img src="assets/project_5_light_detector.jpg" alt="Project 5: Light Detector">
+            <span class="badge badge-secondary project-badge-tag">Project 5 • Lesson 2</span>
+            <div class="project-zoom-hint">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta-row">
+              <span>Time: 30 mins</span>
+              <span>Output: Measured/Visual Light Response</span>
+            </div>
+            <h3 class="project-title">Light Detector</h3>
+            <div class="project-objective-box">
+              <strong>Objective:</strong> Discover photo-sensing physics by testing how ambient light changes an LDR's resistance and affects circuit behavior.
+            </div>
+            
+            <div class="project-subhead">Components Used</div>
+            <div class="project-components-tags">
+              <span class="comp-pill">Light-Dependent Resistor (LDR)</span>
+              <span class="comp-pill">1 × Bright LED</span>
+              <span class="comp-pill">1 × 330Ω Resistor</span>
+              <span class="comp-pill">2 × AA Batteries</span>
+              <span class="comp-pill">Mini Breadboard</span>
+            </div>
+
+            <div class="project-subhead">Build Procedure</div>
+            <ol class="project-steps-list">
+              <li>Observe LDR sensor surface under direct room lighting.</li>
+              <li>Build series circuit with LDR, protective resistor, and LED.</li>
+              <li>Cup hands or shade LDR to observe resistance change.</li>
+              <li>Observe how light variations regulate electron current.</li>
+            </ol>
+
+            <div class="project-outcome-box">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Learning: Optical sensors, variable resistance &amp; environmental triggers.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="project-card" data-category="lesson-2">
+          <div class="project-image-box" onclick="openLightbox('assets/project_6_mini_motor_fan.jpg', 'Project 6: Mini Motor Fan with Airflow')">
+            <img src="assets/project_6_mini_motor_fan.jpg" alt="Project 6: Mini Motor Fan">
+            <span class="badge badge-secondary project-badge-tag">Project 6 • Lesson 2</span>
+            <div class="project-zoom-hint">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta-row">
+              <span>Time: 30 mins</span>
+              <span>Output: Mechanical Rotation &amp; Airflow</span>
+            </div>
+            <h3 class="project-title">Mini Motor Fan</h3>
+            <div class="project-objective-box">
+              <strong>Objective:</strong> Convert electrical energy into rotational kinetic motion and aerodynamic airflow using a 3–6V DC motor.
+            </div>
+            
+            <div class="project-subhead">Components Used</div>
+            <div class="project-components-tags">
+              <span class="comp-pill">Small 3–6V DC Motor</span>
+              <span class="comp-pill">Lightweight Propeller Blade</span>
+              <span class="comp-pill">Cardboard Stand</span>
+              <span class="comp-pill">2 × AA Battery Pack</span>
+              <span class="comp-pill">Jumper Leads</span>
+            </div>
+
+            <div class="project-subhead">Build Procedure</div>
+            <ol class="project-steps-list">
+              <li>Inspect motor terminals and verify rated supply voltage.</li>
+              <li>Affix DC motor securely onto a sturdy cardboard support.</li>
+              <li>Press-fit the lightweight plastic propeller fan blade onto shaft.</li>
+              <li>Connect to battery pack and feel the refreshing airflow.</li>
+            </ol>
+
+            <div class="project-outcome-box">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Learning: Electromagnetic rotation, mechanical propulsion &amp; aerodynamics.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SURPRISE INTERACTIVE LAB SIMULATOR (LIVE CIRCUIT DEMO)
+       ======================================================================== -->
+  <section class="section-spacing lab-widget-section" id="simulator">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-accent">Interactive Demonstration</span>
+        <h2>Virtual Circuit Simulator</h2>
+        <p>Experience the exact circuit behaviors that students will build with their own hands during the workshop.</p>
+      </div>
+
+      <div class="simulator-container">
+        <!-- Sidebar Navigation -->
+        <div class="sim-sidebar">
+          <div class="sim-sidebar-title">Select Experiment</div>
+          <button class="sim-tab-btn active" onclick="switchSim('torch', this)">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            1. LED &amp; Push Button
+          </button>
+          <button class="sim-tab-btn" onclick="switchSim('buzzer', this)">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+            2. Quiz Buzzer
+          </button>
+          <button class="sim-tab-btn" onclick="switchSim('tilt', this)">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            3. Tilt Sensor Alarm
+          </button>
+          <button class="sim-tab-btn" onclick="switchSim('ldr', this)">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            4. LDR Light Detector
+          </button>
+          <button class="sim-tab-btn" onclick="switchSim('fan', this)">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/></svg>
+            5. DC Motor Propeller
+          </button>
+        </div>
+
+        <!-- Simulator Stage Area -->
+        <div class="sim-stage-area">
+          
+          <!-- Circuit Board Display -->
+          <div class="sim-circuit-board" id="simCircuitBoard">
+            <!-- Dynamic elements injected here via JS -->
+          </div>
+
+          <div class="sim-status-text" id="simStatus">
+            Circuit Status: Standby
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       LESSON SCHEDULE & TIMELINE
+       ======================================================================== -->
+  <section class="section-spacing schedule-section" id="schedule">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-primary">Curriculum Roadmap</span>
+        <h2>Structured 4-Hour Schedule</h2>
+        <p>Balanced across 2 structured lessons with hands-on time, student safety briefings, and diagnostic troubleshooting.</p>
+      </div>
+
+      <div class="schedule-lessons-grid">
+        
+        <!-- Lesson 1 Card -->
+        <div class="lesson-schedule-card">
+          <div class="lesson-badge-header">
+            <span class="badge badge-primary">Lesson 1</span>
+            <span style="font-weight: 700; color: var(--text-secondary); font-size: 0.875rem;">Duration: 2 Hours</span>
+          </div>
+          <h3 class="lesson-title">Electronics Fundamentals</h3>
+          
+          <div class="lesson-topics-wrap">
+            <strong>Theory &amp; Concepts:</strong>
+            <ul>
+              <li>Introduction to electronics and STEM principles</li>
+              <li>Battery, voltage, current, and resistance fundamentals</li>
+              <li>Conductors vs. insulators</li>
+              <li>Breadboard navigation &amp; jumper wire routing</li>
+              <li>LED polarity &amp; current-limiting resistor protection</li>
+              <li>Open vs. closed circuits &amp; fault testing</li>
+            </ul>
+          </div>
+
+          <table class="timeline-table">
+            <thead>
+              <tr>
+                <th>Timeline</th>
+                <th>Workshop Activity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="time-slot">00–15 min</td>
+                <td>Introduction, safety orientation &amp; tool handling</td>
+              </tr>
+              <tr>
+                <td class="time-slot">15–30 min</td>
+                <td>Component identification &amp; breadboard exploration</td>
+              </tr>
+              <tr>
+                <td class="time-slot">30–55 min</td>
+                <td><strong>Project 1:</strong> Mini LED Torch construction</td>
+              </tr>
+              <tr>
+                <td class="time-slot">55–80 min</td>
+                <td><strong>Project 2:</strong> Push-Button Light &amp; loop control</td>
+              </tr>
+              <tr>
+                <td class="time-slot">80–105 min</td>
+                <td><strong>Project 3:</strong> Electronic Quiz Buzzer panel</td>
+              </tr>
+              <tr>
+                <td class="time-slot">105–120 min</td>
+                <td>Circuit testing, troubleshooting &amp; Q&amp;A assessment</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Lesson 2 Card -->
+        <div class="lesson-schedule-card">
+          <div class="lesson-badge-header">
+            <span class="badge badge-secondary">Lesson 2</span>
+            <span style="font-weight: 700; color: var(--text-secondary); font-size: 0.875rem;">Duration: 2 Hours</span>
+          </div>
+          <h3 class="lesson-title">Sensors, Alarms, and Motion</h3>
+          
+          <div class="lesson-topics-wrap">
+            <strong>Theory &amp; Concepts:</strong>
+            <ul>
+              <li>Input sensors vs. output transducers</li>
+              <li>Tilt switches &amp; gravity-based mechanisms</li>
+              <li>Light-dependent resistors (LDRs) and optical variance</li>
+              <li>DC electric motors &amp; electro-mechanical conversion</li>
+              <li>Miniature propeller aerodynamics &amp; thrust</li>
+              <li>Creative STEM design challenges &amp; circuit diagnostics</li>
+            </ul>
+          </div>
+
+          <table class="timeline-table">
+            <thead>
+              <tr>
+                <th>Timeline</th>
+                <th>Workshop Activity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="time-slot">00–15 min</td>
+                <td>Review of Lesson 1 &amp; sensor/motor introduction</td>
+              </tr>
+              <tr>
+                <td class="time-slot">15–40 min</td>
+                <td><strong>Project 4:</strong> Tilt-Activated Alarm calibration</td>
+              </tr>
+              <tr>
+                <td class="time-slot">40–70 min</td>
+                <td><strong>Project 5:</strong> Light Detector (LDR) experiments</td>
+              </tr>
+              <tr>
+                <td class="time-slot">70–100 min</td>
+                <td><strong>Project 6:</strong> Mini Motor Fan assembly</td>
+              </tr>
+              <tr>
+                <td class="time-slot">100–115 min</td>
+                <td>Creative STEM design challenge &amp; speed testing</td>
+              </tr>
+              <tr>
+                <td class="time-slot">115–120 min</td>
+                <td>Comprehensive review, outcome celebration &amp; feedback</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       REQUIRED KIT HARDWARE MATRIX (NO PRICES)
+       ======================================================================== -->
+  <section class="section-spacing components-section" id="components">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-primary">Hardware Bill of Materials</span>
+        <h2>Required Kit Components</h2>
+        <p>Every student receives a complete, re-usable hardware kit with safe, solder-free components.</p>
+      </div>
+
+      <div class="components-card">
+        <div class="components-filter-row">
+          <div class="search-input-wrap">
+            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="componentSearch" class="search-input" placeholder="Filter kit components..." onkeyup="filterComponentsTable()">
+          </div>
+          <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 600;">13 Standard Kit Items</span>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="components-table" id="componentsTable">
+            <thead>
+              <tr>
+                <th>Component Specification</th>
+                <th>Educational Purpose</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Mini Breadboard</strong></td>
+                <td>Solderless circuit prototyping platform</td>
+                <td><span class="qty-tag">1</span></td>
+              </tr>
+              <tr>
+                <td><strong>LEDs (Mixed Colours)</strong></td>
+                <td>Visual output indicators, polarity training</td>
+                <td><span class="qty-tag">6</span></td>
+              </tr>
+              <tr>
+                <td><strong>Resistors (220Ω, 330Ω, 1kΩ)</strong></td>
+                <td>Current-limiting and circuit protection</td>
+                <td><span class="qty-tag">10</span></td>
+              </tr>
+              <tr>
+                <td><strong>2 × AA Battery Holder</strong></td>
+                <td>Safe, low-voltage power supply enclosure</td>
+                <td><span class="qty-tag">1</span></td>
+              </tr>
+              <tr>
+                <td><strong>AA Batteries (Alkaline)</strong></td>
+                <td>Portable DC power source</td>
+                <td><span class="qty-tag">2</span></td>
+              </tr>
+              <tr>
+                <td><strong>Jumper Wires (Flexible Male-Male)</strong></td>
+                <td>Rapid solderless circuit connections</td>
+                <td><span class="qty-tag">10</span></td>
+              </tr>
+              <tr>
+                <td><strong>Push Buttons (Tactile)</strong></td>
+                <td>Manual switching and signal triggering</td>
+                <td><span class="qty-tag">2</span></td>
+              </tr>
+              <tr>
+                <td><strong>Active Buzzer</strong></td>
+                <td>Audible alert and quiz sound signaling</td>
+                <td><span class="qty-tag">1</span></td>
+              </tr>
+              <tr>
+                <td><strong>Crocodile Clips</strong></td>
+                <td>Firm mechanical and electrical gripping</td>
+                <td><span class="qty-tag">2</span></td>
+              </tr>
+              <tr>
+                <td><strong>Storage Box &amp; Labels</strong></td>
+                <td>Individual kit organization and identification</td>
+                <td><span class="qty-tag">1</span></td>
+              </tr>
+              <tr>
+                <td><strong>Small DC Motor (3–6V)</strong></td>
+                <td>Electromechanical kinetic rotation</td>
+                <td><span class="qty-tag">1</span></td>
+              </tr>
+              <tr>
+                <td><strong>Light-Dependent Resistor (LDR)</strong></td>
+                <td>Ambient optical environmental sensing</td>
+                <td><span class="qty-tag">1</span></td>
+              </tr>
+              <tr>
+                <td><strong>Tilt Switch Sensor</strong></td>
+                <td>Motion and gravitational tilt detection</td>
+                <td><span class="qty-tag">1</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="optional-extension-notice">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+          <div>
+            <strong>Modular Curriculum Expansion:</strong> An infrared (IR) obstacle detection sensor module can be seamlessly added later as an optional curriculum extension.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SAFETY GUIDELINES & ASSESSMENT
+       ======================================================================== -->
+  <section class="section-spacing" id="safety">
+    <div class="container">
+      <div class="safety-assessment-grid">
+        
+        <!-- Safety Panel -->
+        <div class="safety-panel">
+          <h3>
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+            Safety Guidelines
+          </h3>
+          <ul class="safety-list">
+            <li>
+              <svg class="safety-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Use strictly low-voltage safe battery power (3V nominal).</span>
+            </li>
+            <li>
+              <svg class="safety-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Always disconnect power before re-routing breadboard connections.</span>
+            </li>
+            <li>
+              <svg class="safety-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Always use an appropriate current-limiting resistor with each LED.</span>
+            </li>
+            <li>
+              <svg class="safety-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Secure DC motors and fan propellers firmly before applying current.</span>
+            </li>
+            <li>
+              <svg class="safety-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Keep hair and loose items clear from spinning propeller blades.</span>
+            </li>
+            <li>
+              <svg class="safety-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Continuous adult mentoring provided throughout all activities.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Assessment Panel -->
+        <div class="outcomes-panel">
+          <h3>
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Expected Outcomes
+          </h3>
+          <ul class="outcomes-list">
+            <li>
+              <svg class="outcome-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Draw and explain basic schematic circuit loops and polarities.</span>
+            </li>
+            <li>
+              <svg class="outcome-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Explain why current-limiting resistors prevent LED burnout.</span>
+            </li>
+            <li>
+              <svg class="outcome-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Demonstrate manual switching on both series and open configurations.</span>
+            </li>
+            <li>
+              <svg class="outcome-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Calibrate environmental response using tilt and light sensor circuits.</span>
+            </li>
+            <li>
+              <svg class="outcome-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Independently detect and resolve at least one real circuit fault.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Final Project Summary Matrix -->
+      <table class="summary-matrix-table">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Primary STEM Concept</th>
+            <th>Tangible Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Mini LED Torch</strong></td>
+            <td>Complete Circuit &amp; LED Polarity</td>
+            <td>Controlled Illumination</td>
+          </tr>
+          <tr>
+            <td><strong>2. Push-Button Light</strong></td>
+            <td>Mechanical Switching &amp; Interruption</td>
+            <td>Interactive Light Toggle</td>
+          </tr>
+          <tr>
+            <td><strong>3. Electronic Quiz Buzzer</strong></td>
+            <td>Electrical-to-Sound Energy Conversion</td>
+            <td>Audible Game Tone</td>
+          </tr>
+          <tr>
+            <td><strong>4. Tilt-Activated Alarm</strong></td>
+            <td>Gravitational Orientation Sensing</td>
+            <td>Motion-Activated Siren</td>
+          </tr>
+          <tr>
+            <td><strong>5. Light Detector</strong></td>
+            <td>Light-Sensitive Resistance (LDR)</td>
+            <td>Optical Sensor Modulation</td>
+          </tr>
+          <tr>
+            <td><strong>6. Mini Motor Fan</strong></td>
+            <td>Electrical-to-Mechanical Energy Conversion</td>
+            <td>High-Speed Propeller Airflow</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-group" style="margin-bottom: 0.85rem;">
+            <div class="brand-logo-badge">CS</div>
+            <div class="brand-meta">
+              <span class="brand-title">Corvit Systems Rawalpindi</span>
+              <span class="brand-subtitle">Pioneers in Technical Education</span>
+            </div>
+          </div>
+          <p>
+            Delivering industry-grade STEM, electronics, and robotics training designed to inspire the next generation of engineers, inventors, and innovators across Pakistan.
+          </p>
+          <div class="badge badge-success">Accredited Proposal</div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Key Instructors</h5>
+          <ul>
+            <li><strong>Engr. Aamir Jamil</strong> (Lead Trainer)</li>
+            <li><strong>Miss Zia Ul Ain</strong> (Robotics Educator)</li>
+            <li>Corvit Systems Faculty Team</li>
+            <li>Hands-on Student Mentorship</li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Proposal Documents</h5>
+          <ul>
+            <li><a href="proposal.md">Source Markdown (proposal.md)</a></li>
+            <li><a href="#projects">High-Resolution Photo Gallery</a></li>
+            <li><a href="#components">Hardware BOM Table</a></li>
+            <li><a href="javascript:window.print()">Export Printable Proposal PDF</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Corvit Systems Rawalpindi. All Rights Reserved.</div>
+        <div>Electronics STEM Kit for Kids (Ages 8–12) • 4-Hour Certified Workshop</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       IMAGE LIGHTBOX MODAL
+       ======================================================================== -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+      <img id="lightboxImg" class="lightbox-img" src="" alt="Project Preview">
+      <div id="lightboxCaption" class="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       JAVASCRIPT LOGIC
+       ======================================================================== -->
+  <script>
+    // Project Category Filtering
+    function filterProjects(category, btnElement) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      const cards = document.querySelectorAll('.project-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Lightbox modal handler
+    function openLightbox(imgSrc, captionText) {
+      const modal = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImg');
+      const caption = document.getElementById('lightboxCaption');
+
+      img.src = imgSrc;
+      caption.textContent = captionText;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(e) {
+      if (e.target.id === 'lightboxModal' || e.target.classList.contains('lightbox-close')) {
+        const modal = document.getElementById('lightboxModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Search filter for hardware components table
+    function filterComponentsTable() {
+      const input = document.getElementById('componentSearch');
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById('componentsTable');
+      const trs = table.getElementsByTagName('tr');
+
+      for (let i = 1; i < trs.length; i++) {
+        const rowText = trs[i].textContent.toLowerCase();
+        if (rowText.indexOf(filter) > -1) {
+          trs[i].style.display = '';
+        } else {
+          trs[i].style.display = 'none';
+        }
+      }
+    }
+
+    // ========================================================================
+    // INTERACTIVE LAB SIMULATOR ENGINE (Web Audio API + Dynamic Circuits)
+    // ========================================================================
+    let currentSim = 'torch';
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq = 880, duration = 0.25) {
+      try {
+        const ctx = getAudioContext();
+        if (ctx.state === 'suspended') ctx.resume();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (err) {
+        console.log('Audio disabled or blocked by browser:', err);
+      }
+    }
+
+    function switchSim(simName, btn) {
+      currentSim = simName;
+      document.querySelectorAll('.sim-tab-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const board = document.getElementById('simCircuitBoard');
+      const status = document.getElementById('simStatus');
+
+      if (simName === 'torch') {
+        board.innerHTML = `
+          <div class="sim-led" id="torchLed"></div>
+          <div class="sim-controls-row">
+            <button class="btn btn-primary" id="torchBtn" onclick="toggleTorch()">
+              Toggle Push Button
+            </button>
+          </div>
+        `;
+        status.textContent = 'Circuit: Push button is OPEN. LED is OFF.';
+      } else if (simName === 'buzzer') {
+        board.innerHTML = `
+          <div class="sim-buzzer" id="simBuzzerEl">
+            <svg width="36" height="36" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"/></svg>
+          </div>
+          <div class="sim-controls-row">
+            <button class="btn btn-primary" onmousedown="startBuzzer()" onmouseup="stopBuzzer()" ontouchstart="startBuzzer()" ontouchend="stopBuzzer()">
+              Press &amp; Hold Quiz Buzzer
+            </button>
+          </div>
+        `;
+        status.textContent = 'Hold down button to complete loop and sound active buzzer.';
+      } else if (simName === 'tilt') {
+        board.innerHTML = `
+          <div class="sim-buzzer" id="tiltBuzzerEl" style="transition: transform 0.2s ease;">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+          </div>
+          <div style="font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem;">Rotate Breadboard Orientation: <span id="tiltVal">0</span>°</div>
+          <div class="sim-controls-row">
+            <input type="range" min="0" max="90" value="0" class="sim-slider" id="tiltSlider" oninput="handleTilt(this.value)">
+          </div>
+        `;
+        status.textContent = 'Tilt orientation is 0° (Normal upright). Alarm is quiet.';
+      } else if (simName === 'ldr') {
+        board.innerHTML = `
+          <div class="sim-led" id="ldrLed" style="background: #22c55e;"></div>
+          <div style="font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem;">Ambient Room Light Level: <span id="ldrVal">100</span>%</div>
+          <div class="sim-controls-row">
+            <span>Dark</span>
+            <input type="range" min="5" max="100" value="100" class="sim-slider" id="ldrSlider" oninput="handleLdr(this.value)">
+            <span>Bright</span>
+          </div>
+        `;
+        status.textContent = 'Bright light: LDR resistance is low. Current flows freely.';
+      } else if (simName === 'fan') {
+        board.innerHTML = `
+          <div class="sim-fan-blade" id="simFanBlade">
+            <svg width="44" height="44" fill="#2563eb" viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2v2.1a6 6 0 0 1 3.5 2l1.5-1.5a2 2 0 1 1 2.8 2.8l-1.5 1.5A6 6 0 0 1 22 14.5V17a2 2 0 0 1-2 2h-2.1a6 6 0 0 1-2 3.5l1.5 1.5a2 2 0 1 1-2.8 2.8l-1.5-1.5A6 6 0 0 1 9.5 22H7a2 2 0 0 1-2-2v-2.1a6 6 0 0 1-3.5-2L0 17.4a2 2 0 1 1 2.8-2.8l1.5-1.5A6 6 0 0 1 2 9.5V7a2 2 0 0 1 2-2h2.1a6 6 0 0 1 2-3.5L6.6 0a2 2 0 1 1 2.8-2.8l1.5 1.5A6 6 0 0 1 12 2z"/></svg>
+          </div>
+          <div class="sim-controls-row">
+            <button class="btn btn-primary" id="fanToggleBtn" onclick="toggleFan()">
+              Toggle DC Motor Power
+            </button>
+          </div>
+        `;
+        status.textContent = 'Motor disconnected from battery. Propeller stationary.';
+      }
+    }
+
+    // Torch logic
+    let torchOn = false;
+    function toggleTorch() {
+      torchOn = !torchOn;
+      const led = document.getElementById('torchLed');
+      const status = document.getElementById('simStatus');
+      const btn = document.getElementById('torchBtn');
+      if (torchOn) {
+        led.classList.add('active');
+        status.textContent = 'Circuit: Push button is CLOSED. LED glowing bright red/green!';
+        btn.textContent = 'Release Push Button';
+      } else {
+        led.classList.remove('active');
+        status.textContent = 'Circuit: Push button is OPEN. Loop disconnected.';
+        btn.textContent = 'Toggle Push Button';
+      }
+    }
+
+    // Buzzer logic
+    let buzzerInterval = null;
+    function startBuzzer() {
+      const buzzer = document.getElementById('simBuzzerEl');
+      const status = document.getElementById('simStatus');
+      buzzer.classList.add('sounding');
+      status.textContent = '🚨 BUZZER ACTIVE! Electrical energy converted to sound waves!';
+      playTone(1050, 0.4);
+      buzzerInterval = setInterval(() => playTone(1050, 0.15), 180);
+    }
+    function stopBuzzer() {
+      const buzzer = document.getElementById('simBuzzerEl');
+      const status = document.getElementById('simStatus');
+      if (buzzer) buzzer.classList.remove('sounding');
+      if (buzzerInterval) clearInterval(buzzerInterval);
+      if (status) status.textContent = 'Buzzer silent. Ready for next quiz question.';
+    }
+
+    // Tilt logic
+    function handleTilt(val) {
+      document.getElementById('tiltVal').textContent = val;
+      const buzzer = document.getElementById('tiltBuzzerEl');
+      const status = document.getElementById('simStatus');
+      buzzer.style.transform = `rotate(${val}deg)`;
+
+      if (val >= 45) {
+        buzzer.classList.add('sounding');
+        status.textContent = `🚨 TILT DETECTED (${val}°)! Ball switch closed loop. Intrusion alarm triggered!`;
+        playTone(720, 0.15);
+      } else {
+        buzzer.classList.remove('sounding');
+        status.textContent = `Orientation: ${val}° (Below 45° threshold). Switch contacts remain open.`;
+      }
+    }
+
+    // LDR logic
+    function handleLdr(val) {
+      document.getElementById('ldrVal').textContent = val;
+      const led = document.getElementById('ldrLed');
+      const status = document.getElementById('simStatus');
+      const opacity = Math.max(0.15, val / 100);
+      led.style.opacity = opacity;
+      if (val < 40) {
+        status.textContent = `Dim/Shaded (${val}%): LDR resistance rises sharply, reducing LED current flow.`;
+      } else {
+        status.textContent = `Bright Ambient Light (${val}%): LDR resistance drops, allowing maximum electron flow.`;
+      }
+    }
+
+    // Fan logic
+    let fanRunning = false;
+    function toggleFan() {
+      fanRunning = !fanRunning;
+      const fan = document.getElementById('simFanBlade');
+      const status = document.getElementById('simStatus');
+      const btn = document.getElementById('fanToggleBtn');
+      if (fanRunning) {
+        fan.classList.add('spinning');
+        status.textContent = '🌀 DC Motor ON! Rotational kinetic motion creating cooling airflow.';
+        btn.textContent = 'Disconnect Battery';
+      } else {
+        fan.classList.remove('spinning');
+        status.textContent = 'DC Motor OFF. Circuit open.';
+        btn.textContent = 'Toggle DC Motor Power';
+      }
+    }
+
+    // Initialize default simulation on load
+    document.addEventListener('DOMContentLoaded', () => {
+      switchSim('torch');
+    });
+  </script>
+</body>
+</html>
