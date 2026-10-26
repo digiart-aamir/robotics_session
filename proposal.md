@@ -15,7 +15,9 @@
 - **Total Learning Time:** 4 hours
 - **Power Source:** Batteries
 - **Learning Approach:** Basic theory, hands-on experiments, troubleshooting, and STEM challenges
-- **Aim** To make Students ready familiar with basic concepts of electronics and ready for future robotics and automation courses.
+- **Aim:** To make Students familiar with basic concepts of electronics and ready for future robotics and automation courses.
+- **Included User Manual:** Comprehensive, illustrated step-by-step guidebook with circuit diagrams and project instructions.
+- **Extended Project Capabilities:** In addition to the 6 core workshop projects, students can build numerous other DIY electronics circuits and experiments using the versatile components included in this kit.
 
 ## Programme Objectives
 
@@ -254,6 +256,9 @@ Students understand how an electric motor produces motion.
 | Small DC motor (3–6V) | 1 |
 | LDR | 1 |
 | Tilt switch | 1 |
+| Detailed Illustrated User Manual & Project Guidebook | 1 |
+
+**Comprehensive Manual & Extended Learning:** Each kit includes a detailed, child-friendly user manual featuring clear pictorial wiring guides, component descriptions, safety rules, troubleshooting steps, and detailed instructions for many additional hands-on electronics projects that students can build and explore at home using this same kit.
 
 An IR sensor module can be added later as an optional extension.
 
@@ -296,4 +301,4 @@ At the end of the programme, students should be able to:
 | 5. Light Detector | Light-sensitive resistance | Measured/observed response |
 | 6. Mini Motor Fan | Electrical-to-mechanical energy conversion | Movement and airflow |
 
-**Programme Outcome:** Students complete six practical electronics projects while learning the fundamentals of circuits, switching, sensors, sound, and motion without requiring Arduino, programming, or soldering.
+**Programme Outcome:** Students complete six practical electronics projects during the workshop and gain the foundational skills to construct many other self-guided projects using the included kit and detailed user manual—mastering the fundamentals of circuits, switching, sensors, sound, and motion without requiring Arduino, programming, or soldering.
