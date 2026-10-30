@@ -234,19 +234,24 @@
       display: flex;
     }
 
-    .trainer-photo {
-      width: 54px;
-      height: 54px;
+    .trainer-emblem {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      border: 3px solid #38bdf8;
-      object-fit: cover;
-      margin-left: -12px;
+      border: 2px solid #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      background: rgba(56, 189, 248, 0.15);
+      margin-left: -10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
-    .trainer-photo:first-child {
+    .trainer-emblem:first-child {
       margin-left: 0;
       border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.15);
     }
 
     .trainer-titles h3 {
@@ -623,8 +628,8 @@
       <div class="trainers-strip">
         <div class="trainers-profile-group">
           <div class="trainer-avatar-stack">
-            <img src="assets/trainer_aamir_jamil.jpg" alt="Engr. Aamir Jamil" class="trainer-photo" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'">
-            <img src="assets/trainer_zia_ul_ain.jpg" alt="Miss Zia Ul Ain" class="trainer-photo" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80'">
+            <div class="trainer-emblem" title="Engr. Aamir Jamil (Lead AI, Robotics, STEAM & CEH Trainer)">👨‍🏫</div>
+            <div class="trainer-emblem" title="Miss Zia Ul Ain (Supportive Trainer)">👩‍🏫</div>
           </div>
           <div class="trainer-titles">
             <h3>Engr. Aamir Jamil &amp; Miss Zia Ul Ain</h3>
