@@ -2,14 +2,14 @@
 # Electronics STEM Kit for Kids (Ages 8–12)
 
 **Offered by:** CS Technologies  
-**Trainers:** Engr. Aamir Jamil (Lead AI, Robotics & STEAM Trainer) & Miss Zia Ul Ain (Supportive Trainer)  
+**Trainers:** Engr. Aamir Jamil (Lead AI, Robotics, STEAM & CEH Trainer) & Miss Zia Ul Ain (Supportive Trainer)  
 
 ---
 
 ## Programme Overview
 
 - **Offered by:** CS Technologies
-- **Trainers:** Engr. Aamir Jamil (Lead AI, Robotics & STEAM Trainer) & Miss Zia Ul Ain (Supportive Trainer)
+- **Trainers:** Engr. Aamir Jamil (Lead AI, Robotics, STEAM & CEH Trainer) & Miss Zia Ul Ain (Supportive Trainer)
 - **Target Age:** 8–12 years
 - **Duration:** 2 lessons, 2 hours per lesson
 - **Total Learning Time:** 4 hours

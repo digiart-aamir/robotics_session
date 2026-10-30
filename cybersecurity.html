@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2563eb">
+  <title>CyberGuard: Cybersecurity & Digital Defense STEM Programme (Ages 8–12) | CS Technologies</title>
+  <meta name="description" content="Hands-on 4-Hour Cybersecurity & Digital Defense Programme for Kids (Grades 3–5) and Parents offered by CS Technologies. Lead Trainer: Engr. Aamir Jamil (Lead AI, Robotics & STEAM Trainer, Certified Ethical Hacker - CEH Trainer) & Miss Zia Ul Ain.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & VARIABLES
+       ========================================================================== */
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --primary-glow: rgba(37, 99, 235, 0.2);
+
+      --secondary: #0d9488;
+      --secondary-light: #f0fdfa;
+
+      --accent: #f59e0b;
+      --accent-light: #fffbeb;
+
+      --success: #10b981;
+      --success-light: #ecfdf5;
+
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+
+      --cyber-dark: #0f172a;
+      --cyber-darker: #020617;
+      --cyber-terminal: #052e16;
+      --cyber-green: #22c55e;
+      --cyber-cyan: #06b6d4;
+
+      --bg-canvas: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #ffffff;
+      --bg-muted: #f1f5f9;
+
+      --text-main: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --text-inverted: #ffffff;
+
+      --border-subtle: #e2e8f0;
+      --border-medium: #cbd5e1;
+
+      --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.07);
+      --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.08);
+      --shadow-glow: 0 0 25px rgba(37, 99, 235, 0.25);
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* CSS Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header Nav */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-shield {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .logo-text h1 {
+      font-size: 1.15rem;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .logo-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .badge-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 4.5rem 0 3.5rem;
+      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.25rem, 4.5vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      color: var(--cyber-dark);
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: white;
+      border: 1px solid var(--border-medium);
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .meta-pill strong {
+      color: var(--primary);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all var(--transition-normal);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-dark {
+      background: var(--cyber-dark);
+      color: white;
+    }
+
+    .btn-dark:hover {
+      background: var(--cyber-darker);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Visual Card */
+    .hero-card {
+      background: var(--cyber-darker);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow-xl);
+      color: white;
+      position: relative;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .trainers-badge-box {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .trainer-avatars {
+      display: flex;
+    }
+
+    .trainer-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #38bdf8;
+      object-fit: cover;
+      margin-left: -10px;
+    }
+
+    .trainer-img:first-child {
+      margin-left: 0;
+      border-color: #3b82f6;
+    }
+
+    .trainers-info h4 {
+      color: white;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .trainers-info p {
+      color: #94a3b8;
+      font-size: 0.75rem;
+      margin: 0;
+    }
+
+    .lab-mini-preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .lab-mini-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #cbd5e1;
+    }
+
+    .lab-mini-pill span {
+      font-size: 1.1rem;
+    }
+
+    /* Section Styling */
+    .section {
+      padding: 4.5rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2.3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+    }
+
+    /* Labs Navigation Tabs */
+    .labs-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      background: var(--bg-muted);
+      padding: 0.5rem;
+      border-radius: var(--radius-full);
+      max-width: 980px;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .tab-btn {
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all var(--transition-fast);
+    }
+
+    .tab-btn:hover {
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-btn .tab-badge {
+      font-size: 0.7rem;
+      background: var(--primary-light);
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-full);
+    }
+
+    /* Lab Interactive Container */
+    .lab-panel {
+      display: none;
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-medium);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .lab-panel.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lab-panel-header {
+      padding: 1.75rem 2rem;
+      background: linear-gradient(90deg, #f8fafc, #ffffff);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .lab-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lab-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+    }
+
+    .lab-title-box h3 {
+      font-size: 1.35rem;
+      margin: 0;
+    }
+
+    .lab-title-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .lab-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .lab-status-badge.completed {
+      background: var(--success-light);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .lab-panel-body {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 960px) {
+      .lab-panel-body {
+        grid-template-columns: 1fr;
+      }
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Lab Info Panel */
+    .lab-meta-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .lab-meta-item {
+      background: var(--bg-canvas);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .lab-meta-item h5 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .lab-meta-item p {
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .sim-card {
+      background: var(--cyber-dark);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      color: white;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    .sim-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sim-card-header h4 {
+      color: #38bdf8;
+      font-size: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ==========================================================================
+       SIMULATOR 1: PASSWORD CRACKER
+       ========================================================================== */
+    .pwd-input-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .pwd-input-group label {
+      display: block;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .pwd-input {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 2px solid #334155;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      outline: none;
+      transition: all var(--transition-fast);
+    }
+
+    .pwd-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    }
+
+    .pwd-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .pwd-preset-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .pwd-preset-btn:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    .matrix-terminal {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 1.25rem;
+      min-height: 90px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .terminal-stream {
+      font-size: 0.75rem;
+      color: #22c55e;
+      line-height: 1.3;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .crack-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .crack-stat-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.75rem;
+      border-radius: var(--radius-md);
+    }
+
+    .crack-stat-box span {
+      display: block;
+      font-size: 0.7rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    .crack-stat-box strong {
+      font-size: 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #f59e0b;
+    }
+
+    .entropy-bar-track {
+      width: 100%;
+      height: 8px;
+      background: #1e293b;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .entropy-bar-fill {
+      height: 100%;
+      width: 10%;
+      background: #ef4444;
+      transition: all 0.3s ease;
+    }
+
+    /* ==========================================================================
+       SIMULATOR 2: PHISH HUNTER
+       ========================================================================== */
+    .phish-mail-container {
+      background: #0f172a;
+      border-radius: var(--radius-md);
+      border: 1px solid #334155;
+      padding: 1rem;
+    }
+
+    .mail-header {
+      border-bottom: 1px solid #334155;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .mail-row {
+      display: flex;
+      margin-bottom: 0.25rem;
+      gap: 0.5rem;
+    }
+
+    .mail-label {
+      color: #94a3b8;
+      min-width: 65px;
+    }
+
+    .mail-value {
+      color: #f1f5f9;
+      font-weight: 600;
+    }
+
+    .mail-body {
+      background: #1e293b;
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .phish-cta-button {
+      display: inline-block;
+      background: #ef4444;
+      color: white;
+      font-weight: 700;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      margin: 0.75rem 0;
+      position: relative;
+      border: 2px dashed #fca5a5;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    .url-inspect-box {
+      background: #020617;
+      border: 1px solid #38bdf8;
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #38bdf8;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .phish-action-btns {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    /* ==========================================================================
+       SIMULATOR 3: CODE BREAKER (ENCRYPTION)
+       ========================================================================== */
+    .crypto-pipeline {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .node-box {
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .node-box h5 {
+      color: #38bdf8;
+      font-size: 0.8rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .node-output {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      word-break: break-all;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .snooper-card {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid #ef4444;
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .snooper-card h6 {
+      color: #ef4444;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ==========================================================================
+       SIMULATOR 4: FAKE DOWNLOAD MINEFIELD
+       ========================================================================== */
+    .minefield-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .download-target-btn {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all var(--transition-fast);
+      background: #1e293b;
+      color: white;
+    }
+
+    .download-target-btn:hover {
+      transform: translateY(-2px);
+      border-color: #38bdf8;
+    }
+
+    .download-target-btn.bouncing {
+      animation: bounce 2s infinite;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-6px); }
+      60% { transform: translateY(-3px); }
+    }
+
+    /* ==========================================================================
+       SIMULATOR 5: OSINT DETECTIVE
+       ========================================================================== */
+    .osint-scene {
+      background: #020617;
+      border: 2px solid #334155;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .osint-clue-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.75rem;
+      margin: 0.3rem;
+      border-radius: var(--radius-sm);
+      background: #1e293b;
+      border: 1px dashed #38bdf8;
+      color: #e2e8f0;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all var(--transition-fast);
+    }
+
+    .osint-clue-btn.found {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+      color: #fca5a5;
+    }
+
+    /* ==========================================================================
+       SIMULATOR 6: TWO-LOCK SAFE ROOM
+       ========================================================================== */
+    .vault-chamber {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: #020617;
+      border-radius: var(--radius-md);
+      border: 1px solid #334155;
+      margin-bottom: 1rem;
+    }
+
+    .vault-door {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 6px solid #475569;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #0f172a;
+      transition: all 0.4s ease;
+    }
+
+    .vault-door.unlocked {
+      border-color: #22c55e;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+    }
+
+    .sim-feedback {
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .sim-feedback.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .sim-feedback.success {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid #22c55e;
+      color: #86efac;
+    }
+
+    .sim-feedback.danger {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+    }
+
+    /* Tables */
+    .table-responsive {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+      background: white;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .custom-table th {
+      background: #f8fafc;
+      padding: 0.85rem 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border-medium);
+    }
+
+    .custom-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    .custom-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* Certificate Box */
+    .cert-preview {
+      background: white;
+      border: 4px double #2563eb;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      text-align: center;
+      max-width: 650px;
+      margin: 2rem auto;
+      box-shadow: var(--shadow-xl);
+      position: relative;
+    }
+
+    .cert-seal {
+      width: 70px;
+      height: 70px;
+      background: #f59e0b;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--cyber-darker);
+      color: #94a3b8;
+      padding: 3.5rem 0 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.875rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer h5 {
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .footer p {
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo-container">
+        <div class="logo-shield">🛡️</div>
+        <div class="logo-text">
+          <h1>CyberGuard</h1>
+          <p>CS Technologies · STEAM Wing</p>
+        </div>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#labs">Live Animated Labs</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#outcomes">Outcomes</a></li>
+          <li>
+            <div class="badge-counter" id="badgeCounter">
+              <span>BADGES UNLOCKED:</span>
+              <strong id="badgeCount">0 / 6</strong>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="overview">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-tag">🛡️ 4-Hour Primary Defense Programme (Grades 3–5)</div>
+        <h2 class="hero-title">Defend Your Data. <span>Protect Your Device.</span></h2>
+        <p class="hero-subtitle">
+          An interactive, hands-on cybersecurity and safe device defense programme for students aged 8–12 and parents. Features 6 live animated simulators, password cracking defense, phishing traps, and Chromebook session lockdown.
+        </p>
+
+        <div class="meta-pills">
+          <div class="meta-pill">⏱️ <strong>Duration:</strong> 2 Lessons (2 Hours Each)</div>
+          <div class="meta-pill">🎯 <strong>Total Time:</strong> 4 Hours</div>
+          <div class="meta-pill">💻 <strong>Lab Format:</strong> Web Simulators & Chromebooks</div>
+          <div class="meta-pill">📜 <strong>Accreditation:</strong> Junior Cyber Defender Licence</div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#labs" class="btn btn-primary">🚀 Launch Live Labs</a>
+          <a href="#schedule" class="btn btn-dark">📅 View 4-Hour Schedule</a>
+        </div>
+      </div>
+
+      <!-- Hero Visual / Trainer Box -->
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="terminal-dots">
+            <span class="terminal-dot dot-red"></span>
+            <span class="terminal-dot dot-yellow"></span>
+            <span class="terminal-dot dot-green"></span>
+          </div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #38bdf8;">CS_TECH_CYBERGUARD_v2.6</span>
+        </div>
+
+        <div class="trainers-badge-box">
+          <div class="trainer-avatars">
+            <img src="assets/trainer_aamir_jamil.jpg" alt="Engr. Aamir Jamil" class="trainer-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'">
+            <img src="assets/trainer_zia_ul_ain.jpg" alt="Miss Zia Ul Ain" class="trainer-img" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80'">
+          </div>
+          <div class="trainers-info">
+            <h4>Engr. Aamir Jamil & Miss Zia Ul Ain</h4>
+            <p>Lead AI, Robotics & STEAM Trainer · CEH Trainer</p>
+          </div>
+        </div>
+
+        <div class="lab-mini-preview-grid">
+          <div class="lab-mini-pill"><span>⚡</span> 1. Brute-Force Cracker</div>
+          <div class="lab-mini-pill"><span>🎣</span> 2. Phish URL Hunter</div>
+          <div class="lab-mini-pill"><span>🔐</span> 3. Cryptography Cipher</div>
+          <div class="lab-mini-pill"><span>💣</span> 4. Download Minefield</div>
+          <div class="lab-mini-pill"><span>🔍</span> 5. OSINT PII Detective</div>
+          <div class="lab-mini-pill"><span>🔒</span> 6. Two-Lock Vault & MFA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Animated Labs Section -->
+  <section class="section" id="labs">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Interactive Hands-On Lab Arena</span>
+        <h2 class="section-title">6 Live Animated Cyber Defense Simulations</h2>
+        <p class="section-desc">
+          Test real hacking defense tools directly in your browser. Complete each challenge to earn your Junior Cyber Defender credentials.
+        </p>
+      </div>
+
+      <!-- Navigation Tabs for Labs -->
+      <div class="labs-nav">
+        <button class="tab-btn active" onclick="switchLab(1)">
+          <span>⚡ Lab 1</span> Passwords <span class="tab-badge" id="badge-tab-1">Pending</span>
+        </button>
+        <button class="tab-btn" onclick="switchLab(2)">
+          <span>🎣 Lab 2</span> Phish Hunter <span class="tab-badge" id="badge-tab-2">Pending</span>
+        </button>
+        <button class="tab-btn" onclick="switchLab(3)">
+          <span>🔐 Lab 3</span> Ciphers <span class="tab-badge" id="badge-tab-3">Pending</span>
+        </button>
+        <button class="tab-btn" onclick="switchLab(4)">
+          <span>💣 Lab 4</span> Malware <span class="tab-badge" id="badge-tab-4">Pending</span>
+        </button>
+        <button class="tab-btn" onclick="switchLab(5)">
+          <span>🔍 Lab 5</span> PII Detective <span class="tab-badge" id="badge-tab-5">Pending</span>
+        </button>
+        <button class="tab-btn" onclick="switchLab(6)">
+          <span>🔒 Lab 6</span> Two-Lock Safe <span class="tab-badge" id="badge-tab-6">Pending</span>
+        </button>
+      </div>
+
+      <!-- LAB 1: PASSWORD CRACKER -->
+      <div class="lab-panel active" id="lab-panel-1">
+        <div class="lab-panel-header">
+          <div class="lab-header-left">
+            <div class="lab-icon-box">⚡</div>
+            <div class="lab-title-box">
+              <h3>Lab 1: The Password Cracker Challenge</h3>
+              <p>Lesson 1 · Concept: Password Entropy & Brute-Force Mathematics</p>
+            </div>
+          </div>
+          <span class="lab-status-badge" id="status-1">Challenge Active</span>
+        </div>
+        <div class="lab-panel-body">
+          <div class="lab-info">
+            <ul class="lab-meta-list">
+              <li class="lab-meta-item">
+                <h5>Lab Objective</h5>
+                <p>Observe how supercomputers crack common passwords in milliseconds and build an uncrackable multi-word passphrase.</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>The 3-Word Passphrase Rule</h5>
+                <p>Instead of <code>password123</code>, combine 3 random words with symbols and numbers: e.g., <code>Blue!Giraffe#Eats99Pizzas</code>.</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>Online Reference Tool</h5>
+                <p><a href="https://www.security.org/how-secure-is-my-password/" target="_blank">Security.org: How Secure Is My Password?</a> · <a href="https://beinternetawesome.withgoogle.com/en_us/interland/tower-of-treasure" target="_blank">Google Interland: Tower of Treasure</a></p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sim-card">
+            <div class="sim-card-header">
+              <h4><span>💻</span> BRUTE-FORCE CRACKER SIMULATOR</h4>
+              <span style="font-size: 0.75rem; color: #38bdf8;">100 BILLION GUESSES/SEC</span>
+            </div>
+
+            <div class="pwd-input-group">
+              <label for="pwdInput">> TEST A PASSWORD OR PASSPHRASE:</label>
+              <input type="text" id="pwdInput" class="pwd-input" placeholder="Type a password here..." value="football123" oninput="runBruteForceSim()">
+              <div class="pwd-presets">
+                <button class="pwd-preset-btn" onclick="setPwd('123456')">123456</button>
+                <button class="pwd-preset-btn" onclick="setPwd('football123')">football123</button>
+                <button class="pwd-preset-btn" onclick="setPwd('P@ssw0rd!')">P@ssw0rd!</button>
+                <button class="pwd-preset-btn" onclick="setPwd('Blue!Giraffe#Eats99Pizzas')">Blue!Giraffe#Eats99Pizzas</button>
+              </div>
+            </div>
+
+            <div class="matrix-terminal">
+              <div class="terminal-stream" id="terminalStream">INITIALIZING CRACKING MATRIX...</div>
+            </div>
+
+            <div class="crack-stats-grid">
+              <div class="crack-stat-box">
+                <span>Time to Crack</span>
+                <strong id="timeToCrack">0.0003 Seconds</strong>
+              </div>
+              <div class="crack-stat-box">
+                <span>Security Rating</span>
+                <strong id="securityRating" style="color: #ef4444;">EXTREMELY WEAK</strong>
+              </div>
+            </div>
+
+            <div>
+              <span style="font-size: 0.75rem; color: #94a3b8;">PASSWORD ENTROPY BAR:</span>
+              <div class="entropy-bar-track">
+                <div class="entropy-bar-fill" id="entropyFill"></div>
+              </div>
+            </div>
+
+            <div class="sim-feedback" id="feedback-1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 2: PHISH HUNTER -->
+      <div class="lab-panel" id="lab-panel-2">
+        <div class="lab-panel-header">
+          <div class="lab-header-left">
+            <div class="lab-icon-box">🎣</div>
+            <div class="lab-title-box">
+              <h3>Lab 2: Phish Hunter & URL X-Ray Scanner</h3>
+              <p>Lesson 1 · Concept: Social Engineering & Deceptive Hyperlinks</p>
+            </div>
+          </div>
+          <span class="lab-status-badge" id="status-2">Challenge Active</span>
+        </div>
+        <div class="lab-panel-body">
+          <div class="lab-info">
+            <ul class="lab-meta-list">
+              <li class="lab-meta-item">
+                <h5>Lab Objective</h5>
+                <p>Inspect incoming emails and chat links before clicking. Spot false urgency and typosquatted domains (e.g. <code>g00gle.com</code>).</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>The Cursor Hover Technique</h5>
+                <p>Always place your mouse over a button without clicking to view the actual URL revealed in the bottom status bar.</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>Online Reference Tool</h5>
+                <p><a href="https://phishingquiz.withgoogle.com/" target="_blank">Google Phishing Quiz</a> · <a href="https://beinternetawesome.withgoogle.com/en_us/interland/reality-river" target="_blank">Google Interland: Reality River</a></p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sim-card">
+            <div class="sim-card-header">
+              <h4><span>📬</span> SIMULATED INBOX MESSAGE</h4>
+              <span style="font-size: 0.75rem; color: #f59e0b;" id="phishCaseNum">CASE 1 OF 3</span>
+            </div>
+
+            <div class="phish-mail-container">
+              <div class="mail-header">
+                <div class="mail-row"><span class="mail-label">FROM:</span> <span class="mail-value" id="mailFrom">Roblox Official Admin &lt;reward@robl0x-free-gifts.xyz&gt;</span></div>
+                <div class="mail-row"><span class="mail-label">SUBJECT:</span> <span class="mail-value" id="mailSubject">URGENT: 5,000 Free Robux Added to Your Account!</span></div>
+              </div>
+              <div class="mail-body" id="mailBody">
+                Hey Gamer! You won our random weekly giveaway. Claim your 5,000 Robux within 10 minutes or it will be given to another player!
+                <br>
+                <div class="phish-cta-button" id="phishCta" onmouseenter="showUrlInspection(true)" onmouseleave="showUrlInspection(false)">
+                  👉 CLICK HERE TO CLAIM 5,000 ROBUX NOW!
+                </div>
+              </div>
+            </div>
+
+            <div class="url-inspect-box" id="urlInspectBox">
+              <span>🔍 <strong>X-RAY HOVER DETECTED URL:</strong></span>
+              <span id="revealedUrl" style="color: #ef4444;">http://robl0x-free-gifts.xyz/steal-login.php</span>
+            </div>
+
+            <div class="phish-action-btns">
+              <button class="btn btn-primary" style="flex: 1; background: #ef4444;" onclick="evaluatePhish(true)">🚨 Flag as Phishing Scam</button>
+              <button class="btn btn-dark" style="flex: 1; background: #10b981;" onclick="evaluatePhish(false)">✅ Mark as Safe Link</button>
+            </div>
+
+            <div class="sim-feedback" id="feedback-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 3: SECRET CODE BREAKERS -->
+      <div class="lab-panel" id="lab-panel-3">
+        <div class="lab-panel-header">
+          <div class="lab-header-left">
+            <div class="lab-icon-box">🔐</div>
+            <div class="lab-title-box">
+              <h3>Lab 3: The Secret Code Breakers</h3>
+              <p>Lesson 1 · Concept: Data Encryption & Public Wi-Fi Snooping</p>
+            </div>
+          </div>
+          <span class="lab-status-badge" id="status-3">Challenge Active</span>
+        </div>
+        <div class="lab-panel-body">
+          <div class="lab-info">
+            <ul class="lab-meta-list">
+              <li class="lab-meta-item">
+                <h5>Lab Objective</h5>
+                <p>Observe how unencrypted data on open Wi-Fi can be read in plain text by hackers, and how Caesar shift encryption scrambles the message.</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>HTTPS & Ciphers</h5>
+                <p>The padlock icon on websites means data is converted to ciphertext using secret mathematical keys before traveling across the internet.</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>Online Reference Tool</h5>
+                <p><a href="https://www.pbs.org/wgbh/nova/labs/lab/cyber/" target="_blank">PBS NOVA Cybersecurity Lab (Cryptography)</a> · <a href="https://www.cryptoclub.org/" target="_blank">CryptoClub Ciphers</a></p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sim-card">
+            <div class="sim-card-header">
+              <h4><span>📡</span> WI-FI AIRWAVE INTERCEPTION SIMULATOR</h4>
+              <button class="btn btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.75rem;" id="encryptToggleBtn" onclick="toggleEncryption()">ENABLE ENCRYPTION</button>
+            </div>
+
+            <div class="pwd-input-group">
+              <label for="plainInput">> ALICE'S MESSAGE:</label>
+              <input type="text" id="plainInput" class="pwd-input" value="Secret Password is Star99" oninput="updateCipherSim()">
+            </div>
+
+            <div class="crypto-pipeline">
+              <div class="node-box">
+                <h5>1. ALICE'S DEVICE</h5>
+                <div class="node-output" id="aliceOutput">Secret Password is Star99</div>
+              </div>
+              <div style="font-size: 1.5rem; color: #38bdf8;">➡️</div>
+              <div class="node-box">
+                <h5>2. BOB'S SCREEN</h5>
+                <div class="node-output" id="bobOutput">Secret Password is Star99</div>
+              </div>
+            </div>
+
+            <div class="snooper-card">
+              <h6>🚨 EVE'S SNOOPER ON OPEN WI-FI (INTERCEPTED PACKETS):</h6>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;" id="eveOutput">
+                INTERCEPTED: "Secret Password is Star99" (UNPROTECTED PLAIN TEXT!)
+              </div>
+            </div>
+
+            <div class="sim-feedback" id="feedback-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 4: MALWARE MINEFIELD -->
+      <div class="lab-panel" id="lab-panel-4">
+        <div class="lab-panel-header">
+          <div class="lab-header-left">
+            <div class="lab-icon-box">💣</div>
+            <div class="lab-title-box">
+              <h3>Lab 4: Trojan Horse & The Fake Download Minefield</h3>
+              <p>Lesson 2 · Concept: Drive-By Malware & Rogue Browser Extensions</p>
+            </div>
+          </div>
+          <span class="lab-status-badge" id="status-4">Challenge Active</span>
+        </div>
+        <div class="lab-panel-body">
+          <div class="lab-info">
+            <ul class="lab-meta-list">
+              <li class="lab-meta-item">
+                <h5>Lab Objective</h5>
+                <p>Websites offering free game mods often hide dangerous malware inside flashing download buttons. Identify the safe file source!</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>Rule of Third-Party Downloads</h5>
+                <p>Never install `.exe` or `.apk` files without teacher or parent permission. Official verified publishers display file signatures.</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>Online Reference Tool</h5>
+                <p><a href="https://www.bbc.co.uk/bitesize/topics/z67446f" target="_blank">BBC Bitesize Cyber Security Challenge</a> · <a href="https://www.pbs.org/wgbh/nova/labs/lab/cyber/" target="_blank">PBS NOVA Malware Defense</a></p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sim-card">
+            <div class="sim-card-header">
+              <h4><span>🎮</span> FREE MINECRAFT SKIN MOD PAGE</h4>
+              <span style="font-size: 0.75rem; color: #38bdf8;">FIND THE REAL DOWNLOAD</span>
+            </div>
+
+            <div class="minefield-grid">
+              <button class="download-target-btn bouncing" onclick="scanDownload(1)">
+                <span>⬇️ DOWNLOAD NOW (FAST)</span>
+                <small style="color: #94a3b8; font-size: 0.7rem;">Direct Free Installer</small>
+              </button>
+              <button class="download-target-btn" style="background: #2563eb;" onclick="scanDownload(2)">
+                <span>⚡ SPEED DOWNLOAD VIP</span>
+                <small style="color: #cbd5e1; font-size: 0.7rem;">Chrome Extension Required</small>
+              </button>
+              <button class="download-target-btn" style="background: #334155;" onclick="scanDownload(3)">
+                <span>📥 Official Verified Release (v1.4)</span>
+                <small style="color: #38bdf8; font-size: 0.7rem;">SHA-256 Hash Checked (Safe)</small>
+              </button>
+              <button class="download-target-btn" style="background: #dc2626;" onclick="scanDownload(4)">
+                <span>🎁 CLAIM FREE ROBOT MOD</span>
+                <small style="color: #fca5a5; font-size: 0.7rem;">Sponsored Ad by AdwareNet</small>
+              </button>
+            </div>
+
+            <div class="matrix-terminal" style="min-height: 70px;">
+              <div class="terminal-stream" id="antivirusTerminal">CLICK A BUTTON TO RUN HEURISTIC ANTIVIRUS SCAN...</div>
+            </div>
+
+            <div class="sim-feedback" id="feedback-4"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 5: OSINT DETECTIVE -->
+      <div class="lab-panel" id="lab-panel-5">
+        <div class="lab-panel-header">
+          <div class="lab-header-left">
+            <div class="lab-icon-box">🔍</div>
+            <div class="lab-title-box">
+              <h3>Lab 5: The OSINT Detective & Privacy Shield</h3>
+              <p>Lesson 2 · Concept: Personally Identifiable Information (PII) & Digital Footprints</p>
+            </div>
+          </div>
+          <span class="lab-status-badge" id="status-5">Challenge Active</span>
+        </div>
+        <div class="lab-panel-body">
+          <div class="lab-info">
+            <ul class="lab-meta-list">
+              <li class="lab-meta-item">
+                <h5>Lab Objective</h5>
+                <p>Discover how hackers gather pieces of your identity from background details in casual photos, and learn how to redact them.</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>The Golden PII Rule</h5>
+                <p>Never share your school crest, home address, birthday, or phone number in online games or social platforms.</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>Online Reference Tool</h5>
+                <p><a href="https://beinternetawesome.withgoogle.com/en_us/interland/mindful-mountain" target="_blank">Google Interland: Mindful Mountain</a></p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sim-card">
+            <div class="sim-card-header">
+              <h4><span>🕵️</span> PHOTO INVESTIGATION SCENE</h4>
+              <span style="font-size: 0.75rem; color: #f59e0b;" id="osintFoundCount">0 / 4 CLUES FOUND</span>
+            </div>
+
+            <p style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 0.75rem;">
+              Click the suspicious hotspots in this photo to discover what personal data is being leaked:
+            </p>
+
+            <div class="osint-scene">
+              <button class="osint-clue-btn" id="clue-1" onclick="foundClue(1, 'School crest visible on backpack -> reveals your exact school and campus!')">
+                🎒 School Backpack Crest
+              </button>
+              <button class="osint-clue-btn" id="clue-2" onclick="foundClue(2, 'Street sign through window -> reveals your exact neighborhood!')">
+                🪟 Street Sign Outside Window
+              </button>
+              <button class="osint-clue-btn" id="clue-3" onclick="foundClue(3, 'Wall calendar with birthday circled -> reveals birth date!')">
+                📅 Wall Calendar
+              </button>
+              <button class="osint-clue-btn" id="clue-4" onclick="foundClue(4, 'Luggage tag on floor -> reveals your home phone number!')">
+                🏷️ Luggage Bag Tag
+              </button>
+            </div>
+
+            <div>
+              <span style="font-size: 0.75rem; color: #94a3b8;">IDENTITY EXPOSURE METER:</span>
+              <div class="entropy-bar-track">
+                <div class="entropy-bar-fill" id="osintMeter" style="width: 0%; background: #38bdf8;"></div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <button class="btn btn-primary" style="width: 100%;" onclick="redactPhoto()">🛡️ ACTIVATE PRIVACY SHIELD (REDACT ALL PII)</button>
+            </div>
+
+            <div class="sim-feedback" id="feedback-5"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 6: TWO-LOCK SAFE ROOM -->
+      <div class="lab-panel" id="lab-panel-6">
+        <div class="lab-panel-header">
+          <div class="lab-header-left">
+            <div class="lab-icon-box">🔒</div>
+            <div class="lab-title-box">
+              <h3>Lab 6: The Two-Lock Safe Room & Chromebook Lockdown</h3>
+              <p>Lesson 2 · Concept: Multi-Factor Authentication (2FA) & Session Security</p>
+            </div>
+          </div>
+          <span class="lab-status-badge" id="status-6">Challenge Active</span>
+        </div>
+        <div class="lab-panel-body">
+          <div class="lab-info">
+            <ul class="lab-meta-list">
+              <li class="lab-meta-item">
+                <h5>Lab Objective</h5>
+                <p>Simulate how Two-Factor Authentication blocks hackers even if they know your password, and practice the Chromebook instant lock shortcut (<code>Search + L</code>).</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>Chromebook Discipline</h5>
+                <p>Never walk away from a shared school Chromebook without locking the screen or signing out completely.</p>
+              </li>
+              <li class="lab-meta-item">
+                <h5>Online Reference Tool</h5>
+                <p><a href="https://safety.google/authentication/" target="_blank">Google Safety Center 2-Step Verification</a></p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sim-card">
+            <div class="sim-card-header">
+              <h4><span>🏦</span> DUAL-KEY ACCOUNT VAULT</h4>
+              <span style="font-size: 0.75rem; color: #38bdf8;">MFA SIMULATOR</span>
+            </div>
+
+            <div class="vault-chamber">
+              <div class="vault-door" id="lock1Door">
+                <span style="font-size: 2rem;" id="lock1Icon">🔒</span>
+                <small style="color: #94a3b8; font-size: 0.65rem;">KEY 1: PASSWORD</small>
+              </div>
+              <span style="font-size: 1.5rem; color: #38bdf8;">+</span>
+              <div class="vault-door" id="lock2Door">
+                <span style="font-size: 2rem;" id="lock2Icon">🔒</span>
+                <small style="color: #94a3b8; font-size: 0.65rem;">KEY 2: 2FA CODE</small>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
+              <button class="btn btn-primary" style="flex: 1;" onclick="unlockLock1()">🔑 Enter Password</button>
+              <button class="btn btn-dark" style="flex: 1; background: #0d9488;" onclick="send2FAPush()">📱 Approve 2FA Prompt</button>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 0.75rem; border-radius: var(--radius-sm); margin-bottom: 0.75rem;">
+              <span style="font-size: 0.75rem; color: #cbd5e1;">CHROMEBOOK FAST LOCK DRILL:</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem;">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #38bdf8;">Shortcut: [Search] + [L]</span>
+                <button class="btn btn-dark" style="padding: 0.25rem 0.6rem; font-size: 0.75rem; background: #ef4444;" onclick="lockChromebook()">⚡ LOCK CHROMEBOOK NOW</button>
+              </div>
+            </div>
+
+            <div class="sim-feedback" id="feedback-6"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Certificate Section (Unlocks when 6/6 badges are earned) -->
+      <div class="cert-preview" id="certBox">
+        <div class="cert-seal">🏆</div>
+        <h3 style="font-size: 1.6rem; color: var(--cyber-dark); margin-bottom: 0.5rem;">JUNIOR CYBER DEFENDER LICENCE</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Awarded by CS Technologies & The CyberGuard Training Programme
+        </p>
+        <p style="font-size: 1.1rem; color: var(--text-main);">
+          This certifies that <strong>Grade 3–5 Cyber Cadet</strong> has successfully completed all 6 Hands-On Defense Labs in Password Entropy, URL Phishing Detection, Cryptography, Malware Avoidance, and Chromebook Session Lockdown.
+        </p>
+        <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem; font-size: 0.85rem; color: var(--text-muted);">
+          <div>
+            <strong>Engr. Aamir Jamil</strong><br>Lead AI, Robotics & STEAM Trainer<br><span style="color: #2563eb; font-weight: 700;">CEH Trainer</span>
+          </div>
+          <div>
+            <strong>Miss Zia Ul Ain</strong><br>Supportive Trainer
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Programme Schedule Section (Strictly 2hr x 2 days = 4hr plan without clock times) -->
+  <section class="section" id="schedule" style="background: #f1f5f9;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Curriculum Schedule</span>
+        <h2 class="section-title">4-Hour Complete Training Schedule</h2>
+        <p class="section-desc">
+          Structured in 2 lessons (2 hours per lesson) without rigid clock times, formatted cleanly in relative minutes for flexible school timetabling.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <!-- Lesson 1 Table -->
+        <div style="background: white; border-radius: var(--radius-lg); padding: 1.75rem; box-shadow: var(--shadow-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3>Lesson 1: Account Defense & Passwords</h3>
+            <span class="meta-pill" style="margin: 0;">2 Hours</span>
+          </div>
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Relative Time</th>
+                  <th>Activity & Topic</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>0–15 min</strong></td>
+                  <td>Introduction to Cybersecurity, Ethical Rules & Threat Landscape</td>
+                </tr>
+                <tr>
+                  <td><strong>15–30 min</strong></td>
+                  <td>Threat Identification & Simulator Environment Setup</td>
+                </tr>
+                <tr>
+                  <td><strong>30–55 min</strong></td>
+                  <td><strong>Lab 1:</strong> The Password Cracker Challenge & Entropy Rule</td>
+                </tr>
+                <tr>
+                  <td><strong>55–80 min</strong></td>
+                  <td><strong>Lab 2:</strong> Phish Hunter & URL X-Ray Inspection</td>
+                </tr>
+                <tr>
+                  <td><strong>80–105 min</strong></td>
+                  <td><strong>Lab 3:</strong> The Secret Code Breakers & Wi-Fi Encryption</td>
+                </tr>
+                <tr>
+                  <td><strong>105–120 min</strong></td>
+                  <td>Testing, Daily Defense Badge Assessment & Q&A</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Lesson 2 Table -->
+        <div style="background: white; border-radius: var(--radius-lg); padding: 1.75rem; box-shadow: var(--shadow-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3>Lesson 2: Malware & Device Hardening</h3>
+            <span class="meta-pill" style="margin: 0;">2 Hours</span>
+          </div>
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Relative Time</th>
+                  <th>Activity & Topic</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>0–15 min</strong></td>
+                  <td>Review of Lesson 1 Concepts & Emerging Game Scams Briefing</td>
+                </tr>
+                <tr>
+                  <td><strong>15–40 min</strong></td>
+                  <td><strong>Lab 4:</strong> Trojan Horse & The Fake Download Minefield</td>
+                </tr>
+                <tr>
+                  <td><strong>40–70 min</strong></td>
+                  <td><strong>Lab 5:</strong> The OSINT Detective & Privacy Shield (PII)</td>
+                </tr>
+                <tr>
+                  <td><strong>70–100 min</strong></td>
+                  <td><strong>Lab 6:</strong> The Two-Lock Safe Room & Chromebook Lockdown</td>
+                </tr>
+                <tr>
+                  <td><strong>100–115 min</strong></td>
+                  <td>Joint Parent–Student Defense Drill & Family Agreement</td>
+                </tr>
+                <tr>
+                  <td><strong>115–120 min</strong></td>
+                  <td>Junior Cyber Defender Licence Presentation & Wrap-up</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lab Summary & Outcomes Table -->
+  <section class="section" id="outcomes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Learning Framework</span>
+        <h2 class="section-title">Final Project & Lab Deliverables</h2>
+        <p class="section-desc">
+          Every student leaves the 4-hour programme with concrete technical competencies and actionable defense habits.
+        </p>
+      </div>
+
+      <div class="table-responsive">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Lab Number & Title</th>
+              <th>Main Cybersecurity Concept</th>
+              <th>Practical Output / Deliverable</th>
+              <th>National Framework / Relevance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Password Cracker Challenge</strong></td>
+              <td>Entropy, Brute-Force Math, Credential Stuffing</td>
+              <td>Crack-proof 3-word passphrase formula created</td>
+              <td>Protection against automated bot attacks</td>
+            </tr>
+            <tr>
+              <td><strong>2. Phish Hunter</strong></td>
+              <td>Social Engineering, Urgency, Typosquatting</td>
+              <td>Completed URL inspection checklist</td>
+              <td>Prevents account hijacking in gaming & school accounts</td>
+            </tr>
+            <tr>
+              <td><strong>3. Secret Code Breakers</strong></td>
+              <td>Symmetric Encryption, Ciphers, HTTPS</td>
+              <td>Encrypted/Decrypted cipher message</td>
+              <td>Safe communication over public Wi-Fi hotspots</td>
+            </tr>
+            <tr>
+              <td><strong>4. Fake Download Minefield</strong></td>
+              <td>Malware, Adware, Browser Extensions</td>
+              <td>Safe download verification seal & extension audit</td>
+              <td>Defends school Chromebooks from spyware & keyloggers</td>
+            </tr>
+            <tr>
+              <td><strong>5. OSINT Detective</strong></td>
+              <td>Personally Identifiable Information (PII)</td>
+              <td>Redacted public profile & privacy shield</td>
+              <td>Compliance with child digital safety & PECA 2016</td>
+            </tr>
+            <tr>
+              <td><strong>6. Two-Lock Safe Room</strong></td>
+              <td>Multi-Factor Authentication (MFA), Screen Lock</td>
+              <td>2FA drill passed & <code>Search + L</code> lockdown mastery</td>
+              <td>Incident escalation protocol (NCCIA Helpline 1799)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="logo-container" style="margin-bottom: 1rem;">
+          <div class="logo-shield">🛡️</div>
+          <div class="logo-text">
+            <h1 style="color: white;">CyberGuard</h1>
+            <p>CS Technologies</p>
+          </div>
+        </div>
+        <p>
+          A flagship STEM training module preparing primary school students and parents to navigate the digital world safely, ethically, and securely.
+        </p>
+      </div>
+      <div>
+        <h5>Trainers</h5>
+        <p>
+          <strong>Engr. Aamir Jamil</strong><br>Lead AI, Robotics & STEAM Trainer<br>Certified Ethical Hacker (CEH) Trainer<br><br>
+          <strong>Miss Zia Ul Ain</strong><br>Supportive Trainer
+        </p>
+      </div>
+      <div>
+        <h5>National Helplines</h5>
+        <p>
+          <strong>NCCIA Cybercrime:</strong> 1799<br>
+          <strong>Police Helpline:</strong> 15 (Auto-routed)<br>
+          <strong>Legal Base:</strong> PECA 2016
+        </p>
+      </div>
+    </div>
+    <div class="container" style="text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 1.5rem; font-size: 0.8rem;">
+      © 2026 CS Technologies. All rights reserved. Designed for Grades 3–5 (Ages 8–12).
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    // Audio Synth for Kid-Friendly Feedback
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playBeep(freq, type = 'sine', duration = 0.15) {
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    // Badge State
+    const completedLabs = new Set();
+    function awardBadge(labNum) {
+      if (!completedLabs.has(labNum)) {
+        completedLabs.add(labNum);
+        document.getElementById(`badge-tab-${labNum}`).innerText = 'Unlocked ⭐';
+        document.getElementById(`badge-tab-${labNum}`).style.background = '#dcfce7';
+        document.getElementById(`badge-tab-${labNum}`).style.color = '#15803d';
+        document.getElementById(`status-${labNum}`).innerText = 'Completed! 🛡️';
+        document.getElementById(`status-${labNum}`).classList.add('completed');
+        document.getElementById('badgeCount').innerText = `${completedLabs.size} / 6`;
+        playBeep(587, 'triangle', 0.2);
+        setTimeout(() => playBeep(880, 'triangle', 0.3), 150);
+      }
+    }
+
+    // Tab Switching
+    function switchLab(num) {
+      document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === num - 1);
+      });
+      document.querySelectorAll('.lab-panel').forEach((panel, idx) => {
+        panel.classList.toggle('active', idx === num - 1);
+      });
+    }
+
+    // LAB 1: BRUTE FORCE CALCULATOR
+    function setPwd(val) {
+      document.getElementById('pwdInput').value = val;
+      runBruteForceSim();
+    }
+
+    function runBruteForceSim() {
+      const val = document.getElementById('pwdInput').value;
+      const term = document.getElementById('terminalStream');
+      const timeBox = document.getElementById('timeToCrack');
+      const rateBox = document.getElementById('securityRating');
+      const fill = document.getElementById('entropyFill');
+      const fb = document.getElementById('feedback-1');
+
+      if (!val) {
+        timeBox.innerText = '0 Seconds';
+        rateBox.innerText = 'EMPTY';
+        fill.style.width = '0%';
+        term.innerText = 'WAITING FOR INPUT...';
+        return;
+      }
+
+      let entropy = val.length * 4;
+      if (/[A-Z]/.test(val)) entropy += 10;
+      if (/[0-9]/.test(val)) entropy += 10;
+      if (/[^A-Za-z0-9]/.test(val)) entropy += 20;
+
+      let timeText = '0.0003 Seconds';
+      let rating = 'EXTREMELY WEAK';
+      let color = '#ef4444';
+      let percent = Math.min(100, (entropy / 65) * 100);
+
+      if (val.length < 7) {
+        timeText = 'Instant (< 0.001s)';
+        rating = 'CRACKED INSTANTLY!';
+      } else if (val.length < 10) {
+        timeText = '3.5 Minutes';
+        rating = 'WEAK - HACKABLE';
+        color = '#f97316';
+      } else if (val.length < 14) {
+        timeText = '450 Years';
+        rating = 'STRONG DEFENSE';
+        color = '#eab308';
+      } else {
+        timeText = '18.4 BILLION YEARS';
+        rating = 'UNCACKABLE PASSPHRASE 🏆';
+        color = '#22c55e';
+        awardBadge(1);
+        fb.className = 'sim-feedback success show';
+        fb.innerText = '🛡️ Fantastic! You built a high-entropy passphrase that defeated the brute-force cracking engine!';
+      }
+
+      timeBox.innerText = timeText;
+      rateBox.innerText = rating;
+      rateBox.style.color = color;
+      fill.style.width = percent + '%';
+      fill.style.background = color;
+
+      term.innerText = `[ATTACK MATRIX]: Testing pattern '${val.substring(0, 4)}***' against 10^11 keys/sec...\nEstimated pool size: 2^${entropy} combinations.\nBrute force progress: ${percent >= 90 ? 'FAILED (KEYSPACE TOO VAST)' : 'BREACH SUCCESSFUL'}`;
+      playBeep(220 + percent * 4, 'sawtooth', 0.05);
+    }
+
+    // LAB 2: PHISH HUNTER
+    function showUrlInspection(show) {
+      const box = document.getElementById('revealedUrl');
+      box.style.textDecoration = show ? 'underline' : 'none';
+      if (show) playBeep(440, 'sine', 0.08);
+    }
+
+    function evaluatePhish(flaggedAsPhish) {
+      const fb = document.getElementById('feedback-2');
+      if (flaggedAsPhish) {
+        fb.className = 'sim-feedback success show';
+        fb.innerText = '🎯 BINGO! You correctly spotted the spoofed sender and malicious .xyz domain!';
+        awardBadge(2);
+      } else {
+        fb.className = 'sim-feedback danger show';
+        fb.innerText = '⚠️ CAUTION! That was a phishing trap! The real link led to "robl0x-free-gifts.xyz/steal-login.php"';
+        playBeep(180, 'square', 0.25);
+      }
+    }
+
+    // LAB 3: CIPHER & ENCRYPTION
+    let isEncrypted = false;
+    function toggleEncryption() {
+      isEncrypted = !isEncrypted;
+      const btn = document.getElementById('encryptToggleBtn');
+      btn.innerText = isEncrypted ? 'DISABLE ENCRYPTION' : 'ENABLE ENCRYPTION';
+      btn.style.background = isEncrypted ? '#10b981' : '#2563eb';
+      updateCipherSim();
+    }
+
+    function updateCipherSim() {
+      const txt = document.getElementById('plainInput').value;
+      const alice = document.getElementById('aliceOutput');
+      const bob = document.getElementById('bobOutput');
+      const eve = document.getElementById('eveOutput');
+      const fb = document.getElementById('feedback-3');
+
+      alice.innerText = txt;
+      if (!isEncrypted) {
+        bob.innerText = txt;
+        eve.innerText = `INTERCEPTED: "${txt}" (UNPROTECTED PLAIN TEXT EXPOSED TO EVERYONE!)`;
+        eve.style.color = '#ef4444';
+      } else {
+        // Caesar shift +3
+        let cipher = txt.split('').map(c => String.fromCharCode(c.charCodeAt(0) + 3)).join('');
+        bob.innerText = `${txt} (Decrypted via Private Key)`;
+        eve.innerText = `INTERCEPTED: "${cipher}" [ENCRYPTED GIBBERISH - EVE BLOCKED!]`;
+        eve.style.color = '#22c55e';
+        awardBadge(3);
+        fb.className = 'sim-feedback success show';
+        fb.innerText = '🔒 Excellent! Encryption turned your plain text into ciphertext so the snooper intercepted only scrambled characters.';
+      }
+    }
+
+    // LAB 4: MALWARE MINEFIELD
+    function scanDownload(id) {
+      const term = document.getElementById('antivirusTerminal');
+      const fb = document.getElementById('feedback-4');
+      if (id === 3) {
+        term.innerText = `[SCAN COMPLETED]: File 'release-v1.4.zip'\nDigital Signature: Verified Official Publisher (CS-Tech)\nHeuristic Threats: 0 Found. Safe to run.`;
+        fb.className = 'sim-feedback success show';
+        fb.innerText = '✅ SAFE DOWNLOAD! You bypassed 3 deceptive ads and selected the verified release.';
+        awardBadge(4);
+      } else {
+        const threats = {
+          1: 'Trojan.Dropper.Win32 disguised inside fake green installer!',
+          2: 'Rogue Chrome Extension requesting permission to steal all passwords!',
+          4: 'Adware.SpamNet bundled in sponsored click-trap!'
+        };
+        term.innerText = `[ALERT]: HEURISTIC SCAN DETECTED THREAT:\n${threats[id]}`;
+        fb.className = 'sim-feedback danger show';
+        fb.innerText = `🛑 THREAT BLOCKED: ${threats[id]}`;
+        playBeep(160, 'sawtooth', 0.3);
+      }
+    }
+
+    // LAB 5: OSINT DETECTIVE
+    let cluesFound = 0;
+    function foundClue(num, desc) {
+      const btn = document.getElementById(`clue-${num}`);
+      if (!btn.classList.contains('found')) {
+        btn.classList.add('found');
+        cluesFound++;
+        document.getElementById('osintFoundCount').innerText = `${cluesFound} / 4 CLUES FOUND`;
+        document.getElementById('osintMeter').style.width = `${cluesFound * 25}%`;
+        document.getElementById('osintMeter').style.background = cluesFound === 4 ? '#ef4444' : '#f59e0b';
+        playBeep(330 + cluesFound * 80, 'sine', 0.15);
+      }
+    }
+
+    function redactPhoto() {
+      const fb = document.getElementById('feedback-5');
+      if (cluesFound >= 2) {
+        document.querySelectorAll('.osint-clue-btn').forEach(b => {
+          b.innerText = '🛡️ [REDACTED BY PRIVACY SHIELD]';
+          b.style.background = '#065f46';
+          b.style.borderColor = '#10b981';
+          b.style.color = '#a7f3d0';
+        });
+        document.getElementById('osintMeter').style.width = '0%';
+        fb.className = 'sim-feedback success show';
+        fb.innerText = '✨ PRIVACY SHIELD DEPLOYED: All sensitive personal identifiable data is blurred and safe from OSINT collectors!';
+        awardBadge(5);
+      } else {
+        fb.className = 'sim-feedback danger show';
+        fb.innerText = '🔍 First find at least 2 clues to understand what you need to protect!';
+      }
+    }
+
+    // LAB 6: TWO-LOCK SAFE & CHROMEBOOK LOCKDOWN
+    let lock1Open = false;
+    let lock2Open = false;
+
+    function unlockLock1() {
+      lock1Open = true;
+      document.getElementById('lock1Door').classList.add('unlocked');
+      document.getElementById('lock1Icon').innerText = '🔓';
+      playBeep(520, 'sine', 0.15);
+      const fb = document.getElementById('feedback-6');
+      fb.className = 'sim-feedback danger show';
+      fb.innerText = '⚠️ Lock 1 Opened (Password correct), but the vault remains LOCKED until you approve the 2FA push on your phone!';
+    }
+
+    function send2FAPush() {
+      if (!lock1Open) {
+        alert('Please enter your password (Key 1) first!');
+        return;
+      }
+      lock2Open = true;
+      document.getElementById('lock2Door').classList.add('unlocked');
+      document.getElementById('lock2Icon').innerText = '🔓';
+      const fb = document.getElementById('feedback-6');
+      fb.className = 'sim-feedback success show';
+      fb.innerText = '🏆 ACCESS GRANTED! Both factors verified! The account is completely safe from password-stealing hackers.';
+      awardBadge(6);
+    }
+
+    function lockChromebook() {
+      playBeep(784, 'triangle', 0.1);
+      setTimeout(() => playBeep(659, 'triangle', 0.2), 100);
+      alert('🔒 CHROMEBOOK LOCKED! Screen protected with [Search + L]. Unattended session secured.');
+    }
+
+    // Initialize on page load
+    runBruteForceSim();
+    updateCipherSim();
+  </script>
+</body>
+</html>
+
