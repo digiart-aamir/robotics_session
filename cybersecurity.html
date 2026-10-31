@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <meta name="theme-color" content="#2563eb">
   <title>CyberGuard: Cybersecurity & Digital Defense STEM Programme (Ages 8–12) | CS Technologies</title>
-  <meta name="description" content="Hands-on 4-Hour Cybersecurity & Digital Defense Programme for Kids (Grades 3–5) and Parents offered by CS Technologies. Lead Trainer: Engr. Aamir Jamil (Lead AI, Robotics & STEAM Trainer, Certified Ethical Hacker - CEH Trainer) & Miss Zia Ul Ain.">
+  <meta name="description" content="Hands-on 4-Hour Cybersecurity & Digital Defense Programme for Kids (Grades 3–5) and Parents offered by CS Technologies. Team: Engr. Aamir Jamil (Lead AI, Robotics & STEAM Trainer, CEH Trainer), Miss Zia Ul Ain (Supportive Trainer) & Awais Paracha (Manager).">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,14 +105,15 @@
       padding: 0 1.5rem;
     }
 
-    /* Header Nav */
+    /* Header Nav Redesign */
     .header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-subtle);
+      transition: all var(--transition-fast);
     }
 
     .header-inner {
@@ -120,12 +121,16 @@
       align-items: center;
       justify-content: space-between;
       height: 72px;
+      gap: 1rem;
     }
 
     .logo-container {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
     }
 
     .logo-shield {
@@ -144,37 +149,72 @@
 
     .logo-text h1 {
       font-size: 1.15rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
       margin: 0;
       line-height: 1.1;
+      color: var(--text-main);
     }
 
     .logo-text p {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      font-weight: 600;
+      font-size: 0.725rem;
+      color: var(--primary);
+      font-weight: 700;
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
 
-    .nav-links {
+    /* Track Switcher */
+    .track-nav {
       display: flex;
-      gap: 1.25rem;
       align-items: center;
-      list-style: none;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.25rem;
+      gap: 0.2rem;
     }
 
-    .nav-links a {
+    .track-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
       font-weight: 600;
-      font-size: 0.9rem;
       color: var(--text-secondary);
-      padding: 0.4rem 0.75rem;
-      border-radius: var(--radius-sm);
+      text-decoration: none;
       transition: all var(--transition-fast);
+      white-space: nowrap;
     }
 
-    .nav-links a:hover {
+    .track-link:hover {
       color: var(--primary);
-      background: var(--primary-light);
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    .track-link.active {
+      background: #ffffff;
+      color: var(--primary);
+      border: 1px solid var(--border-medium);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .track-indicator {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #0ea5e9;
+      box-shadow: 0 0 8px #0ea5e9;
+      display: inline-block;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-shrink: 0;
     }
 
     .badge-counter {
@@ -189,6 +229,189 @@
       font-size: 0.8rem;
       font-weight: 700;
       border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-header-pdf {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-header-pdf:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      width: 40px;
+      height: 40px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    /* Subnav Quick Jump Strip */
+    .subnav-bar {
+      background: rgba(241, 245, 249, 0.95);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.35rem 0;
+    }
+
+    .subnav-inner {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .subnav-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .subnav-link {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+    }
+
+    .subnav-link:hover {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    @media (max-width: 992px) {
+      .track-nav {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: flex;
+      }
+      .btn-header-pdf span {
+        display: none;
+      }
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .mobile-drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 300px;
+      height: 100%;
+      background: #0f172a;
+      border-left: 1px solid rgba(56, 189, 248, 0.2);
+      z-index: 1001;
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+      overflow-y: auto;
+      color: white;
+    }
+
+    .mobile-drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .drawer-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .drawer-section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+      margin-bottom: 0.75rem;
+    }
+
+    .drawer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.2s ease;
+    }
+
+    .drawer-link:hover, .drawer-link.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
     }
 
     /* Hero Section */
@@ -1092,60 +1315,287 @@
       box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
     }
 
-    /* Footer */
+    /* Master Redesigned Footer (4 Columns) */
     .footer {
-      background: var(--cyber-darker);
+      background: #060c18;
       color: #94a3b8;
-      padding: 3.5rem 0 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 4rem 0 2rem;
+      border-top: 1px solid rgba(56, 189, 248, 0.25);
       font-size: 0.875rem;
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.5), rgba(34, 197, 94, 0.5), transparent);
     }
 
     .footer-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 2rem;
-      margin-bottom: 2rem;
+      grid-template-columns: 1.4fr 1fr 1.15fr 1fr;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
     }
 
-    .footer h5 {
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .footer-col h5 {
       color: white;
-      margin-bottom: 1rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .footer p {
-      line-height: 1.6;
+    .footer-brand p {
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+      color: #94a3b8;
+    }
+
+    .footer-trust-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .footer-trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.725rem;
+      color: #cbd5e1;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #38bdf8;
+      transform: translateX(3px);
+    }
+
+    .footer-team-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .footer-team-member {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-team-member strong {
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .footer-team-member span {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    .footer-helpline-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-helpline-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.825rem;
+    }
+
+    .footer-helpline-item:last-child {
+      border-bottom: none;
+    }
+
+    .footer-helpline-item strong {
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.825rem;
+      color: #64748b;
+    }
+
+    .footer-bottom-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.775rem;
+      color: #38bdf8;
+    }
+
+    .back-to-top-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.775rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .back-to-top-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.3);
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation -->
+  <!-- Top Navigation Redesigned -->
   <header class="header">
     <div class="container header-inner">
-      <div class="logo-container">
+      <a href="index.html" class="logo-container" title="Return to Academy Hub">
         <div class="logo-shield">🛡️</div>
         <div class="logo-text">
           <h1>CyberGuard</h1>
-          <p>CS Technologies · STEAM Wing</p>
+          <p>CS Technologies · Cyber Defense</p>
         </div>
-      </div>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#overview">Overview</a></li>
-          <li><a href="#labs">Live Animated Labs</a></li>
-          <li><a href="#schedule">Schedule</a></li>
-          <li><a href="#outcomes">Outcomes</a></li>
-          <li>
-            <div class="badge-counter" id="badgeCounter">
-              <span>BADGES UNLOCKED:</span>
-              <strong id="badgeCount">0 / 6</strong>
-            </div>
-          </li>
-        </ul>
+      </a>
+
+      <!-- Global Track Switcher -->
+      <nav class="track-nav">
+        <a href="index.html" class="track-link">
+          <span>🏠 Academy Hub</span>
+        </a>
+        <a href="robotics.html" class="track-link">
+          <span>🤖 Robotics Masterclass</span>
+        </a>
+        <a href="cybersecurity.html" class="track-link active">
+          <span class="track-indicator"></span>
+          <span>🛡️ CyberGuard Defense</span>
+        </a>
+        <a href="cyber_labs.html" class="track-link">
+          <span>🎮 Cyber Arcade</span>
+        </a>
       </nav>
+
+      <!-- Actions -->
+      <div class="header-actions">
+        <div class="badge-counter" id="badgeCounter">
+          <span>BADGES:</span>
+          <strong id="badgeCount">0 / 6</strong>
+        </div>
+        <button class="btn-header-pdf" onclick="window.print()" title="Print / Export CyberGuard Proposal">
+          <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <span>PDF / Print</span>
+        </button>
+        <button class="mobile-menu-btn" onclick="toggleCyberDrawer()" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Subnav Quick Jump Strip -->
+    <div class="subnav-bar">
+      <div class="container subnav-inner">
+        <a href="#overview" class="subnav-link">📌 Overview</a>
+        <a href="#labs" class="subnav-link">⚡ 6 Live Labs</a>
+        <a href="#schedule" class="subnav-link">⏱️ Schedule</a>
+        <a href="#outcomes" class="subnav-link">🏆 Outcomes &amp; Licence</a>
+        <a href="cyber_labs.html" class="subnav-link" style="color: #2563eb; font-weight: 700;">🎮 Open Fullscreen Arcade ↗</a>
+      </div>
     </div>
   </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-overlay" id="cyberDrawerOverlay" onclick="toggleCyberDrawer(false)"></div>
+  <aside class="mobile-drawer" id="cyberDrawer">
+    <div class="drawer-header">
+      <div style="font-weight: 800; color: white; font-family: 'Outfit', sans-serif;">🛡️ CyberGuard</div>
+      <button class="drawer-close" onclick="toggleCyberDrawer(false)">&times;</button>
+    </div>
+    <div>
+      <div class="drawer-section-title">Academic Tracks</div>
+      <div class="drawer-links">
+        <a href="index.html" class="drawer-link">🏠 Academy Hub Portal</a>
+        <a href="robotics.html" class="drawer-link">🤖 Robotics Masterclass</a>
+        <a href="cybersecurity.html" class="drawer-link active">🛡️ CyberGuard Defense</a>
+        <a href="cyber_labs.html" class="drawer-link">🎮 Cyber Arcade Simulator</a>
+      </div>
+    </div>
+    <div>
+      <div class="drawer-section-title">In-Page Quick Jumps</div>
+      <div class="drawer-links">
+        <a href="#overview" class="drawer-link" onclick="toggleCyberDrawer(false)">📌 Overview &amp; Meta</a>
+        <a href="#labs" class="drawer-link" onclick="toggleCyberDrawer(false)">⚡ 6 Live Defense Labs</a>
+        <a href="#schedule" class="drawer-link" onclick="toggleCyberDrawer(false)">⏱️ 4-Hour Schedule</a>
+        <a href="#outcomes" class="drawer-link" onclick="toggleCyberDrawer(false)">🏆 Cadet Licence</a>
+      </div>
+    </div>
+    <div>
+      <div class="drawer-section-title">Official Documents</div>
+      <div class="drawer-links">
+        <a href="cyber_plan.md" target="_blank" class="drawer-link">📄 Cyber Plan (.md)</a>
+        <a href="javascript:window.print()" class="drawer-link">🖨️ Print Proposal PDF</a>
+      </div>
+    </div>
+  </aside>
 
   <!-- Hero Section -->
   <section class="hero" id="overview">
@@ -1185,10 +1635,11 @@
           <div class="trainer-avatars">
             <div class="trainer-emblem" title="Engr. Aamir Jamil (Lead AI, Robotics & CEH Trainer)">👨‍🏫</div>
             <div class="trainer-emblem" title="Miss Zia Ul Ain (Supportive Trainer)">👩‍🏫</div>
+            <div class="trainer-emblem" title="Awais Paracha (Manager)">💼</div>
           </div>
           <div class="trainers-info">
-            <h4>Engr. Aamir Jamil & Miss Zia Ul Ain</h4>
-            <p>Lead AI, Robotics & STEAM Trainer · CEH Trainer</p>
+            <h4>Engr. Aamir Jamil, Miss Zia Ul Ain &amp; Awais Paracha</h4>
+            <p>Lead AI &amp; Robotics Trainer · Supportive Trainer · Manager</p>
           </div>
         </div>
 
@@ -1659,6 +2110,9 @@
           <div>
             <strong>Miss Zia Ul Ain</strong><br>Supportive Trainer
           </div>
+          <div>
+            <strong>Awais Paracha</strong><br>Manager
+          </div>
         </div>
       </div>
 
@@ -1832,44 +2286,108 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Master Redesigned Footer (4 Columns) -->
   <footer class="footer">
     <div class="container footer-grid">
-      <div>
-        <div class="logo-container" style="margin-bottom: 1rem;">
-          <div class="logo-shield">🛡️</div>
-          <div class="logo-text">
-            <h1 style="color: white;">CyberGuard</h1>
-            <p>CS Technologies</p>
+      <!-- Col 1: Brand & Mission -->
+      <div class="footer-col footer-brand">
+        <h5>🛡️ CS Technologies · CyberGuard</h5>
+        <p>
+          A flagship STEM cybersecurity training programme preparing primary students (Grades 3–5 / Ages 8–12) and parents to navigate the digital world safely, ethically, and securely.
+        </p>
+        <div class="footer-trust-pills">
+          <span class="footer-trust-pill">🛡️ CEH Certified Instruction</span>
+          <span class="footer-trust-pill">🔐 Zero Attack Ethics</span>
+          <span class="footer-trust-pill">🏆 Junior Cyber Defender</span>
+          <span class="footer-trust-pill">⏱️ 4-Hour Flexible</span>
+        </div>
+      </div>
+
+      <!-- Col 2: Curriculum & Fast Links -->
+      <div class="footer-col">
+        <h5>Curriculum Tracks</h5>
+        <ul class="footer-links">
+          <li><a href="index.html">🏠 Academy Hub Portal</a></li>
+          <li><a href="robotics.html">🤖 Robotics STEM Masterclass</a></li>
+          <li><a href="cybersecurity.html">🛡️ CyberGuard Defense &amp; Labs</a></li>
+          <li><a href="cyber_labs.html">🎮 Cyber Lab Arcade Range</a></li>
+          <li><a href="robotics_proposal.md" target="_blank">📄 Robotics Proposal (.md)</a></li>
+          <li><a href="cyber_plan.md" target="_blank">📄 Cyber Defense Plan (.md)</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Instructional & Management Team -->
+      <div class="footer-col">
+        <h5>Academic &amp; Management</h5>
+        <div class="footer-team-list">
+          <div class="footer-team-member">
+            <strong>Engr. Aamir Jamil</strong>
+            <span>Lead AI, Robotics &amp; STEAM Trainer · CEH</span>
+          </div>
+          <div class="footer-team-member">
+            <strong>Miss Zia Ul Ain</strong>
+            <span>Supportive Trainer · Lab Guidance</span>
+          </div>
+          <div class="footer-team-member">
+            <strong>Awais Paracha</strong>
+            <span>Manager · Operations &amp; Quality</span>
           </div>
         </div>
-        <p>
-          A flagship STEM training module preparing primary school students and parents to navigate the digital world safely, ethically, and securely.
-        </p>
       </div>
-      <div>
-        <h5>Trainers</h5>
-        <p>
-          <strong>Engr. Aamir Jamil</strong><br>Lead AI, Robotics & STEAM Trainer<br>Certified Ethical Hacker (CEH) Trainer<br><br>
-          <strong>Miss Zia Ul Ain</strong><br>Supportive Trainer
-        </p>
-      </div>
-      <div>
-        <h5>National Helplines</h5>
-        <p>
-          <strong>NCCIA Cybercrime:</strong> 1799<br>
-          <strong>Police Helpline:</strong> 15 (Auto-routed)<br>
-          <strong>Legal Base:</strong> PECA 2016
+
+      <!-- Col 4: Safety, Helplines & Compliance -->
+      <div class="footer-col">
+        <h5>Safety &amp; Compliance</h5>
+        <div class="footer-helpline-box">
+          <div class="footer-helpline-item">
+            <span>NCCIA Cybercrime</span>
+            <strong>1799</strong>
+          </div>
+          <div class="footer-helpline-item">
+            <span>Police Helpline</span>
+            <strong>15</strong>
+          </div>
+          <div class="footer-helpline-item">
+            <span>Legal Framework</span>
+            <span style="color: #cbd5e1; font-size: 0.8rem;">PECA 2016</span>
+          </div>
+        </div>
+        <p style="font-size: 0.8rem; color: #94a3b8; line-height: 1.4;">
+          Zero intrusive tactics. 100% defense-only simulations, account security &amp; child privacy protection.
         </p>
       </div>
     </div>
-    <div class="container" style="text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 1.5rem; font-size: 0.8rem;">
-      © 2026 CS Technologies. All rights reserved. Designed for Grades 3–5 (Ages 8–12).
+
+    <!-- Bottom Bar -->
+    <div class="container footer-bottom">
+      <div>© 2026 CS Technologies. All rights reserved. Designed for Grades 3–5 (Ages 8–12).</div>
+      <div class="footer-bottom-badge">
+        <span class="track-indicator"></span> CyberGuard Defense Wing · Active 2026
+      </div>
+      <a href="#" class="back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+        Back to Top ↑
+      </a>
     </div>
   </footer>
 
   <!-- Interactive JavaScript Engine -->
   <script>
+    function toggleCyberDrawer(forceState) {
+      const drawer = document.getElementById('cyberDrawer');
+      const overlay = document.getElementById('cyberDrawerOverlay');
+      if (!drawer || !overlay) return;
+      const isOpen = drawer.classList.contains('open');
+      const nextState = (typeof forceState === 'boolean') ? forceState : !isOpen;
+      if (nextState) {
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
     // Audio Synth for Kid-Friendly Feedback
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, type = 'sine', duration = 0.15) {

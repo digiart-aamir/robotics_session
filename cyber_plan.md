@@ -1,14 +1,14 @@
 # Cybersecurity & Digital Defense STEM Kit for Kids (Ages 8–12)
 
 **Offered by:** CS Technologies  
-**Trainers:** Engr. Aamir Jamil (Lead AI, Robotics, STEAM & CEH Trainer) & Miss Zia Ul Ain (Supportive Trainer)  
+**Instructional & Management Team:** Engr. Aamir Jamil (Lead AI, Robotics, STEAM & CEH Trainer), Miss Zia Ul Ain (Supportive Trainer) & Awais Paracha (Manager)  
 
 ---
 
 ## Programme Overview
 
 - **Offered by:** CS Technologies
-- **Trainers:** Engr. Aamir Jamil (Lead AI, Robotics, STEAM & CEH Trainer) & Miss Zia Ul Ain (Supportive Trainer)
+- **Instructional & Management Team:** Engr. Aamir Jamil (Lead AI, Robotics, STEAM & CEH Trainer), Miss Zia Ul Ain (Supportive Trainer), Awais Paracha (Manager)
 - **Target Age:** 8–12 years (Grades 3–5)
 - **Duration:** 2 lessons, 2 hours per lesson
 - **Total Learning Time:** 4 hours
