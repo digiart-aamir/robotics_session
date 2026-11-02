@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgArena" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#180e07"/>
+      <stop offset="50%" stop-color="#2a160a"/>
+      <stop offset="100%" stop-color="#090502"/>
+    </linearGradient>
+    <filter id="glowArena" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bgArena)"/>
+
+  <!-- Technical Grid -->
+  <g opacity="0.08" stroke="#f97316" stroke-width="1.5">
+    <path d="M0,180 H1920 M0,360 H1920 M0,540 H1920 M0,720 H1920 M0,900 H1920"/>
+    <path d="M240,0 V1080 M480,0 V1080 M720,0 V1080 M960,0 V1080 M1200,0 V1080 M1440,0 V1080 M1680,0 V1080"/>
+  </g>
+
+  <!-- Header Badge -->
+  <rect x="120" y="90" width="380" height="48" rx="24" fill="#c2410c" opacity="0.3"/>
+  <rect x="120" y="90" width="380" height="48" rx="24" fill="none" stroke="#f97316" stroke-width="2"/>
+  <text x="310" y="122" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" fill="#fb923c" text-anchor="middle">DAY 2 · ARENA COMPETITION</text>
+
+  <!-- Main Title -->
+  <text x="120" y="210" font-family="'Outfit', sans-serif" font-size="64" font-weight="800" fill="#ffffff">Grand "Mars Rover" Obstacle Arena</text>
+  <text x="120" y="260" font-family="'Plus Jakarta Sans', sans-serif" font-size="26" fill="#fed7aa">Live Team Obstacle Navigation, Terrain Clearance, Speed Time-Trials &amp; Autonomous Maneuvers</text>
+
+  <!-- Canvas Box -->
+  <rect x="220" y="340" width="1480" height="580" rx="24" fill="#1c1009" stroke="#431407" stroke-width="3"/>
+
+  <!-- Arena Track Map Graphic -->
+  <g transform="translate(320, 420)">
+    <!-- 3-Meter Arena Track Border -->
+    <rect x="0" y="0" width="820" height="360" rx="20" fill="#2a140a" stroke="#f97316" stroke-width="4"/>
+    
+    <!-- Start Zone -->
+    <rect x="20" y="20" width="120" height="140" rx="10" fill="#0369a1" stroke="#38bdf8" stroke-width="2"/>
+    <text x="80" y="95" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle">START</text>
+
+    <!-- Track Path Guides -->
+    <path d="M140,90 Q300,90 340,220 T540,160 T700,260" fill="none" stroke="#fdba74" stroke-width="8" stroke-dasharray="16 10"/>
+
+    <!-- Slalom Obstacles -->
+    <circle cx="280" cy="160" r="24" fill="#ef4444" stroke="#ffffff" stroke-width="3"/>
+    <text x="280" y="166" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">B1</text>
+
+    <circle cx="440" cy="240" r="24" fill="#ef4444" stroke="#ffffff" stroke-width="3"/>
+    <text x="440" y="246" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">B2</text>
+
+    <!-- Incline Ramp Zone -->
+    <rect x="520" y="60" width="100" height="70" rx="6" fill="#78350f" stroke="#fbbf24" stroke-width="2"/>
+    <text x="570" y="100" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#fef3c7" text-anchor="middle">RAMP 15°</text>
+
+    <!-- Finish Zone -->
+    <rect x="680" y="200" width="120" height="140" rx="10" fill="#15803d" stroke="#22c55e" stroke-width="3" filter="url(#glowArena)"/>
+    <text x="740" y="275" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle">FINISH</text>
+  </g>
+
+  <!-- Explanatory Right Panel -->
+  <g transform="translate(1200, 420)">
+    <rect x="0" y="0" width="440" height="360" rx="16" fill="#2d170b" stroke="#7c2d12" stroke-width="2"/>
+    <text x="30" y="50" font-family="'Outfit', sans-serif" font-size="24" font-weight="700" fill="#fb923c">ARENA EVALUATION CRITERIA</text>
+    
+    <text x="30" y="105" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" fill="#fed7aa">• Autonomous Navigation &amp; Slalom Precision</text>
+    <text x="30" y="145" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" fill="#fed7aa">• Ramp Hill Climb &amp; Wheel Traction Torque</text>
+    <text x="30" y="185" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" fill="#fed7aa">• Obstacle Proximity Detection Response</text>
+    <text x="30" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" fill="#fed7aa">• Timed Lap Runs with Team Driver Relays</text>
+    <text x="30" y="265" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" fill="#fed7aa">• Best Mechanical Design Engineering Trophy!</text>
+
+    <rect x="30" y="295" width="380" height="45" rx="8" fill="#431407" stroke="#f97316"/>
+    <text x="220" y="324" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="700" fill="#fdba74" text-anchor="middle">TEAM COGNITIVE STEM CHALLENGE</text>
+  </g>
+
+  <!-- Bottom Spec Chips -->
+  <rect x="220" y="830" width="340" height="50" rx="10" fill="#020617" stroke="#334155"/>
+  <text x="390" y="862" font-family="'JetBrains Mono', monospace" font-size="16" fill="#fb923c" text-anchor="middle">🏁 3-METER ARENA TRACK</text>
+
+  <rect x="590" y="830" width="360" height="50" rx="10" fill="#020617" stroke="#334155"/>
+  <text x="770" y="862" font-family="'JetBrains Mono', monospace" font-size="16" fill="#22c55e" text-anchor="middle">🎯 FOCUS: COLLISION &amp; STABILITY</text>
+
+  <rect x="980" y="830" width="340" height="50" rx="10" fill="#020617" stroke="#334155"/>
+  <text x="1150" y="862" font-family="'JetBrains Mono', monospace" font-size="16" fill="#f59e0b" text-anchor="middle">⏱️ ARENA TIME: 45 MINS</text>
+
+  <rect x="1350" y="830" width="350" height="50" rx="10" fill="#020617" stroke="#334155"/>
+  <text x="1525" y="862" font-family="'JetBrains Mono', monospace" font-size="16" fill="#fb923c" text-anchor="middle">🏆 AWARD: MARS ROVER CUP</text>
+</svg>
+

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 5: Bionic Hexapod Walker | CS Technologies Day 2 Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060b14;
+      --card-bg: #0d1527;
+      --rob-orange: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1a2742;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #09101d;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .back-btn {
+      color: var(--rob-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .main-wrap {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .stage-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 800px) { .stage-card { grid-template-columns: 1fr; } }
+    canvas {
+      width: 100%;
+      height: 320px;
+      background: #140d0a;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .controls-box {
+      background: #04070e;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-btn">← Back to Day 2 Lab Console</a>
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #f59e0b;">● STANDALONE LAB UNIT 5</div>
+  </header>
+
+  <main class="main-wrap">
+    <div>
+      <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--rob-orange); font-weight: 700;">MODULE 05 · BIOMIMETIC GAIT KINEMATICS</span>
+      <h1 style="font-family: 'Outfit'; font-size: 2rem; margin-top: 0.2rem;">Bionic Hexapod Walker</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem;">
+        Bio-inspired insect locomotion. Synchronize tripod walking gaits and balance the Center of Mass (CoM) stability polygon across rough terrain.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <canvas id="hexaCanvas" width="540" height="320"></canvas>
+
+      <div class="controls-box">
+        <h3 style="font-family: 'Outfit'; font-size: 1.1rem; color: #fff;">Hexapod Gait Controls</h3>
+        
+        <div class="ctrl-row">
+          <span>Gait Mode:</span>
+          <select id="gaitSel" style="background: #1e293b; color: #fff; border: 1px solid var(--border); padding: 0.4rem; border-radius: 6px; font-family: 'JetBrains Mono';" onchange="updateGait(this.value)">
+            <option value="tripod">Tripod Gait (Fast)</option>
+            <option value="wave">Wave Gait (Stable)</option>
+          </select>
+        </div>
+
+        <div class="ctrl-row">
+          <span>Step Clearance:</span>
+          <input type="range" id="stepRange" min="10" max="35" value="25" style="flex: 1;" oninput="updateStep(this.value)">
+          <span id="stepVal" style="font-family: 'JetBrains Mono'; color: #06b6d4; min-width: 45px;">25 mm</span>
+        </div>
+
+        <button style="background: #22c55e; color: #000; font-weight: 800; border: none; padding: 0.75rem; border-radius: 6px; cursor: pointer;" onclick="stepWalk()">
+          🐾 Step Forward
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('hexaCanvas');
+    const ctx = canvas.getContext('2d');
+    let phase = 0;
+    let distWalked = 0;
+    let stepHeight = 25;
+
+    function updateGait(v) {}
+    function updateStep(v) { stepHeight = parseInt(v); document.getElementById('stepVal').textContent = v + ' mm'; }
+    function stepWalk() {
+      phase++;
+      distWalked += 25;
+      if (distWalked > 380) distWalked = 0;
+    }
+
+    function draw() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.fillStyle = '#140d0a';
+      ctx.fillRect(0, 0, w, h);
+
+      // Terrain
+      ctx.fillStyle = '#26160e';
+      ctx.fillRect(0, h * 0.7, w, h * 0.3);
+
+      // Rocks
+      ctx.fillStyle = '#442819';
+      for (let bx = 50; bx < w; bx += 80) {
+        ctx.beginPath(); ctx.arc(bx, h * 0.72, 12, 0, Math.PI * 2); ctx.fill();
+      }
+
+      // Beacon
+      ctx.fillStyle = '#22c55e';
+      ctx.fillRect(w - 50, h * 0.45, 10, h * 0.25);
+      ctx.beginPath(); ctx.arc(w - 45, h * 0.45, 10, 0, Math.PI * 2); ctx.fill();
+
+      // Hexapod
+      const hx = 90 + distWalked;
+      const hy = h * 0.52;
+
+      // Stability Polygon
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
+      ctx.strokeStyle = '#22c55e';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(hx - 35, hy + 35);
+      ctx.lineTo(hx + 35, hy + 25);
+      ctx.lineTo(hx, hy - 35);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // CoM point
+      ctx.fillStyle = '#22c55e';
+      ctx.beginPath(); ctx.arc(hx, hy, 5, 0, Math.PI * 2); ctx.fill();
+
+      // 6 Legs
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 4;
+      for (let i = -1; i <= 1; i++) {
+        const liftL = (phase % 2 === 0) ? stepHeight : 0;
+        ctx.beginPath();
+        ctx.moveTo(hx + i * 22, hy - 8);
+        ctx.lineTo(hx + i * 30 - 25, hy - 16 - liftL);
+        ctx.lineTo(hx + i * 30 - 45, hy + 30);
+        ctx.stroke();
+
+        const liftR = (phase % 2 === 1) ? stepHeight : 0;
+        ctx.beginPath();
+        ctx.moveTo(hx + i * 22, hy + 8);
+        ctx.lineTo(hx + i * 30 + 25, hy + 16 - liftR);
+        ctx.lineTo(hx + i * 30 + 45, hy + 30);
+        ctx.stroke();
+      }
+
+      // Body
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#06b6d4';
+      ctx.lineWidth = 2;
+      ctx.fillRect(hx - 30, hy - 16, 60, 32);
+      ctx.strokeRect(hx - 30, hy - 16, 60, 32);
+
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>

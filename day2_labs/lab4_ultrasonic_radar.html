@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 4: 360° LiDAR &amp; Ultrasonic Radar | CS Technologies Day 2 Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060b14;
+      --card-bg: #0d1527;
+      --rob-orange: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1a2742;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #09101d;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .back-btn {
+      color: var(--rob-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .main-wrap {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .stage-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 800px) { .stage-card { grid-template-columns: 1fr; } }
+    canvas {
+      width: 100%;
+      height: 320px;
+      background: #040812;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      cursor: crosshair;
+    }
+    .controls-box {
+      background: #04070e;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-btn">← Back to Day 2 Lab Console</a>
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #06b6d4;">● STANDALONE LAB UNIT 4</div>
+  </header>
+
+  <main class="main-wrap">
+    <div>
+      <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--rob-orange); font-weight: 700;">MODULE 04 · SPATIAL ACOUSTIC SLAM</span>
+      <h1 style="font-family: 'Outfit'; font-size: 2rem; margin-top: 0.2rem;">360° LiDAR &amp; Ultrasonic Radar Sweep</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem;">
+        Autonomous spatial perception. Continuous rotating ultrasonic turntable maps perimeter obstacles and commands Automatic Emergency Braking (AEB).
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <canvas id="radarCanvas" width="540" height="320"></canvas>
+
+      <div class="controls-box">
+        <h3 style="font-family: 'Outfit'; font-size: 1.1rem; color: #fff;">LiDAR Radar Telemetry</h3>
+        
+        <div>
+          <span style="font-size: 0.8rem; color: #94a3b8;">Current Bearing:</span>
+          <div id="bearingDisp" style="font-family: 'JetBrains Mono'; font-size: 1.5rem; color: #06b6d4; font-weight: 800; margin-top: 0.2rem;">
+            0° SWEEP
+          </div>
+        </div>
+
+        <div id="aebBanner" style="background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; color: #22c55e; padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700;">
+          ✓ PERIMETER STATUS: CLEAR (&gt; 15cm)
+        </div>
+
+        <div style="background: rgba(255,255,255,0.04); padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.4; color: #94a3b8;">
+          💡 <strong>Interactive Arena:</strong> Click and drag obstacles directly on the radar scope to simulate moving targets and trigger proximity echoes!
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('radarCanvas');
+    const ctx = canvas.getContext('2d');
+    let sweep = 0;
+    const obstacles = [
+      { x: 340, y: 120, r: 16, name: "Obstacle A" },
+      { x: 200, y: 80, r: 20, name: "Barrier B" },
+      { x: 360, y: 220, r: 18, name: "Drone C" }
+    ];
+    let dragged = null;
+
+    canvas.addEventListener('mousedown', e => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+      const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+      obstacles.forEach(obs => {
+        if (Math.hypot(mx - obs.x, my - obs.y) < obs.r + 10) dragged = obs;
+      });
+    });
+
+    window.addEventListener('mousemove', e => {
+      if (!dragged) return;
+      const rect = canvas.getBoundingClientRect();
+      dragged.x = (e.clientX - rect.left) * (canvas.width / rect.width);
+      dragged.y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    });
+
+    window.addEventListener('mouseup', () => { dragged = null; });
+
+    function draw() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.fillStyle = '#040812';
+      ctx.fillRect(0, 0, w, h);
+
+      const cx = w / 2, cy = h / 2;
+      const maxR = Math.min(w, h) * 0.42;
+
+      // Concentric circles
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.25)';
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 4; i++) {
+        ctx.beginPath(); ctx.arc(cx, cy, (maxR / 4) * i, 0, Math.PI * 2); ctx.stroke();
+      }
+
+      // Crosshair
+      ctx.beginPath(); ctx.moveTo(cx - maxR, cy); ctx.lineTo(cx + maxR, cy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx, cy - maxR); ctx.lineTo(cx, cy + maxR); ctx.stroke();
+
+      // Critical AEB ring
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(cx, cy, maxR * 0.35, 0, Math.PI * 2); ctx.stroke();
+
+      // Sweep
+      sweep = (sweep + 0.03) % (Math.PI * 2);
+      document.getElementById('bearingDisp').textContent = `${Math.round((sweep * 180) / Math.PI)}° SWEEP`;
+
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(sweep);
+      const g = ctx.createRadialGradient(0, 0, 0, 0, 0, maxR);
+      g.addColorStop(0, 'rgba(6, 182, 212, 0.6)');
+      g.addColorStop(1, 'rgba(6, 182, 212, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(0, 0); ctx.arc(0, 0, maxR, -0.3, 0); ctx.fill();
+      ctx.restore();
+
+      // Draw obstacles
+      let critical = false;
+      obstacles.forEach(o => {
+        const d = Math.hypot(o.x - cx, o.y - cy);
+        if (d < maxR * 0.35) critical = true;
+
+        ctx.fillStyle = d < maxR * 0.35 ? '#ef4444' : '#f59e0b';
+        ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 9px JetBrains Mono';
+        ctx.fillText(o.name, o.x - 20, o.y - o.r - 4);
+      });
+
+      const banner = document.getElementById('aebBanner');
+      if (critical) {
+        banner.textContent = '🚨 CRITICAL: AEB BRAKE TRIGGERED (< 15cm)';
+        banner.style.background = 'rgba(239, 68, 68, 0.15)';
+        banner.style.color = '#ef4444';
+        banner.style.borderColor = '#ef4444';
+      } else {
+        banner.textContent = '✓ PERIMETER STATUS: CLEAR (> 15cm)';
+        banner.style.background = 'rgba(34, 197, 94, 0.15)';
+        banner.style.color = '#22c55e';
+        banner.style.borderColor = '#22c55e';
+      }
+
+      // Center sensor
+      ctx.fillStyle = '#06b6d4';
+      ctx.beginPath(); ctx.arc(cx, cy, 8, 0, Math.PI * 2); ctx.fill();
+
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 5: Mars Rover Obstacle Arena | CS Technologies Day 2 Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070d18;
+      --card-bg: #0f192c;
+      --rob-orange: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e2e4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #0f192c;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .back-btn {
+      color: var(--rob-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .main-wrap {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .arena-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    canvas {
+      width: 100%;
+      height: 340px;
+      background: #140b07;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .hud-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: #050a14;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-btn">← Back to Day 2 Lab Console</a>
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #f59e0b;">● STANDALONE LAB UNIT 5</div>
+  </header>
+
+  <main class="main-wrap">
+    <div>
+      <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--rob-orange); font-weight: 700;">MODULE 11 · GRAND ARENA CHALLENGE</span>
+      <h1 style="font-family: 'Outfit'; font-size: 2rem; margin-top: 0.2rem;">3-Meter Mars Rover Obstacle Arena</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem;">
+        Navigate the 3 slalom pylons, summit the 15° terrain incline ramp, and trigger automated radar braking inside the Terminal Zone!
+      </p>
+    </div>
+
+    <div class="arena-card">
+      <div class="hud-bar">
+        <div>🏎️ Speed: <strong id="hudSpeed" style="color: #22c55e;">0.0 km/h</strong></div>
+        <div>📡 Radar Assist: <strong style="color: #06b6d4;">ACTIVE (Auto-Stop)</strong></div>
+        <div>⏱️ Course Status: <strong id="hudStatus" style="color: #f59e0b;">Ready at Start Line</strong></div>
+        <button style="background: rgba(255,255,255,0.06); color: #fff; border: 1px solid var(--border); padding: 0.35rem 0.75rem; border-radius: 6px; cursor: pointer;" onclick="resetRover()">↺ Reset Rover</button>
+      </div>
+
+      <canvas id="arenaCanvas" width="900" height="340"></canvas>
+
+      <div style="font-size: 0.8rem; color: #94a3b8; display: flex; justify-content: space-between; align-items: center;">
+        <span>🎮 Controls: Use <strong>Arrow Keys</strong> or <strong>W / A / S / D</strong> to steer and accelerate the rover.</span>
+        <span>Finish Condition: Stop safely inside the green Finish Zone without hitting the barrier wall.</span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('arenaCanvas');
+    const ctx = canvas.getContext('2d');
+    let x = 60, y = 170, speed = 0, angle = 0;
+    let keys = { up: false, down: false, left: false, right: false };
+
+    const pylons = [{ x: 250, y: 170, r: 16 }, { x: 420, y: 110, r: 16 }, { x: 580, y: 210, r: 16 }];
+
+    window.addEventListener('keydown', e => {
+      if (e.key === 'ArrowUp' || e.key === 'w') keys.up = true;
+      if (e.key === 'ArrowDown' || e.key === 's') keys.down = true;
+      if (e.key === 'ArrowLeft' || e.key === 'a') keys.left = true;
+      if (e.key === 'ArrowRight' || e.key === 'd') keys.right = true;
+    });
+
+    window.addEventListener('keyup', e => {
+      if (e.key === 'ArrowUp' || e.key === 'w') keys.up = false;
+      if (e.key === 'ArrowDown' || e.key === 's') keys.down = false;
+      if (e.key === 'ArrowLeft' || e.key === 'a') keys.left = false;
+      if (e.key === 'ArrowRight' || e.key === 'd') keys.right = false;
+    });
+
+    function resetRover() { x = 60; y = 170; speed = 0; angle = 0; }
+
+    function loop() {
+      if (keys.up) speed = Math.min(3.8, speed + 0.15);
+      else if (keys.down) speed = Math.max(-2, speed - 0.15);
+      else speed *= 0.95;
+
+      if (keys.left) angle -= 0.05;
+      if (keys.right) angle += 0.05;
+
+      x += Math.cos(angle) * speed;
+      y += Math.sin(angle) * speed;
+
+      // Radar auto-brake near terminal barrier
+      if (x > 790) {
+        speed = 0;
+        document.getElementById('hudStatus').textContent = '🏁 FINISHED! Auto-Brake Stopped Safely!';
+        document.getElementById('hudStatus').style.color = '#22c55e';
+      }
+
+      document.getElementById('hudSpeed').textContent = (Math.abs(speed) * 4).toFixed(1) + ' km/h';
+
+      // Draw Course
+      ctx.fillStyle = '#170e0a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Start Line
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(90, 20); ctx.lineTo(90, 320); ctx.stroke();
+
+      // 15° Ramp (Center)
+      ctx.fillStyle = 'rgba(217, 119, 6, 0.2)';
+      ctx.fillRect(450, 40, 160, 260);
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 12px JetBrains Mono';
+      ctx.fillText('15° INCLINE RAMP', 465, 65);
+
+      // Finish Zone (Right)
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
+      ctx.fillRect(780, 40, 90, 260);
+      ctx.fillStyle = '#22c55e';
+      ctx.fillText('FINISH BOX', 790, 65);
+
+      // Pylons
+      pylons.forEach(p => {
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+      });
+
+      // Draw Rover
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+
+      ctx.fillStyle = '#06b6d4';
+      ctx.fillRect(-18, -12, 36, 24);
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(-16, -16, 10, 5);
+      ctx.fillRect(-16, 11, 10, 5);
+      ctx.fillRect(6, -16, 10, 5);
+      ctx.fillRect(6, 11, 10, 5);
+
+      // Optical beam
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+      ctx.beginPath();
+      ctx.moveTo(18, 0); ctx.lineTo(60, -20); ctx.lineTo(60, 20);
+      ctx.fill();
+
+      ctx.restore();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

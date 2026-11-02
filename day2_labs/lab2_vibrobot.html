@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 2: Autonomous Vibro-Bot | CS Technologies Day 2 Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070d18;
+      --card-bg: #0f192c;
+      --rob-orange: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e2e4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #0f192c;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .back-btn {
+      color: var(--rob-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .main-wrap {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .sim-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    canvas {
+      width: 100%;
+      height: 320px;
+      background: #050a14;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      align-items: center;
+      background: #050a14;
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .btn-act {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      font-weight: 800;
+      border: none;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-btn">← Back to Day 2 Lab Console</a>
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #06b6d4;">● STANDALONE LAB UNIT 2</div>
+  </header>
+
+  <main class="main-wrap">
+    <div>
+      <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--rob-orange); font-weight: 700;">MODULE 08 · HARMONIC LOCOMOTION</span>
+      <h1 style="font-family: 'Outfit'; font-size: 2rem; margin-top: 0.2rem;">Autonomous Vibro-Bot Simulator</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem;">
+        Harnessing Eccentric Rotating Mass (ERM) kinetic oscillation to propel a bristle-skating robot without traditional wheels.
+      </p>
+    </div>
+
+    <div class="sim-card">
+      <canvas id="botCanvas" width="900" height="320"></canvas>
+
+      <div class="controls-grid">
+        <div>
+          <label style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; display: block; margin-bottom: 0.25rem;">Motor RPM: <span id="rpmVal" style="color: #f59e0b;">5000</span></label>
+          <input type="range" id="rpmRange" min="1000" max="9000" step="500" value="5000" style="width: 100%;" oninput="updateRpm(this.value)">
+        </div>
+
+        <div>
+          <label style="font-size: 0.8rem; font-weight: 700; color: #94a3b8; display: block; margin-bottom: 0.25rem;">Bristle Slant: <span id="bristleVal" style="color: #06b6d4;">45°</span></label>
+          <input type="range" id="bristleRange" min="30" max="90" value="45" style="width: 100%;" oninput="updateBristle(this.value)">
+        </div>
+
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn-act" id="startBtn" onclick="toggleRun()">⚡ Start Vibro-Bot</button>
+          <button style="background: rgba(255,255,255,0.06); color: #fff; border: 1px solid var(--border); padding: 0.65rem 1rem; border-radius: 8px; cursor: pointer;" onclick="clearTrail()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('botCanvas');
+    const ctx = canvas.getContext('2d');
+    let running = false;
+    let rpm = 5000;
+    let slant = 45;
+    let x = 450, y = 160;
+    let trail = [];
+
+    function updateRpm(v) { rpm = parseInt(v); document.getElementById('rpmVal').textContent = v; }
+    function updateBristle(v) { slant = parseInt(v); document.getElementById('bristleVal').textContent = v + '°'; }
+    function toggleRun() {
+      running = !running;
+      document.getElementById('startBtn').textContent = running ? '🛑 Stop Motor' : '⚡ Start Vibro-Bot';
+    }
+    function clearTrail() { trail = []; }
+
+    function draw() {
+      ctx.fillStyle = '#050a14';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Trail
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i < trail.length; i++) {
+        if (i === 0) ctx.moveTo(trail[i].x, trail[i].y);
+        else ctx.lineTo(trail[i].x, trail[i].y);
+      }
+      ctx.stroke();
+
+      if (running) {
+        const speed = (rpm / 2500) * Math.cos((slant * Math.PI) / 180) * 2;
+        x += speed + (Math.random() - 0.5) * 1.2;
+        y += (Math.random() - 0.5) * 1.8;
+
+        if (x > canvas.width) x = 20;
+        if (x < 0) x = canvas.width - 20;
+        if (y > canvas.height) y = 20;
+        if (y < 0) y = canvas.height - 20;
+
+        trail.push({ x, y });
+        if (trail.length > 180) trail.shift();
+      }
+
+      // Draw Bot
+      ctx.save();
+      ctx.translate(x, y);
+
+      // Chassis
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2;
+      ctx.fillRect(-30, -16, 60, 32);
+      ctx.strokeRect(-30, -16, 60, 32);
+
+      // Bristles
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 2;
+      const rad = (slant * Math.PI) / 180;
+      for (let bx = -20; bx <= 20; bx += 8) {
+        ctx.beginPath();
+        ctx.moveTo(bx, 16);
+        ctx.lineTo(bx - Math.cos(rad) * 16, 16 + Math.sin(rad) * 16);
+        ctx.stroke();
+      }
+
+      // ERM rotor
+      ctx.fillStyle = '#06b6d4';
+      ctx.beginPath();
+      ctx.arc(12, 0, 9, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>

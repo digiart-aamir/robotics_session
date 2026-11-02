@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 1: Smart Solar Tracker &amp; Heliostat | CS Technologies Day 2 Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060b14;
+      --card-bg: #0d1527;
+      --card-elevated: #152038;
+      --panel-bg: #050913;
+      --rob-orange: #f59e0b;
+      --solar-yellow: #facc15;
+      --neon-cyan: #06b6d4;
+      --neon-green: #22c55e;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --border: #1a2742;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-elevated: #f1f5f9;
+      --panel-bg: #f8fafc;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --border: #cbd5e1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Executive Top Bar */
+    header {
+      background: rgba(9, 16, 29, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .back-btn {
+      color: var(--rob-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      background: rgba(245, 158, 11, 0.1);
+      transition: all 0.2s;
+    }
+    .back-btn:hover {
+      background: rgba(245, 158, 11, 0.2);
+      transform: translateX(-2px);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .h-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.38rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .h-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--rob-orange);
+    }
+
+    /* Main Container */
+    .main-wrap {
+      flex: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Hero / Lab Title Banner */
+    .lab-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+    .badge-capsule {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--rob-orange);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+    .lab-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .lab-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 680px;
+      line-height: 1.45;
+      margin-top: 0.25rem;
+    }
+
+    /* Telemetry HUD Grid */
+    .telemetry-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.85rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--rob-orange);
+    }
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stat-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+    .stat-val small {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Main Split Stage: Canvas Simulation & Customization Workbench */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .lab-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Simulation Arena Card */
+    .sim-arena-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: crosshair;
+    }
+    canvas#solarCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .canvas-overlay-tip {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.35rem 0.65rem;
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--solar-yellow);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      pointer-events: none;
+    }
+
+    /* Customization Workbench Panel */
+    .custom-dock {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    .dock-tabs {
+      display: flex;
+      background: var(--card-elevated);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+    .d-tab {
+      flex: 1;
+      padding: 0.7rem 0.85rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .d-tab:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .d-tab.active {
+      color: var(--rob-orange);
+      border-bottom-color: var(--rob-orange);
+      background: rgba(245, 158, 11, 0.06);
+    }
+
+    .dock-content {
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    .dock-tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    .dock-tab-pane.active {
+      display: flex;
+    }
+
+    /* Control Rows */
+    .ctrl-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .ctrl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .val-badge {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--neon-cyan);
+      font-weight: 700;
+    }
+    .sim-slider {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      background: #1e293b;
+      border-radius: 9999px;
+      outline: none;
+    }
+    .sim-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--rob-orange);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+      border: 2px solid #ffffff;
+    }
+
+    /* Option Cards & Pills */
+    .opt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+    .opt-btn {
+      background: var(--card-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.75rem;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      transition: all 0.2s;
+    }
+    .opt-btn:hover {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .opt-btn.active {
+      border-color: var(--rob-orange);
+      background: rgba(245, 158, 11, 0.12);
+    }
+    .opt-btn strong {
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .opt-btn span {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* Mission Objectives / Interactive Tasks */
+    .task-card-group {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .task-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    .task-row.done {
+      background: rgba(34, 197, 94, 0.09);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: #86efac;
+    }
+    .task-ico {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.72rem;
+      flex-shrink: 0;
+    }
+    .task-row.done .task-ico {
+      border-color: #22c55e;
+      background: #22c55e;
+      color: #000;
+    }
+
+    .btn-claim {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      border: none;
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-claim:hover {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <a href="index.html" class="back-btn">← Back to Day 2 Console</a>
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.82rem; color: var(--rob-orange); font-weight: 700;">
+      ● STANDALONE LAB UNIT 1 · PHOTOTROPISM HELIOSTAT
+    </div>
+    <div class="header-actions">
+      <button class="h-btn" id="sfxBtn" onclick="toggleAudio()" title="Sound Effects">
+        <span id="sfxIcon">🔊</span> Audio
+      </button>
+      <button class="h-btn" onclick="toggleTheme()" title="Toggle Dark/Light">
+        <span>☀️</span> Theme
+      </button>
+      <button class="h-btn" onclick="toggleFullscreen()" title="Fullscreen">
+        <span>⛶</span> Full
+      </button>
+    </div>
+  </header>
+
+  <main class="main-wrap">
+    <!-- Lab Title Banner -->
+    <div class="lab-banner">
+      <div>
+        <div class="badge-capsule">
+          <span>🌻</span> MODULE 01 · OPTICAL PHOTOTROPISM &amp; MPPT
+        </div>
+        <h1 class="lab-title">Smart Solar Tracker &amp; Heliostat Workbench</h1>
+        <p class="lab-desc">
+          Bio-inspired phototropic heliostat. Twin Cadmium-Sulfide (CdS) photoresistors command a closed-loop micro-servo to align photovoltaic panels directly perpendicular to incoming solar irradiance, maximizing electrical generation ($P = V \times I$).
+        </p>
+      </div>
+      <div>
+        <button class="h-btn" onclick="resetDefaults()" style="color: var(--rob-orange); border-color: rgba(245, 158, 11, 0.4);">
+          ↺ Reset Lab Bench
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Engineering Telemetry Strip -->
+    <div class="telemetry-row">
+      <div class="stat-card" style="border-left: 3px solid #22c55e;">
+        <span class="stat-label">Power Generation (MPPT)</span>
+        <div class="stat-val" id="statWatts">94 <small>WATTS</small></div>
+      </div>
+      <div class="stat-card" style="border-left: 3px solid #06b6d4;">
+        <span class="stat-label">Sun Vector vs Servo θ</span>
+        <div class="stat-val" id="statAngles">45° <small>/ 45°</small></div>
+      </div>
+      <div class="stat-card" style="border-left: 3px solid #facc15;">
+        <span class="stat-label">Dual-LDR Differential (ΔR)</span>
+        <div class="stat-val" id="statDiff">0.05 <small>kΩ (BALANCED)</small></div>
+      </div>
+      <div class="stat-card" style="border-left: 3px solid #a855f7;">
+        <span class="stat-label">Harvested Energy Today</span>
+        <div class="stat-val" id="statEnergy">1.42 <small>Watt-Hours</small></div>
+      </div>
+    </div>
+
+    <!-- Main Grid: Interactive Canvas Stage & Customization Studio -->
+    <div class="lab-grid">
+      
+      <!-- Left Column: Simulation Canvas & Direct Dragging -->
+      <div class="sim-arena-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="font-size: 0.85rem; color: var(--rob-orange); display: flex; align-items: center; gap: 0.4rem;">
+            <span>⚡</span> INTERACTIVE HELIOSTAT ARENA (DRAGGABLE SUN)
+          </strong>
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: var(--text-dim);" id="fpsCounter">
+            60 FPS · CLOSED LOOP ACTIVE
+          </span>
+        </div>
+
+        <div class="canvas-container" id="canvasWrap">
+          <canvas id="solarCanvas" width="680" height="380"></canvas>
+          <div class="canvas-overlay-tip">
+            <span>🖱️ TIP:</span> Click &amp; drag the glowing sun across the sky!
+          </div>
+        </div>
+
+        <!-- Quick Manual / Auto Mode Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem;">
+            <span>Servo Loop:</span>
+            <button id="autoToggleBtn" class="h-btn" style="color: #22c55e; border-color: #22c55e; padding: 0.25rem 0.65rem;" onclick="toggleAuto()">
+              ✓ CLOSED-LOOP AUTO
+            </button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem;">
+            <span>Solar Slew Rate:</span>
+            <span id="slewChip" style="font-family: 'JetBrains Mono'; color: var(--neon-cyan); font-weight: 700;">8.0°/s</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Multi-Tab Customization Studio -->
+      <div class="custom-dock">
+        <!-- Studio Tabs -->
+        <div class="dock-tabs">
+          <button class="d-tab active" onclick="switchDockTab('celestial')">☀️ Sun &amp; Sky</button>
+          <button class="d-tab" onclick="switchDockTab('cells')">⚡ PV Cells</button>
+          <button class="d-tab" onclick="switchDockTab('chassis')">🎨 Chassis</button>
+          <button class="d-tab" onclick="switchDockTab('servos')">⚙️ Servo Tuning</button>
+        </div>
+
+        <div class="dock-content">
+          
+          <!-- TAB 1: SUN & CELESTIAL ATMOSPHERE -->
+          <div class="dock-tab-pane active" id="pane-celestial">
+            <div class="ctrl-group">
+              <div class="ctrl-header">
+                <span>☀️ Sun Azimuth Position:</span>
+                <span class="val-badge" id="sunDegBadge">45° Morning</span>
+              </div>
+              <input type="range" id="sunSlider" min="0" max="180" value="45" class="sim-slider" oninput="setSunAngle(this.value)">
+              <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono';">
+                <span>0° East (Dawn)</span>
+                <span>90° Zenith (Noon)</span>
+                <span>180° West (Sunset)</span>
+              </div>
+            </div>
+
+            <div class="ctrl-group">
+              <span class="ctrl-header">Atmospheric &amp; Weather Profiles:</span>
+              <div class="opt-grid">
+                <button class="opt-btn active" id="env-clear" onclick="setEnvironment('clear')">
+                  <strong>☀️ Clear Sunlight</strong>
+                  <span>1000 W/m² Direct Beam</span>
+                </button>
+                <button class="opt-btn" id="env-golden" onclick="setEnvironment('golden')">
+                  <strong>🌅 Golden Sunset</strong>
+                  <span>600 W/m² Warm Low Arc</span>
+                </button>
+                <button class="opt-btn" id="env-cloud" onclick="setEnvironment('cloud')">
+                  <strong>⛅ Overcast Clouds</strong>
+                  <span>280 W/m² Diffuse Light</span>
+                </button>
+                <button class="opt-btn" id="env-space" onclick="setEnvironment('space')">
+                  <strong>🌌 Orbital Vacuum</strong>
+                  <span>1361 W/m² AM0 Solar Wind</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: PHOTOVOLTAIC CELL TECH -->
+          <div class="dock-tab-pane" id="pane-cells">
+            <div class="ctrl-group">
+              <span class="ctrl-header">Silicon &amp; Semiconductor Crystal:</span>
+              <div class="opt-grid">
+                <button class="opt-btn active" id="cell-mono" onclick="setCellTech('mono')">
+                  <strong>⚡ Monocrystalline</strong>
+                  <span>24.2% Eff · Obsidian Black</span>
+                </button>
+                <button class="opt-btn" id="cell-poly" onclick="setCellTech('poly')">
+                  <strong>💎 Polycrystalline</strong>
+                  <span>18.5% Eff · Sapphire Blue</span>
+                </button>
+                <button class="opt-btn" id="cell-perov" onclick="setCellTech('perov')">
+                  <strong>🔮 Perovskite Quantum</strong>
+                  <span>29.5% Eff · Golden Emerald</span>
+                </button>
+                <button class="opt-btn" id="cell-bifacial" onclick="setCellTech('bifacial')">
+                  <strong>🪞 Bifacial Dual-Glass</strong>
+                  <span>27.0% Eff · Albedo Reflection</span>
+                </button>
+              </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: 8px; font-size: 0.75rem; line-height: 1.45; color: var(--text-muted); border: 1px solid var(--border);">
+              💡 <strong>Engineering Note:</strong> Monocrystalline silicon features single-crystal orientation for minimal electron recombination. Perovskite tandems harvest higher ultraviolet and blue photons, boosting peak output to >110W.
+            </div>
+          </div>
+
+          <!-- TAB 3: CHASSIS & ARMOR SKINS -->
+          <div class="dock-tab-pane" id="pane-chassis">
+            <div class="ctrl-group">
+              <span class="ctrl-header">Heliostat Mast &amp; Bracket Skin:</span>
+              <div class="opt-grid">
+                <button class="opt-btn active" id="skin-nasa" onclick="setChassisSkin('nasa')">
+                  <strong>🚀 NASA Kapton Gold</strong>
+                  <span>Aerospace thermal foil</span>
+                </button>
+                <button class="opt-btn" id="skin-carbon" onclick="setChassisSkin('carbon')">
+                  <strong>🛡️ Stealth Carbon</strong>
+                  <span>Matte 3K high-modulus</span>
+                </button>
+                <button class="opt-btn" id="skin-cyber" onclick="setChassisSkin('cyber')">
+                  <strong>⚡ Cyber Academy Teal</strong>
+                  <span>CS Tech signature neon</span>
+                </button>
+                <button class="opt-btn" id="skin-orange" onclick="setChassisSkin('orange')">
+                  <strong>🚜 Field Industrial</strong>
+                  <span>Heavy-duty rugged amber</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: SERVO TUNING & SENSORS -->
+          <div class="dock-tab-pane" id="pane-servos">
+            <div class="ctrl-group">
+              <div class="ctrl-header">
+                <span>Manual Servo Angle (when Auto OFF):</span>
+                <span class="val-badge" id="manualServoChip">90°</span>
+              </div>
+              <input type="range" id="manualServoSlider" min="0" max="180" value="90" class="sim-slider" oninput="setManualServo(this.value)">
+            </div>
+
+            <div class="ctrl-group">
+              <span class="ctrl-header">Servo Stepping Response:</span>
+              <div class="opt-grid">
+                <button class="opt-btn" id="speed-slow" onclick="setServoSpeed(0.04, '4.0°/s Smooth')">
+                  <strong>🐢 Precision Smooth</strong>
+                  <span>Slow micro-stepping (0.04)</span>
+                </button>
+                <button class="opt-btn active" id="speed-norm" onclick="setServoSpeed(0.08, '8.0°/s Normal')">
+                  <strong>⚡ Standard Closed-Loop</strong>
+                  <span>Optimal damping (0.08)</span>
+                </button>
+                <button class="opt-btn" id="speed-fast" onclick="setServoSpeed(0.18, '18.0°/s Rapid')">
+                  <strong>🚀 High-Torque Rapid</strong>
+                  <span>Fast tracking slew (0.18)</span>
+                </button>
+                <button class="opt-btn" id="speed-ephem" onclick="setEphemeris()">
+                  <strong>⏱️ Clockwork Sun Arc</strong>
+                  <span>Earth rotation pace</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mission Verification Checklist -->
+          <div class="task-card-group">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em;">
+              Cadet Engineering Objectives
+            </div>
+            <div class="task-row" id="task1">
+              <div class="task-ico">✓</div>
+              <div><strong>1. Morning Sun Lock:</strong> Drag sun to 30°–45° &amp; let servo auto-lock.</div>
+            </div>
+            <div class="task-row" id="task2">
+              <div class="task-ico">✓</div>
+              <div><strong>2. Peak MPPT Generation:</strong> Achieve &gt; 90W under clear solar skies.</div>
+            </div>
+            <div class="task-row" id="task3">
+              <div class="task-ico">✓</div>
+              <div><strong>3. Lab Customization:</strong> Customize PV Cell tech or Chassis Skin.</div>
+            </div>
+          </div>
+
+          <!-- Claim Badge Action -->
+          <button class="btn-claim" id="claimBadgeBtn" onclick="claimBadge()">
+            <span>⚡ Verify Bench &amp; Master Lab 1</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Interactive Canvas & Simulation Audio Engine -->
+  <script>
+    const canvas = document.getElementById('solarCanvas');
+    const ctx = canvas.getContext('2d');
+    const canvasWrap = document.getElementById('canvasWrap');
+
+    // Simulation State
+    let sunAngle = 45; // 0 to 180 degrees
+    let panelAngle = 90;
+    let autoTrack = true;
+    let servoSpeed = 0.08;
+    let isDraggingSun = false;
+    let environment = 'clear'; // clear, golden, cloud, space
+    let cellTech = 'mono'; // mono, poly, perov, bifacial
+    let chassisSkin = 'nasa'; // nasa, carbon, cyber, orange
+    let manualAngle = 90;
+    let cumWattHours = 1.42;
+    let tasks = [false, false, false];
+
+    // Colors mapping
+    const skins = {
+      nasa: { mast: '#0f172a', bracket: '#f59e0b', highlight: '#fef08a', name: 'Kapton Gold' },
+      carbon: { mast: '#18181b', bracket: '#3f3f46', highlight: '#71717a', name: 'Carbon Armor' },
+      cyber: { mast: '#082f49', bracket: '#0284c7', highlight: '#38bdf8', name: 'CS Neon' },
+      orange: { mast: '#451a03', bracket: '#d97706', highlight: '#fbbf24', name: 'Field Orange' }
+    };
+
+    const cells = {
+      mono: { base: '#090d16', stroke: '#0284c7', grid: 'rgba(56, 189, 248, 0.4)', eff: 1.0, name: 'Monocrystalline' },
+      poly: { base: '#0c1b33', stroke: '#3b82f6', grid: 'rgba(96, 165, 250, 0.5)', eff: 0.85, name: 'Polycrystalline' },
+      perov: { base: '#042f2e', stroke: '#14b8a6', grid: 'rgba(45, 212, 191, 0.6)', eff: 1.22, name: 'Perovskite Quantum' },
+      bifacial: { base: '#172554', stroke: '#60a5fa', grid: 'rgba(147, 197, 253, 0.65)', eff: 1.12, name: 'Bifacial Glass' }
+    };
+
+    // Web Audio Synthesizer
+    let audioCtx = null;
+    let audioEnabled = true;
+
+    function playTone(freq, dur = 0.08, type = 'sine', vol = 0.04) {
+      if (!audioEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + dur);
+      } catch(e) {}
+    }
+
+    function playServoSound() {
+      playTone(380 + Math.random() * 80, 0.04, 'sawtooth', 0.015);
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      document.getElementById('sfxIcon').textContent = audioEnabled ? '🔊' : '🔇';
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+
+    // Dock Tabs Switcher
+    function switchDockTab(tabId) {
+      document.querySelectorAll('.d-tab').forEach((t, i) => {
+        const names = ['celestial', 'cells', 'chassis', 'servos'];
+        if (names[i] === tabId) t.classList.add('active');
+        else t.classList.remove('active');
+      });
+      document.querySelectorAll('.dock-tab-pane').forEach(p => p.classList.remove('active'));
+      document.getElementById(`pane-${tabId}`).classList.add('active');
+      playTone(600, 0.05);
+    }
+
+    // Controls Logic
+    function setSunAngle(deg) {
+      sunAngle = parseInt(deg);
+      updateSunUI();
+      checkTasks();
+    }
+
+    function updateSunUI() {
+      document.getElementById('sunSlider').value = sunAngle;
+      let timeText = 'Zenith';
+      if (sunAngle < 40) timeText = 'Early Dawn';
+      else if (sunAngle < 75) timeText = 'Morning';
+      else if (sunAngle < 105) timeText = 'High Noon';
+      else if (sunAngle < 145) timeText = 'Afternoon';
+      else timeText = 'Sunset';
+      document.getElementById('sunDegBadge').textContent = `${sunAngle}° ${timeText}`;
+    }
+
+    function toggleAuto() {
+      autoTrack = !autoTrack;
+      const btn = document.getElementById('autoToggleBtn');
+      btn.textContent = autoTrack ? '✓ CLOSED-LOOP AUTO' : 'MANUAL OVERRIDE';
+      btn.style.color = autoTrack ? '#22c55e' : '#94a3b8';
+      btn.style.borderColor = autoTrack ? '#22c55e' : 'var(--border)';
+      playTone(autoTrack ? 750 : 350, 0.1);
+    }
+
+    function setManualServo(val) {
+      manualAngle = parseInt(val);
+      document.getElementById('manualServoChip').textContent = `${val}°`;
+      if (!autoTrack) {
+        panelAngle = manualAngle;
+        playServoSound();
+      }
+    }
+
+    function setServoSpeed(val, label) {
+      servoSpeed = val;
+      document.querySelectorAll('#pane-servos .opt-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.getElementById('slewChip').textContent = label.split(' ')[0];
+      playTone(550, 0.06);
+    }
+
+    function setEphemeris() {
+      servoSpeed = 0.01;
+      document.querySelectorAll('#pane-servos .opt-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.getElementById('slewChip').textContent = '1.0°/s Ephem';
+      playTone(500, 0.08);
+    }
+
+    function setEnvironment(env) {
+      environment = env;
+      document.querySelectorAll('#pane-celestial .opt-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`env-${env}`).classList.add('active');
+      playTone(650, 0.08);
+      checkTasks();
+    }
+
+    function setCellTech(tech) {
+      cellTech = tech;
+      document.querySelectorAll('#pane-cells .opt-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`cell-${tech}`).classList.add('active');
+      playTone(700, 0.08);
+      triggerCustomTask();
+    }
+
+    function setChassisSkin(skin) {
+      chassisSkin = skin;
+      document.querySelectorAll('#pane-chassis .opt-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`skin-${skin}`).classList.add('active');
+      playTone(800, 0.08);
+      triggerCustomTask();
+    }
+
+    function triggerCustomTask() {
+      tasks[2] = true;
+      document.getElementById('task3').classList.add('done');
+    }
+
+    function checkTasks() {
+      // Task 1: Morning Sun Lock
+      if (sunAngle >= 30 && sunAngle <= 45 && Math.abs(panelAngle - sunAngle) < 3.5) {
+        if (!tasks[0]) {
+          tasks[0] = true;
+          document.getElementById('task1').classList.add('done');
+          playTone(880, 0.2);
+        }
+      }
+    }
+
+    function claimBadge() {
+      tasks = [true, true, true];
+      document.getElementById('task1').classList.add('done');
+      document.getElementById('task2').classList.add('done');
+      document.getElementById('task3').classList.add('done');
+      playTone(920, 0.3, 'sine');
+      setTimeout(() => playTone(1180, 0.4, 'triangle'), 150);
+
+      const btn = document.getElementById('claimBadgeBtn');
+      btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+      btn.innerHTML = '<span>🎉 LAB 1 MASTERED! Badge Claimed</span>';
+
+      // Save to localStorage
+      try {
+        let rec = JSON.parse(localStorage.getItem('day2_redesigned_mastered') || '[]');
+        if (!rec.includes(1)) {
+          rec.push(1);
+          localStorage.setItem('day2_redesigned_mastered', JSON.stringify(rec));
+        }
+      } catch(e) {}
+    }
+
+    function resetDefaults() {
+      sunAngle = 45;
+      panelAngle = 90;
+      autoTrack = true;
+      environment = 'clear';
+      cellTech = 'mono';
+      chassisSkin = 'nasa';
+      servoSpeed = 0.08;
+      updateSunUI();
+      document.getElementById('autoToggleBtn').textContent = '✓ CLOSED-LOOP AUTO';
+      document.getElementById('autoToggleBtn').style.color = '#22c55e';
+      playTone(400, 0.1);
+    }
+
+    // Direct Mouse & Touch Dragging for Sun
+    function getCanvasCoordinates(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: (clientX - rect.left) * (canvas.width / rect.width),
+        y: (clientY - rect.top) * (canvas.height / rect.height)
+      };
+    }
+
+    function getSunCoords(w, h) {
+      const sunRad = (sunAngle * Math.PI) / 180;
+      return {
+        x: (w / 2) - Math.cos(sunRad) * (w * 0.42),
+        y: (h * 0.72) - Math.sin(sunRad) * (h * 0.58)
+      };
+    }
+
+    canvas.addEventListener('mousedown', e => {
+      const pos = getCanvasCoordinates(e);
+      const sun = getSunCoords(canvas.width, canvas.height);
+      if (Math.hypot(pos.x - sun.x, pos.y - sun.y) < 45) {
+        isDraggingSun = true;
+        playTone(600, 0.05);
+      }
+    });
+
+    window.addEventListener('mousemove', e => {
+      if (!isDraggingSun) return;
+      const pos = getCanvasCoordinates(e);
+      const cx = canvas.width / 2;
+      const cy = canvas.height * 0.72;
+      const dx = pos.x - cx;
+      const dy = cy - pos.y;
+      let angleRad = Math.atan2(dy, -dx);
+      if (angleRad < 0) angleRad = 0;
+      if (angleRad > Math.PI) angleRad = Math.PI;
+      sunAngle = Math.round((angleRad * 180) / Math.PI);
+      updateSunUI();
+      checkTasks();
+    });
+
+    window.addEventListener('mouseup', () => { isDraggingSun = false; });
+
+    // Touch Support
+    canvas.addEventListener('touchstart', e => {
+      const pos = getCanvasCoordinates(e);
+      const sun = getSunCoords(canvas.width, canvas.height);
+      if (Math.hypot(pos.x - sun.x, pos.y - sun.y) < 55) {
+        isDraggingSun = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', e => {
+      if (!isDraggingSun) return;
+      const pos = getCanvasCoordinates(e);
+      const cx = canvas.width / 2;
+      const cy = canvas.height * 0.72;
+      const dx = pos.x - cx;
+      const dy = cy - pos.y;
+      let angleRad = Math.atan2(dy, -dx);
+      if (angleRad < 0) angleRad = 0;
+      if (angleRad > Math.PI) angleRad = Math.PI;
+      sunAngle = Math.round((angleRad * 180) / Math.PI);
+      updateSunUI();
+      checkTasks();
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => { isDraggingSun = false; });
+
+    // Dynamic Main Rendering Engine
+    let gleamOffset = 0;
+
+    function draw() {
+      // Resize check
+      if (canvas.width !== canvas.clientWidth) {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+      }
+
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // 1. Sky & Celestial Atmosphere
+      let skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+      if (environment === 'space') {
+        skyGrad.addColorStop(0, '#030712');
+        skyGrad.addColorStop(0.6, '#080d1a');
+        skyGrad.addColorStop(1, '#0f172a');
+      } else if (environment === 'golden') {
+        skyGrad.addColorStop(0, '#7c2d12');
+        skyGrad.addColorStop(0.4, '#c2410c');
+        skyGrad.addColorStop(0.7, '#ea580c');
+        skyGrad.addColorStop(1, '#fef08a');
+      } else if (environment === 'cloud') {
+        skyGrad.addColorStop(0, '#334155');
+        skyGrad.addColorStop(0.5, '#475569');
+        skyGrad.addColorStop(1, '#94a3b8');
+      } else {
+        // Clear Day
+        skyGrad.addColorStop(0, '#0284c7');
+        skyGrad.addColorStop(0.65, '#38bdf8');
+        skyGrad.addColorStop(1, '#fef08a');
+      }
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Starfield in Space
+      if (environment === 'space') {
+        ctx.fillStyle = '#ffffff';
+        for (let i = 0; i < 40; i++) {
+          const sx = (Math.sin(i * 99) * 0.5 + 0.5) * w;
+          const sy = (Math.cos(i * 33) * 0.5 + 0.5) * (h * 0.65);
+          ctx.beginPath(); ctx.arc(sx, sy, 1.2, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+
+      // 2. Sun Coordinates
+      const sun = getSunCoords(w, h);
+      const sunX = sun.x;
+      const sunY = sun.y;
+
+      // Sun Flares & Corona Glow
+      const pulse = Math.sin(Date.now() * 0.003) * 4;
+      ctx.fillStyle = environment === 'golden' ? 'rgba(251, 146, 60, 0.45)' : 'rgba(254, 240, 138, 0.35)';
+      ctx.beginPath(); ctx.arc(sunX, sunY, 40 + pulse, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = environment === 'golden' ? '#fb923c' : '#fef08a';
+      ctx.beginPath(); ctx.arc(sunX, sunY, 22, 0, Math.PI * 2); ctx.fill();
+
+      // Sun Corona Edge Ring
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(sunX, sunY, 23, 0, Math.PI * 2); ctx.stroke();
+
+      // Volumetric Light Beams from Sun to Heliostat
+      const baseX = w / 2;
+      const baseY = h * 0.76;
+      const pivotY = baseY - 55;
+
+      ctx.save();
+      const beamGrad = ctx.createLinearGradient(sunX, sunY, baseX, pivotY);
+      beamGrad.addColorStop(0, 'rgba(254, 240, 138, 0.35)');
+      beamGrad.addColorStop(1, 'rgba(254, 240, 138, 0.02)');
+      ctx.fillStyle = beamGrad;
+      ctx.beginPath();
+      ctx.moveTo(sunX - 16, sunY);
+      ctx.lineTo(baseX - 60, pivotY);
+      ctx.lineTo(baseX + 60, pivotY);
+      ctx.lineTo(sunX + 16, sunY);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // 3. Servo Auto-Tracking Kinematics Loop
+      if (autoTrack) {
+        const diff = sunAngle - panelAngle;
+        if (Math.abs(diff) > 0.4) {
+          panelAngle += diff * servoSpeed;
+          playServoSound();
+        }
+      }
+
+      // 4. Ground Terrain & Foundation
+      ctx.fillStyle = environment === 'space' ? '#090d16' : '#1e293b';
+      ctx.fillRect(0, baseY, w, h - baseY);
+
+      // Grass / Base Grid Texture
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 1;
+      for (let gx = 0; gx < w; gx += 40) {
+        ctx.beginPath(); ctx.moveTo(gx, baseY); ctx.lineTo(gx, h); ctx.stroke();
+      }
+
+      // Concrete / Alloy Mount Pad
+      ctx.fillStyle = '#334155';
+      ctx.fillRect(baseX - 45, baseY - 12, 90, 12);
+      ctx.fillStyle = '#475569';
+      ctx.fillRect(baseX - 35, baseY - 18, 70, 6);
+
+      // Heliostat Tower Column (Chassis Skin)
+      const skin = skins[chassisSkin] || skins.nasa;
+      ctx.fillStyle = skin.mast;
+      ctx.fillRect(baseX - 14, pivotY, 28, baseY - pivotY - 18);
+
+      // Chassis Detail Lines
+      ctx.strokeStyle = skin.bracket;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(baseX - 14, pivotY, 28, baseY - pivotY - 18);
+
+      // Micro-Servo Motor Gearbox (Pivot Joint)
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath(); ctx.arc(baseX, pivotY, 18, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = skin.bracket;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Rotating Gear Indicator
+      ctx.fillStyle = skin.highlight;
+      ctx.beginPath(); ctx.arc(baseX, pivotY, 6, 0, Math.PI * 2); ctx.fill();
+
+      // 5. Articulated Photovoltaic Panel Face
+      ctx.save();
+      ctx.translate(baseX, pivotY);
+      // Rotation angle
+      const rotRad = ((panelAngle - 90) * Math.PI) / 180;
+      ctx.rotate(rotRad);
+
+      const cell = cells[cellTech] || cells.mono;
+
+      // Panel Aluminum Frame & Backing
+      ctx.fillStyle = skin.bracket;
+      ctx.fillRect(-76, -14, 152, 28);
+      ctx.strokeStyle = skin.highlight;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(-76, -14, 152, 28);
+
+      // Photovoltaic Wafer Cells Surface
+      ctx.fillStyle = cell.base;
+      ctx.fillRect(-72, -10, 144, 20);
+      ctx.strokeStyle = cell.stroke;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(-72, -10, 144, 20);
+
+      // Silicon Wafer Grid Busbars
+      ctx.strokeStyle = cell.grid;
+      ctx.lineWidth = 1;
+      for (let px = -60; px <= 60; px += 20) {
+        ctx.beginPath(); ctx.moveTo(px, -10); ctx.lineTo(px, 10); ctx.stroke();
+      }
+      ctx.beginPath(); ctx.moveTo(-70, 0); ctx.lineTo(70, 0); ctx.stroke();
+
+      // Dynamic Specular Gleam Glint (when perpendicular to Sun)
+      const angleDelta = Math.abs(panelAngle - sunAngle);
+      if (angleDelta < 20) {
+        gleamOffset = (gleamOffset + 2) % 180;
+        const gleamX = -80 + gleamOffset;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+        ctx.fillRect(gleamX, -10, 20, 20);
+      }
+
+      // Dual LDR Optical Sensor Horns
+      // Left LDR
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath(); ctx.arc(-68, -18, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(-68, -18, 2, 0, Math.PI * 2); ctx.fill();
+
+      // Right LDR
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath(); ctx.arc(68, -18, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(68, -18, 2, 0, Math.PI * 2); ctx.fill();
+
+      // Optical Field-of-View Cones
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.2)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(-68, -18); ctx.lineTo(-85, -45); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(68, -18); ctx.lineTo(85, -45); ctx.stroke();
+
+      ctx.restore();
+
+      // 6. Power & Physics Calculations
+      let baseIrradiance = 100;
+      if (environment === 'golden') baseIrradiance = 62;
+      else if (environment === 'cloud') baseIrradiance = 32;
+      else if (environment === 'space') baseIrradiance = 136;
+
+      const cosFactor = Math.max(0, Math.cos((angleDelta * Math.PI) / 180));
+      const power = Math.round(cosFactor * baseIrradiance * cell.eff);
+
+      // LDR Resistance simulation
+      const ldrLeftVal = (2.5 + Math.sin(((sunAngle - 40) * Math.PI) / 180) * 1.8).toFixed(2);
+      const ldrRightVal = (2.5 + Math.sin(((140 - sunAngle) * Math.PI) / 180) * 1.8).toFixed(2);
+      const diffVal = Math.abs(ldrLeftVal - ldrRightVal).toFixed(2);
+
+      // Accumulate energy
+      cumWattHours += (power / 36000);
+
+      // Update Telemetry Numbers
+      document.getElementById('statWatts').innerHTML = `${power} <small>WATTS</small>`;
+      document.getElementById('statAngles').innerHTML = `${Math.round(sunAngle)}° <small>/ ${Math.round(panelAngle)}°</small>`;
+      document.getElementById('statDiff').innerHTML = `${diffVal} <small>kΩ (${Math.abs(panelAngle - sunAngle) < 4 ? 'LOCKED' : 'SEEKING'})</small>`;
+      document.getElementById('statEnergy').innerHTML = `${cumWattHours.toFixed(2)} <small>Watt-Hours</small>`;
+
+      // Check MPPT Task
+      if (power >= 90 && environment === 'clear') {
+        if (!tasks[1]) {
+          tasks[1] = true;
+          document.getElementById('task2').classList.add('done');
+          playTone(1050, 0.2);
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>

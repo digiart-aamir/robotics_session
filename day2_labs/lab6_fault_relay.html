@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 6: Speed-Wire Fault Hunter | CS Technologies Day 2 Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070d18;
+      --card-bg: #0f192c;
+      --rob-orange: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e2e4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #0f192c;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .back-btn {
+      color: var(--rob-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .main-wrap {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .diagnostic-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 800px) { .diagnostic-grid { grid-template-columns: 1fr; } }
+    .dmm-box {
+      background: #1e293b;
+      border: 2px solid #f59e0b;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .probe-btn {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono';
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-align: left;
+    }
+    .probe-btn:hover { border-color: #f59e0b; }
+    .probe-btn.active { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-btn">← Back to Day 2 Lab Console</a>
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #a855f7;">● STANDALONE LAB UNIT 6</div>
+  </header>
+
+  <main class="main-wrap">
+    <div>
+      <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #a855f7; font-weight: 700;">MODULE 12 · REVERSE-ENGINEERING DIAGNOSTICS</span>
+      <h1 style="font-family: 'Outfit'; font-size: 2rem; margin-top: 0.2rem;">Speed-Wire Fault Hunter Relay</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem;">
+        Diagnose the mystery hardware fault using multimeter test probes, isolate the open loop, and execute the physical component repair.
+      </p>
+    </div>
+
+    <div class="diagnostic-grid">
+      <!-- Circuit Probe Selection -->
+      <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem;">
+        <h3 style="font-family: 'Outfit'; font-size: 1.1rem; margin-bottom: 1rem;">Select Test Point (Probe Target)</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <button class="probe-btn active" id="p1" onclick="setProbe('TP1', 3.02, 'Battery VCC Terminal')">🔴 TP1: Battery Supply (+3V Rail)</button>
+          <button class="probe-btn" id="p2" onclick="setProbe('TP2', 3.00, 'Resistor Output')">🔴 TP2: After 330Ω Limiting Resistor</button>
+          <button class="probe-btn" id="p3" onclick="setProbe('TP3', 0.00, 'LED Diode Anode (FAULT DETECTED)')">🔴 TP3: LED Diode Anode</button>
+          <button class="probe-btn" id="p4" onclick="setProbe('TP4', 0.00, 'Ground Return Rail')">🔴 TP4: Ground Return Rail (0V)</button>
+        </div>
+
+        <div style="margin-top: 1.5rem; background: rgba(255,255,255,0.03); padding: 0.85rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.4; color: #94a3b8;">
+          🔍 <strong>Diagnostic Logic:</strong> If voltage is present at TP2 (+3.00V) but drops to 0.00V at TP3, current cannot pass through the diode, indicating a <strong>Reversed Diode Polarity</strong> fault!
+        </div>
+      </div>
+
+      <!-- Virtual DMM -->
+      <div class="dmm-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; font-family: 'Outfit'; font-weight: 800; font-size: 0.9rem; color: #f59e0b;">
+          <span>DIGITAL MULTIMETER</span>
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #22c55e;">DC VOLTS</span>
+        </div>
+
+        <div id="dmmScreen" style="background: #000; color: #38bdf8; font-family: 'JetBrains Mono'; font-size: 2rem; font-weight: 800; padding: 0.85rem; border-radius: 6px; text-align: right;">
+          3.02 V
+        </div>
+
+        <div style="font-size: 0.78rem; color: #94a3b8;">
+          Active Probe: <strong id="activeTarget" style="color: #fff;">Battery VCC Terminal</strong>
+        </div>
+
+        <button style="margin-top: 0.5rem; background: #22c55e; color: #000; font-weight: 800; border: none; padding: 0.75rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem;" onclick="fixFault()">
+          🔧 Flip LED Polarity (Execute Fix)
+        </button>
+
+        <div id="fixStatus" style="font-size: 0.8rem; text-align: center; font-weight: 700; color: #f59e0b; margin-top: 0.25rem;">
+          Circuit Status: Fault Present (LED OFF)
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let faultFixed = false;
+
+    function setProbe(id, val, desc) {
+      document.querySelectorAll('.probe-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(id.toLowerCase().replace('tp', 'p'));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      document.getElementById('activeTarget').textContent = desc;
+
+      const screen = document.getElementById('dmmScreen');
+      if (id === 'TP3' && faultFixed) {
+        screen.textContent = '2.14 V';
+        screen.style.color = '#22c55e';
+      } else {
+        screen.textContent = val.toFixed(2) + ' V';
+        screen.style.color = val > 0 ? '#38bdf8' : '#ef4444';
+      }
+    }
+
+    function fixFault() {
+      faultFixed = true;
+      document.getElementById('fixStatus').textContent = '✓ FAULT FIXED! LED Glowing Bright (Circuit Complete)';
+      document.getElementById('fixStatus').style.color = '#22c55e';
+      alert('🎉 CONGRATULATIONS!\nYou accurately diagnosed the reversed LED polarity fault and restored circuit operation!');
+    }
+  </script>
+</body>
+</html>

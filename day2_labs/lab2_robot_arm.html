@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 2: Mobile Robot Arm Vehicle &amp; Claw | CS Technologies Day 2 Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060b14;
+      --card-bg: #0d1527;
+      --card-elevated: #152038;
+      --panel-bg: #050913;
+      --rob-orange: #f59e0b;
+      --neon-cyan: #06b6d4;
+      --neon-green: #22c55e;
+      --neon-red: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --border: #1a2742;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-elevated: #f1f5f9;
+      --panel-bg: #f8fafc;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --border: #cbd5e1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Executive Top Bar */
+    header {
+      background: rgba(9, 16, 29, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .back-btn {
+      color: var(--neon-cyan);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      background: rgba(6, 182, 212, 0.1);
+      transition: all 0.2s;
+    }
+    .back-btn:hover {
+      background: rgba(6, 182, 212, 0.2);
+      transform: translateX(-2px);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .h-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.38rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .h-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-cyan);
+    }
+
+    /* Main Container */
+    .main-wrap {
+      flex: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Title Banner */
+    .lab-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+    .badge-capsule {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+    .lab-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .lab-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 740px;
+      line-height: 1.45;
+      margin-top: 0.25rem;
+    }
+
+    /* Telemetry HUD Strip */
+    .telemetry-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.85rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--neon-cyan);
+    }
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stat-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+    .stat-val small {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Main Split Stage Grid */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .lab-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Simulation Arena Card */
+    .sim-arena-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #040812;
+    }
+    canvas#armCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Interactive Key Control Bar */
+    .key-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .key-pill-group {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+    .key-chip {
+      background: var(--card-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s;
+    }
+    .key-chip:hover, .key-chip.active {
+      border-color: var(--neon-cyan);
+      background: rgba(6, 182, 212, 0.22);
+      color: var(--neon-cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+    }
+    .key-chip:active {
+      transform: translateY(1px);
+    }
+
+    /* Customization Workbench Panel */
+    .custom-dock {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    .dock-tabs {
+      display: flex;
+      background: var(--card-elevated);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+    .d-tab {
+      flex: 1;
+      padding: 0.7rem 0.85rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .d-tab:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .d-tab.active {
+      color: var(--neon-cyan);
+      border-bottom-color: var(--neon-cyan);
+      background: rgba(6, 182, 212, 0.08);
+    }
+
+    .dock-content {
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    .dock-tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    .dock-tab-pane.active {
+      display: flex;
+    }
+
+    .ctrl-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .ctrl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .val-badge {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--neon-cyan);
+      font-weight: 700;
+    }
+    .sim-slider {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      background: #1e293b;
+      border-radius: 9999px;
+      outline: none;
+    }
+    .sim-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--neon-cyan);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+      border: 2px solid #ffffff;
+    }
+
+    .opt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+    .opt-btn {
+      background: var(--card-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.75rem;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      transition: all 0.2s;
+    }
+    .opt-btn:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .opt-btn.active {
+      border-color: var(--neon-cyan);
+      background: rgba(6, 182, 212, 0.12);
+    }
+    .opt-btn strong {
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .opt-btn span {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* Action Grip Button */
+    .btn-claw {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #000;
+      font-weight: 800;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.35);
+      transition: all 0.2s;
+    }
+    .btn-claw.clamping {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    }
+
+    /* Mission Objectives */
+    .task-card-group {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .task-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    .task-row.done {
+      background: rgba(34, 197, 94, 0.09);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: #86efac;
+    }
+    .task-ico {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.72rem;
+      flex-shrink: 0;
+    }
+    .task-row.done .task-ico {
+      border-color: #22c55e;
+      background: #22c55e;
+      color: #000;
+    }
+
+    .btn-claim {
+      background: linear-gradient(135deg, #06b6d4, #0284c7);
+      color: #000;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      border: none;
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-claim:hover {
+      background: linear-gradient(135deg, #38bdf8, #06b6d4);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <a href="index.html" class="back-btn">← Back to Day 2 Console</a>
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.82rem; color: var(--neon-cyan); font-weight: 700;">
+      ● STANDALONE LAB UNIT 2 · MOBILE ROBOT VEHICLE
+    </div>
+    <div class="header-actions">
+      <button class="h-btn" id="sfxBtn" onclick="toggleAudio()" title="Sound Effects">
+        <span id="sfxIcon">🔊</span> Audio
+      </button>
+      <button class="h-btn" onclick="toggleTheme()" title="Toggle Dark/Light">
+        <span>☀️</span> Theme
+      </button>
+      <button class="h-btn" onclick="toggleFullscreen()" title="Fullscreen">
+        <span>⛶</span> Full
+      </button>
+    </div>
+  </header>
+
+  <main class="main-wrap">
+    <!-- Lab Title Banner -->
+    <div class="lab-banner">
+      <div>
+        <div class="badge-capsule">
+          <span>🦾</span> MODULE 02 · MOBILE VEHICLE KINEMATICS
+        </div>
+        <h1 class="lab-title">Mobile Robot Arm Vehicle &amp; Pneumatic Claw</h1>
+        <p class="lab-desc">
+          Autonomous 3-DOF mobile manipulator AGV. <strong>Movement 1:</strong> Use <strong>Left / Right Arrow Keys (← / →)</strong> or A/D keys to drive the <strong>whole vehicle chassis</strong> across the track. <strong>Movement 2:</strong> Use <strong>Up / Down Arrow Keys (↑ / ↓)</strong> to articulate the <strong>Shoulder Boom (θ₁)</strong>. <strong>Movement 3:</strong> Use <strong>W / S Keys</strong> to articulate the <strong>Elbow Forearm (θ₂)</strong>. Press <strong>[Spacebar]</strong> to actuate the pneumatic claw!
+        </p>
+      </div>
+      <div>
+        <button class="h-btn" onclick="resetPayload()" style="color: var(--neon-cyan); border-color: rgba(6, 182, 212, 0.4);">
+          ↺ Reset Cargo Core
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Telemetry Strip: All 3 Movements + Gripper + Cargo -->
+    <div class="telemetry-row">
+      <div class="stat-card" style="border-left: 3px solid #06b6d4;">
+        <span class="stat-label">Movement 1: Vehicle Base (X)</span>
+        <div class="stat-val" id="statVehicleX">X: 250 <small>mm (TRACK)</small></div>
+      </div>
+      <div class="stat-card" style="border-left: 3px solid #f59e0b;">
+        <span class="stat-label">Movement 2: Shoulder (θ₁)</span>
+        <div class="stat-val" id="statShoulder">65° <small>/ 160° (BOOM)</small></div>
+      </div>
+      <div class="stat-card" style="border-left: 3px solid #38bdf8;">
+        <span class="stat-label">Movement 3: Elbow (θ₂)</span>
+        <div class="stat-val" id="statElbow">50° <small>/ 135° (FOREARM)</small></div>
+      </div>
+      <div class="stat-card" style="border-left: 3px solid #22c55e;">
+        <span class="stat-label">Pneumatic Gripper State</span>
+        <div class="stat-val" id="statClaw">OPEN <small>(READY)</small></div>
+      </div>
+      <div class="stat-card" style="border-left: 3px solid #a855f7;">
+        <span class="stat-label">Cargo Delivered to Bay</span>
+        <div class="stat-val" id="statDelivered">0 <small>/ 3 CORES</small></div>
+      </div>
+    </div>
+
+    <!-- Main Grid: Interactive Canvas Stage & Controls -->
+    <div class="lab-grid">
+      
+      <!-- Left Column: Canvas Arena & Keyboard Drive Bar -->
+      <div class="sim-arena-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="font-size: 0.85rem; color: var(--neon-cyan); display: flex; align-items: center; gap: 0.4rem;">
+            <span>🚜</span> 3-DOF MOBILE MANIPULATOR (VEHICLE + SHOULDER + ELBOW)
+          </strong>
+          <span style="font-family: 'JetBrains Mono'; font-size: 0.72rem; color: var(--text-dim);" id="kinematicsModeText">
+            3 MOVEMENTS ACTIVE: ←/→ TRACK · ↑/↓ SHOULDER · W/S ELBOW
+          </span>
+        </div>
+
+        <div class="canvas-container" id="canvasWrap">
+          <canvas id="armCanvas" width="680" height="380"></canvas>
+        </div>
+
+        <!-- Interactive Keyboard & Vehicle Drive Bar: 3 Functional Movements -->
+        <div class="key-bar">
+          <div class="key-pill-group">
+            <span style="font-size: 0.72rem; color: var(--text-dim);">Track:</span>
+            <button class="key-chip" id="k-left" onclick="driveVehicle(-14)" title="Left Arrow or A">◀ Left (←/A)</button>
+            <button class="key-chip" id="k-right" onclick="driveVehicle(+14)" title="Right Arrow or D">Right (→/D) ▶</button>
+          </div>
+          <div class="key-pill-group">
+            <span style="font-size: 0.72rem; color: var(--text-dim);">Shoulder θ₁:</span>
+            <button class="key-chip" id="k-up" onclick="stepShoulder(+4)" title="Up Arrow">▲ Up (↑)</button>
+            <button class="key-chip" id="k-down" onclick="stepShoulder(-4)" title="Down Arrow">▼ Down (↓)</button>
+          </div>
+          <div class="key-pill-group">
+            <span style="font-size: 0.72rem; color: var(--text-dim);">Elbow θ₂:</span>
+            <button class="key-chip" id="k-w" onclick="stepElbow(+4)" title="W Key">⮥ Raise (W)</button>
+            <button class="key-chip" id="k-s" onclick="stepElbow(-4)" title="S Key">⮦ Lower (S)</button>
+          </div>
+          <div class="key-pill-group">
+            <button class="key-chip" id="k-space" onclick="toggleClaw()" style="border-color: rgba(34, 197, 94, 0.4); color: #22c55e;">
+              [Space] 🗜️ Actuate Claw
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Multi-Tab Customization Studio -->
+      <div class="custom-dock">
+        <!-- Studio Tabs -->
+        <div class="dock-tabs">
+          <button class="d-tab active" onclick="switchDockTab('drive')">🚜 3-Axis Drive</button>
+          <button class="d-tab" onclick="switchDockTab('skins')">🎨 AGV Skins</button>
+          <button class="d-tab" onclick="switchDockTab('effector')">🗜️ Grippers</button>
+          <button class="d-tab" onclick="switchDockTab('payload')">⚡ Cores</button>
+        </div>
+
+        <div class="dock-content">
+          
+          <!-- TAB 1: VEHICLE DRIVE & 3-AXIS ARM SLIDERS -->
+          <div class="dock-tab-pane active" id="pane-drive">
+            <!-- Movement 1: Vehicle Position X -->
+            <div class="ctrl-group">
+              <div class="ctrl-header">
+                <span>🚜 Movement 1: Whole Vehicle Track (X-Axis):</span>
+                <span class="val-badge" id="vehPosBadge">250 mm</span>
+              </div>
+              <input type="range" id="vehSlider" min="110" max="470" value="250" class="sim-slider" oninput="setVehicleX(this.value)">
+              <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono';">
+                <span>110 mm (Conveyor Bay)</span>
+                <span>250 mm (Midway)</span>
+                <span>470 mm (Cargo Bay)</span>
+              </div>
+            </div>
+
+            <!-- Movement 2: Shoulder Joint Boom (θ1) -->
+            <div class="ctrl-group">
+              <div class="ctrl-header">
+                <span>🦾 Movement 2: Shoulder Boom Servo (θ₁):</span>
+                <span class="val-badge" id="shoulderBadge">65°</span>
+              </div>
+              <input type="range" id="shoulderSlider" min="20" max="160" value="65" class="sim-slider" oninput="setShoulder(this.value)">
+              <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono';">
+                <span>20° (Forward Reach)</span>
+                <span>90° (Upright)</span>
+                <span>160° (Back Reach)</span>
+              </div>
+            </div>
+
+            <!-- Movement 3: Elbow Joint Forearm (θ2) -->
+            <div class="ctrl-group">
+              <div class="ctrl-header">
+                <span>🦾 Movement 3: Elbow Forearm Servo (θ₂):</span>
+                <span class="val-badge" id="elbowBadge">50°</span>
+              </div>
+              <input type="range" id="elbowSlider" min="15" max="135" value="50" class="sim-slider" oninput="setElbow(this.value)">
+              <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono';">
+                <span>15° (Extended)</span>
+                <span>50° (Neutral)</span>
+                <span>135° (Full Curl)</span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.6rem; margin-top: 0.35rem; flex-wrap: wrap;">
+              <button class="btn-claw" id="clawActionBtn" style="flex: 1;" onclick="toggleClaw()">
+                🗜️ CLAMP GRIPPER (Space)
+              </button>
+              <button class="h-btn" onclick="alignToConveyor()" style="color: #06b6d4; border-color: rgba(6, 182, 212, 0.4);" title="Automatically align arm above the cargo core">
+                🎯 Auto-Align Core
+              </button>
+              <button class="h-btn" onclick="resetPayload()">
+                ↺ Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- TAB 2: AGV CHASSIS SKINS -->
+          <div class="dock-tab-pane" id="pane-skins">
+            <div class="ctrl-group">
+              <span class="ctrl-header">Mobile AGV Chassis Skin:</span>
+              <div class="opt-grid">
+                <button class="opt-btn active" id="skin-kuka" onclick="setSkin('kuka')">
+                  <strong>🏭 Industrial Kuka Orange</strong>
+                  <span>High-visibility factory robotics</span>
+                </button>
+                <button class="opt-btn" id="skin-artemis" onclick="setSkin('artemis')">
+                  <strong>🚀 NASA Artemis Canadarm</strong>
+                  <span>White &amp; gold aerospace foil</span>
+                </button>
+                <button class="opt-btn" id="skin-cyber" onclick="setSkin('cyber')">
+                  <strong>⚡ Cyber Academy Teal</strong>
+                  <span>Matte carbon &amp; cyan headlights</span>
+                </button>
+                <button class="opt-btn" id="skin-hazard" onclick="setSkin('hazard')">
+                  <strong>☣️ Bio-Hazard Stripes</strong>
+                  <span>Heavy industrial hazard livery</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: END-EFFECTOR GRIPPER TECH -->
+          <div class="dock-tab-pane" id="pane-effector">
+            <div class="ctrl-group">
+              <span class="ctrl-header">End-Effector Tooling:</span>
+              <div class="opt-grid">
+                <button class="opt-btn active" id="eff-claw" onclick="setEffector('claw')">
+                  <strong>🗜️ 2-Jaw Pneumatic Claw</strong>
+                  <span>Dual servo-driven fingers</span>
+                </button>
+                <button class="opt-btn" id="eff-magnet" onclick="setEffector('magnet')">
+                  <strong>🧲 Electromagnetic Plaque</strong>
+                  <span>Magnetic solenoid flux latch</span>
+                </button>
+                <button class="opt-btn" id="eff-suction" onclick="setEffector('suction')">
+                  <strong>🫧 Pneumatic Suction Cup</strong>
+                  <span>Vacuum negative-pressure pick</span>
+                </button>
+                <button class="opt-btn" id="eff-roller" onclick="setEffector('roller')">
+                  <strong>🎯 Soft Adaptive Gripper</strong>
+                  <span>Compliant silicone grip</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: PAYLOAD CORE TECHNOLOGY -->
+          <div class="dock-tab-pane" id="pane-payload">
+            <div class="ctrl-group">
+              <span class="ctrl-header">Conveyor Payload Battery Type:</span>
+              <div class="opt-grid">
+                <button class="opt-btn active" id="pay-lion" onclick="setPayloadType('lion')">
+                  <strong>🔋 Standard Li-Ion Pack</strong>
+                  <span>Standard 48V power cell</span>
+                </button>
+                <button class="opt-btn" id="pay-plasma" onclick="setPayloadType('plasma')">
+                  <strong>⚡ Plasma Fusion Core</strong>
+                  <span>Pulsing neon blue energy cell</span>
+                </button>
+                <button class="opt-btn" id="pay-quantum" onclick="setPayloadType('quantum')">
+                  <strong>🔮 Quantum Isotope Rod</strong>
+                  <span>Glowing magenta isotope</span>
+                </button>
+                <button class="opt-btn" id="pay-gold" onclick="setPayloadType('gold')">
+                  <strong>🏆 Titanium Gold Ingot</strong>
+                  <span>Ultra-dense aerospace alloy</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mission Verification Checklist: 3 Functional Movements -->
+          <div class="task-card-group">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em;">
+              Cadet 3-DOF AGV Objectives
+            </div>
+            <div class="task-row" id="task1">
+              <div class="task-ico">✓</div>
+              <div><strong>1. Movement 1 - Drive AGV Base:</strong> Use <strong>Left / Right Arrow (← / →)</strong> or A/D keys to drive rover to conveyor ($X \le 160\text{ mm}$).</div>
+            </div>
+            <div class="task-row" id="task2">
+              <div class="task-ico">✓</div>
+              <div><strong>2. Movements 2 &amp; 3 - Articulate Arm &amp; Grip:</strong> Use <strong>Up/Down (↑/↓)</strong> for Shoulder, <strong>W/S</strong> for Elbow, then press <strong>[Spacebar]</strong> to clamp cargo!</div>
+            </div>
+            <div class="task-row" id="task3">
+              <div class="task-ico">✓</div>
+              <div><strong>3. Transport to Cargo Bay:</strong> Drive vehicle right to bay ($X \ge 390\text{ mm}$) and press <strong>[Spacebar]</strong> to release &amp; deliver core!</div>
+            </div>
+          </div>
+
+          <!-- Claim Badge Action -->
+          <button class="btn-claim" id="claimBadgeBtn" onclick="claimBadge()">
+            <span>⚡ Verify Bench &amp; Master Lab 2</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('armCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // 3-DOF Simulation State
+    // Movement 1: Vehicle horizontal track translation (110mm = Conveyor, 470mm = Cargo Bay)
+    let vehicleX = 250;
+    // Movement 2: Shoulder boom elevation joint (20° = reach forward/down, 160° = lean back)
+    let shoulder = 65;
+    // Movement 3: Elbow forearm articulation joint (15° = extended, 135° = curled)
+    let elbow = 50;
+
+    // Gripper & Payload state
+    let clawOpen = true;
+    let hasPayload = false;
+    let payloadX = 100;
+    let payloadY = 265;
+    let wheelRotation = 0;
+    let coresDelivered = 0;
+    let skinType = 'kuka';
+    let effectorType = 'claw';
+    let payloadTech = 'lion';
+    let conveyorOffset = 0;
+    let tasks = [false, false, false];
+
+    // Vehicle Skins
+    const armSkins = {
+      kuka: { body: '#f59e0b', frame: '#d97706', accent: '#ffffff', wheel: '#1e293b' },
+      artemis: { body: '#f1f5f9', frame: '#cbd5e1', accent: '#0284c7', wheel: '#334155' },
+      cyber: { body: '#0f172a', frame: '#1e293b', accent: '#06b6d4', wheel: '#0284c7' },
+      hazard: { body: '#eab308', frame: '#ca8a04', accent: '#000000', wheel: '#18181b' }
+    };
+
+    // Payloads
+    const payloads = {
+      lion: { color: '#f59e0b', stroke: '#fff', label: 'LI-ION' },
+      plasma: { color: '#06b6d4', stroke: '#38bdf8', label: 'PLASMA' },
+      quantum: { color: '#a855f7', stroke: '#c084fc', label: 'ISOTOPE' },
+      gold: { color: '#eab308', stroke: '#fef08a', label: 'AU-99' }
+    };
+
+    // Web Audio Synthesizer
+    let audioCtx = null;
+    let audioEnabled = true;
+
+    function playTone(freq, dur = 0.08, type = 'sine', vol = 0.04) {
+      if (!audioEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + dur);
+      } catch(e) {}
+    }
+
+    function playDriveSound() {
+      playTone(160 + (vehicleX % 50) * 2, 0.05, 'sawtooth', 0.025);
+    }
+
+    function playShoulderSound() {
+      playTone(220 + shoulder * 2.4, 0.04, 'sine', 0.022);
+    }
+
+    function playElbowSound() {
+      playTone(360 + elbow * 3.1, 0.04, 'triangle', 0.022);
+    }
+
+    function playClawSound(clamping) {
+      playTone(clamping ? 750 : 420, 0.08, 'square', 0.035);
+      setTimeout(() => playTone(clamping ? 900 : 260, 0.06, 'triangle', 0.03), 40);
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      document.getElementById('sfxIcon').textContent = audioEnabled ? '🔊' : '🔇';
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+
+    function switchDockTab(tabId) {
+      document.querySelectorAll('.d-tab').forEach((t, i) => {
+        const names = ['drive', 'skins', 'effector', 'payload'];
+        if (names[i] === tabId) t.classList.add('active');
+        else t.classList.remove('active');
+      });
+      document.querySelectorAll('.dock-tab-pane').forEach(p => p.classList.remove('active'));
+      document.getElementById(`pane-${tabId}`).classList.add('active');
+      playTone(600, 0.05);
+    }
+
+    // Kinematics calculations: 3 Functional Movements
+    // Movement 1 translates the arm base (armBaseX = vehicleX)
+    // Movement 2 rotates the shoulder boom link (th1)
+    // Movement 3 articulates the elbow forearm link (th2)
+    function getKinematics(w, h) {
+      if (!w) w = canvas.width || 680;
+      if (!h) h = canvas.height || 380;
+      const baseY = h * 0.77;
+      const vehDeckY = baseY - 26; // Top deck of vehicle
+      const armBaseX = vehicleX;
+      const armBaseY = vehDeckY;
+
+      const L1 = 80; // Boom length
+      const L2 = 68; // Forearm length
+
+      // Main Boom Vector
+      const th1 = (shoulder * Math.PI) / 180;
+      const j1x = armBaseX - L1 * Math.cos(th1);
+      const j1y = armBaseY - L1 * Math.sin(th1);
+
+      // Forearm Vector articulated around elbow
+      const th2 = (elbow * Math.PI) / 180;
+      const forearmAngle = th1 - th2;
+      const endX = j1x - L2 * Math.cos(forearmAngle);
+      const endY = j1y - L2 * Math.sin(forearmAngle);
+
+      // Claw tip point (where fingers grasp object)
+      const armAngle = Math.atan2(endY - j1y, endX - j1x);
+      const clawTipX = endX + Math.cos(armAngle) * 18;
+      const clawTipY = endY + Math.sin(armAngle) * 18;
+
+      return { armBaseX, armBaseY, j1x, j1y, endX, endY, baseY, forearmAngle, armAngle, clawTipX, clawTipY };
+    }
+
+    // Quick auto-alignment helper for cadet convenience
+    function alignToConveyor() {
+      setVehicleX(210);
+      setShoulder(50);
+      setElbow(95);
+      playTone(750, 0.12);
+    }
+
+    // ==========================================
+    // MOVEMENT 1: VEHICLE TRACK TRANSLATION (X)
+    // ==========================================
+    function setVehicleX(val) {
+      const oldX = vehicleX;
+      vehicleX = Math.max(110, Math.min(470, parseInt(val)));
+      wheelRotation += (vehicleX - oldX) * 0.15;
+      const slider = document.getElementById('vehSlider');
+      if (slider) slider.value = vehicleX;
+      const badge = document.getElementById('vehPosBadge');
+      if (badge) badge.textContent = `${vehicleX} mm`;
+      const stat = document.getElementById('statVehicleX');
+      if (stat) stat.innerHTML = `X: ${vehicleX} <small>mm (TRACK)</small>`;
+      playDriveSound();
+      checkTasks();
+    }
+
+    function driveVehicle(delta) {
+      setVehicleX(vehicleX + delta);
+    }
+
+    // ==========================================
+    // MOVEMENT 2: SHOULDER BOOM SERVO (θ₁)
+    // ==========================================
+    function setShoulder(deg) {
+      shoulder = Math.max(20, Math.min(160, parseInt(deg)));
+      const slider = document.getElementById('shoulderSlider');
+      if (slider) slider.value = shoulder;
+      const badge = document.getElementById('shoulderBadge');
+      if (badge) badge.textContent = `${shoulder}°`;
+      const stat = document.getElementById('statShoulder');
+      if (stat) stat.innerHTML = `${shoulder}° <small>/ 160° (BOOM)</small>`;
+      playShoulderSound();
+      checkTasks();
+    }
+
+    function stepShoulder(delta) {
+      setShoulder(shoulder + delta);
+    }
+
+    // ==========================================
+    // MOVEMENT 3: ELBOW FOREARM SERVO (θ₂)
+    // ==========================================
+    function setElbow(deg) {
+      elbow = Math.max(15, Math.min(135, parseInt(deg)));
+      const slider = document.getElementById('elbowSlider');
+      if (slider) slider.value = elbow;
+      const badge = document.getElementById('elbowBadge');
+      if (badge) badge.textContent = `${elbow}°`;
+      const stat = document.getElementById('statElbow');
+      if (stat) stat.innerHTML = `${elbow}° <small>/ 135° (FOREARM)</small>`;
+      playElbowSound();
+      checkTasks();
+    }
+
+    function stepElbow(delta) {
+      setElbow(elbow + delta);
+    }
+
+    // ==========================================
+    // PNEUMATIC CLAW & PAYLOAD ACTUATION
+    // ==========================================
+    function toggleClaw() {
+      clawOpen = !clawOpen;
+      const btn = document.getElementById('clawActionBtn');
+      const statClaw = document.getElementById('statClaw');
+
+      if (!clawOpen) {
+        if (btn) {
+          btn.textContent = '✋ RELEASE CLAW (Space)';
+          btn.classList.add('clamping');
+        }
+        if (statClaw) {
+          statClaw.innerHTML = 'CLAMPED <small>(SECURED)</small>';
+          statClaw.style.color = '#ef4444';
+        }
+      } else {
+        if (btn) {
+          btn.textContent = '🗜️ CLAMP GRIPPER (Space)';
+          btn.classList.remove('clamping');
+        }
+        if (statClaw) {
+          statClaw.innerHTML = 'OPEN <small>(READY)</small>';
+          statClaw.style.color = '#22c55e';
+        }
+      }
+
+      playClawSound(!clawOpen);
+
+      const k = getKinematics(canvas.width, canvas.height);
+      const distTip = Math.hypot(k.clawTipX - payloadX, k.clawTipY - payloadY);
+      const distWrist = Math.hypot(k.endX - payloadX, k.endY - payloadY);
+      const dist = Math.min(distTip, distWrist);
+
+      // Generous 65px magnetic grasp radius
+      if (!clawOpen && dist < 65) {
+        hasPayload = true;
+        payloadX = k.clawTipX;
+        payloadY = k.clawTipY;
+        tasks[1] = true;
+        const t2 = document.getElementById('task2');
+        if (t2) t2.classList.add('done');
+        playTone(950, 0.15);
+      } else if (clawOpen && hasPayload) {
+        hasPayload = false;
+        // Check if released over Cargo Bay (right side: vehicleX >= 370 or payloadX >= 370)
+        if (vehicleX >= 370 || payloadX >= 370) {
+          coresDelivered++;
+          const statDel = document.getElementById('statDelivered');
+          if (statDel) statDel.innerHTML = `${coresDelivered} <small>/ 3 CORES</small>`;
+          tasks[2] = true;
+          const t3 = document.getElementById('task3');
+          if (t3) t3.classList.add('done');
+          playTone(880, 0.25);
+          setTimeout(() => playTone(1175, 0.35), 160);
+
+          // Automatically respawn next energy core on conveyor
+          if (coresDelivered < 3) {
+            setTimeout(() => {
+              payloadX = 100;
+              payloadY = k.baseY - 32;
+              playTone(600, 0.1);
+            }, 600);
+          }
+        } else {
+          // Drops to factory floor
+          payloadY = k.baseY - 14;
+        }
+      }
+    }
+
+    function resetPayload() {
+      const k = getKinematics(canvas.width, canvas.height);
+      payloadX = 100;
+      payloadY = k.baseY - 32;
+      hasPayload = false;
+      clawOpen = true;
+      const btn = document.getElementById('clawActionBtn');
+      if (btn) {
+        btn.textContent = '🗜️ CLAMP GRIPPER (Space)';
+        btn.classList.remove('clamping');
+      }
+      const statClaw = document.getElementById('statClaw');
+      if (statClaw) {
+        statClaw.innerHTML = 'OPEN <small>(READY)</small>';
+        statClaw.style.color = '#22c55e';
+      }
+      playTone(500, 0.1);
+    }
+
+    function checkTasks() {
+      // Task 1: Drive AGV into conveyor pick zone
+      if (vehicleX <= 240) {
+        if (!tasks[0]) {
+          tasks[0] = true;
+          const t1 = document.getElementById('task1');
+          if (t1) t1.classList.add('done');
+          playTone(720, 0.1);
+        }
+      }
+    }
+
+    function setSkin(skin) {
+      skinType = skin;
+      document.querySelectorAll('#pane-skins .opt-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`skin-${skin}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      playTone(600, 0.08);
+    }
+
+    function setEffector(eff) {
+      effectorType = eff;
+      document.querySelectorAll('#pane-effector .opt-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`eff-${eff}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      playTone(650, 0.08);
+    }
+
+    function setPayloadType(pay) {
+      payloadTech = pay;
+      document.querySelectorAll('#pane-payload .opt-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`pay-${pay}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      playTone(700, 0.08);
+    }
+
+    function claimBadge() {
+      tasks = [true, true, true];
+      document.querySelectorAll('.task-row').forEach(r => r.classList.add('done'));
+      playTone(920, 0.3, 'sine');
+      setTimeout(() => playTone(1180, 0.4, 'triangle'), 150);
+
+      const btn = document.getElementById('claimBadgeBtn');
+      if (btn) {
+        btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+        btn.innerHTML = '<span>🎉 LAB 2 MASTERED! Badge Claimed</span>';
+      }
+
+      try {
+        let rec = JSON.parse(localStorage.getItem('day2_redesigned_mastered') || '[]');
+        if (!rec.includes(2)) {
+          rec.push(2);
+          localStorage.setItem('day2_redesigned_mastered', JSON.stringify(rec));
+        }
+      } catch(e) {}
+    }
+
+    // KEYBOARD NAVIGATION: 3 Movements Functional!
+    // Movement 1: Left/Right Arrow OR A/D moves Whole Vehicle
+    // Movement 2: Up/Down Arrow moves Shoulder Joint (θ₁)
+    // Movement 3: W/S keys move Elbow Joint (θ₂)
+    // Action: Spacebar or Enter toggles Gripper
+    window.addEventListener('keydown', e => {
+      const k = e.key.toLowerCase();
+
+      if (e.key === 'ArrowLeft' || k === 'a') {
+        e.preventDefault();
+        driveVehicle(-14);
+        highlightKey('k-left');
+      } else if (e.key === 'ArrowRight' || k === 'd') {
+        e.preventDefault();
+        driveVehicle(+14);
+        highlightKey('k-right');
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        stepShoulder(+4);
+        highlightKey('k-up');
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        stepShoulder(-4);
+        highlightKey('k-down');
+      } else if (k === 'w') {
+        e.preventDefault();
+        stepElbow(+4);
+        highlightKey('k-w');
+      } else if (k === 's') {
+        e.preventDefault();
+        stepElbow(-4);
+        highlightKey('k-s');
+      } else if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        toggleClaw();
+        highlightKey('k-space');
+      }
+    });
+
+    function highlightKey(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('active');
+        setTimeout(() => el.classList.remove('active'), 140);
+      }
+    }
+
+    // Main Canvas Render Loop
+    function draw() {
+      if (canvas.width !== canvas.clientWidth) {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+      }
+
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // 1. Factory Floor & Background
+      ctx.fillStyle = '#060a14';
+      ctx.fillRect(0, 0, w, h);
+
+      // Floor grid
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < w; x += 35) {
+        ctx.beginPath(); ctx.moveTo(x, h * 0.77); ctx.lineTo(x, h); ctx.stroke();
+      }
+
+      // Base Ground Surface
+      ctx.fillStyle = '#111827';
+      ctx.fillRect(0, h * 0.77, w, h * 0.23);
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, h * 0.77); ctx.lineTo(w, h * 0.77); ctx.stroke();
+
+      // Vehicle Drive Guide Track
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(80, h * 0.77 + 2); ctx.lineTo(510, h * 0.77 + 2); ctx.stroke();
+
+      // 4. Kinematics End-Effector Position: 3 Functional Movements
+      const k = getKinematics(w, h);
+
+      // 2. Incoming Conveyor Belt (Left: X=25 to 160, grounded relative to floor)
+      conveyorOffset = (conveyorOffset + 0.5) % 20;
+      const convY = k.baseY - 20;
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(25, convY, 135, 20);
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(25, convY, 135, 20);
+
+      // Rollers
+      ctx.fillStyle = '#38bdf8';
+      for (let rx = 30 + conveyorOffset; rx < 160; rx += 20) {
+        ctx.fillRect(rx, convY + 1, 4, 18);
+      }
+      ctx.fillStyle = '#0284c7';
+      ctx.font = 'bold 9px JetBrains Mono';
+      ctx.fillText('INCOMING CONVEYOR', 32, convY + 14);
+
+      // 3. Target Cargo Bay (Right: X=400 to 570)
+      const bayY = k.baseY - 60;
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.12)';
+      ctx.fillRect(400, bayY, 170, 60);
+      ctx.strokeStyle = '#22c55e';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(400, bayY, 170, 60);
+
+      ctx.fillStyle = '#22c55e';
+      ctx.font = 'bold 10px JetBrains Mono';
+      ctx.fillText(`TARGET CARGO BAY [${coresDelivered}/3]`, 412, bayY + 18);
+
+      // Delivered cores stack in cargo bay
+      for (let c = 0; c < Math.min(coresDelivered, 3); c++) {
+        const slotX = 416 + (c * 48);
+        ctx.fillStyle = '#15803d';
+        ctx.fillRect(slotX, k.baseY - 30, 36, 28);
+        ctx.strokeStyle = '#86efac';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(slotX, k.baseY - 30, 36, 28);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 8px JetBrains Mono';
+        ctx.fillText('CORE', slotX + 6, k.baseY - 13);
+      }
+
+      // Attach payload to claw tip when held, or rest on conveyor
+      if (hasPayload) {
+        payloadX = k.clawTipX;
+        payloadY = k.clawTipY;
+      } else if (payloadX === 100) {
+        payloadY = convY - 14;
+      }
+
+      // 5. Draw Active Energy Payload Core
+      const pay = payloads[payloadTech] || payloads.lion;
+      ctx.save();
+      ctx.translate(payloadX, payloadY);
+
+      if (payloadTech === 'plasma' || payloadTech === 'quantum') {
+        const glowPulse = Math.sin(Date.now() * 0.005) * 5;
+        ctx.fillStyle = payloadTech === 'plasma' ? 'rgba(6, 182, 212, 0.35)' : 'rgba(168, 85, 247, 0.35)';
+        ctx.beginPath(); ctx.arc(0, 0, 18 + glowPulse, 0, Math.PI * 2); ctx.fill();
+      }
+
+      ctx.fillStyle = pay.color;
+      ctx.fillRect(-14, -14, 28, 28);
+      ctx.strokeStyle = pay.stroke;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(-14, -14, 28, 28);
+
+      // Terminal Contacts
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(-7, -16, 14, 2);
+
+      ctx.fillStyle = '#000000';
+      ctx.font = 'bold 8px JetBrains Mono';
+      ctx.fillText(pay.label, -12, 3);
+      ctx.restore();
+
+      // 6. Draw MOVEMENT 1: WHOLE VEHICLE (Mobile AGV Rover Chassis)
+      const skin = armSkins[skinType] || armSkins.kuka;
+      const vehW = 92;
+      const vehH = 26;
+      const vehY = k.baseY - vehH;
+
+      // Ground Shadow under vehicle
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+      ctx.beginPath();
+      ctx.ellipse(vehicleX, k.baseY + 2, 56, 6, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Headlight Beam projecting forward/backward
+      const beamDir = (vehicleX < 260) ? -1 : 1;
+      const headGrad = ctx.createLinearGradient(vehicleX, vehY, vehicleX + beamDir * 70, vehY);
+      headGrad.addColorStop(0, 'rgba(6, 182, 212, 0.4)');
+      headGrad.addColorStop(1, 'rgba(6, 182, 212, 0)');
+      ctx.fillStyle = headGrad;
+      ctx.beginPath();
+      ctx.moveTo(vehicleX + beamDir * (vehW / 2), vehY + 8);
+      ctx.lineTo(vehicleX + beamDir * (vehW / 2 + 70), vehY + 2);
+      ctx.lineTo(vehicleX + beamDir * (vehW / 2 + 70), vehY + 22);
+      ctx.closePath();
+      ctx.fill();
+
+      // Vehicle Chassis Body
+      ctx.fillStyle = skin.body;
+      ctx.fillRect(vehicleX - vehW / 2, vehY, vehW, vehH);
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 2.5;
+      ctx.strokeRect(vehicleX - vehW / 2, vehY, vehW, vehH);
+
+      // Bumper Guard & Hazard Trim
+      ctx.fillStyle = skin.frame;
+      ctx.fillRect(vehicleX - vehW / 2, vehY + vehH - 6, vehW, 6);
+
+      // Vehicle Status LED & Label
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(vehicleX - 25, vehY + 4, 50, 10);
+      ctx.fillStyle = skin.accent;
+      ctx.font = 'bold 7px JetBrains Mono';
+      ctx.fillText(`AGV·${vehicleX}`, vehicleX - 21, vehY + 12);
+
+      // Rolling Heavy-Duty Wheels
+      const wheelR = 11;
+      [-vehW / 2 + 14, vehW / 2 - 14].forEach(offset => {
+        const wx = vehicleX + offset;
+        const wy = k.baseY;
+
+        ctx.fillStyle = skin.wheel;
+        ctx.beginPath(); ctx.arc(wx, wy, wheelR, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = skin.frame;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Rim Spokes showing rotation
+        ctx.strokeStyle = skin.accent;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(wx - Math.cos(wheelRotation) * (wheelR - 3), wy - Math.sin(wheelRotation) * (wheelR - 3));
+        ctx.lineTo(wx + Math.cos(wheelRotation) * (wheelR - 3), wy + Math.sin(wheelRotation) * (wheelR - 3));
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(wx - Math.sin(wheelRotation) * (wheelR - 3), wy + Math.cos(wheelRotation) * (wheelR - 3));
+        ctx.lineTo(wx + Math.sin(wheelRotation) * (wheelR - 3), wy - Math.cos(wheelRotation) * (wheelR - 3));
+        ctx.stroke();
+      });
+
+      // 7. Draw MOVEMENT 2 & 3: ARTICULATED ROBOTIC ARM
+      // Shoulder Turntable Swivel on vehicle deck
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath(); ctx.arc(k.armBaseX, k.armBaseY, 14, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // MOVEMENT 2: Main Boom Link 1 (Shoulder θ₁)
+      ctx.strokeStyle = skin.body;
+      ctx.lineWidth = 14;
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(k.armBaseX, k.armBaseY); ctx.lineTo(k.j1x, k.j1y); ctx.stroke();
+
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 6;
+      ctx.beginPath(); ctx.moveTo(k.armBaseX, k.armBaseY); ctx.lineTo(k.j1x, k.j1y); ctx.stroke();
+
+      // Joint 2: Elbow Servo Pivot
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath(); ctx.arc(k.j1x, k.j1y, 11, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // MOVEMENT 3: Forearm Link 2 (Elbow θ₂)
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 11;
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(k.j1x, k.j1y); ctx.lineTo(k.endX, k.endY); ctx.stroke();
+
+      // Wrist Pin
+      ctx.fillStyle = '#e2e8f0';
+      ctx.beginPath(); ctx.arc(k.endX, k.endY, 7, 0, Math.PI * 2); ctx.fill();
+
+      // 8. End-Effector Tooling (Articulates with forearm orientation)
+      ctx.save();
+      ctx.translate(k.endX, k.endY);
+      ctx.rotate(armAngle - Math.PI / 2);
+
+      if (effectorType === 'claw') {
+        const spread = clawOpen ? 18 : 8;
+        ctx.strokeStyle = clawOpen ? '#22c55e' : '#ef4444';
+        ctx.lineWidth = 3.5;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        // Left finger
+        ctx.moveTo(-spread, 20); ctx.lineTo(-spread, 4); ctx.lineTo(0, 0);
+        // Right finger
+        ctx.lineTo(spread, 4); ctx.lineTo(spread, 20);
+        ctx.stroke();
+      } else if (effectorType === 'magnet') {
+        ctx.fillStyle = clawOpen ? '#64748b' : '#ef4444';
+        ctx.fillRect(-15, 0, 30, 10);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(-15, 0, 30, 10);
+      } else {
+        ctx.fillStyle = clawOpen ? '#0284c7' : '#22c55e';
+        ctx.beginPath();
+        ctx.moveTo(-12, 10); ctx.lineTo(12, 10); ctx.lineTo(0, 0); ctx.closePath();
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // Proximity Alignment Reticle & Visual Grab Guidance
+      const distTip = Math.hypot(k.clawTipX - payloadX, k.clawTipY - payloadY);
+      const distWrist = Math.hypot(k.endX - payloadX, k.endY - payloadY);
+      const distToPayload = Math.min(distTip, distWrist);
+
+      if (!hasPayload) {
+        if (distToPayload < 65) {
+          // In range: pulsating bright green reticle
+          const pulse = Math.sin(Date.now() * 0.008) * 4;
+          ctx.strokeStyle = '#22c55e';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.arc(payloadX, payloadY, 26 + pulse, 0, Math.PI * 2); ctx.stroke();
+
+          // Green guidance laser line from claw tip to cargo
+          ctx.strokeStyle = 'rgba(34, 197, 94, 0.6)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          ctx.moveTo(k.clawTipX, k.clawTipY);
+          ctx.lineTo(payloadX, payloadY);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Prompt pill badge
+          ctx.fillStyle = 'rgba(34, 197, 94, 0.9)';
+          ctx.fillRect(payloadX - 62, payloadY - 42, 124, 20);
+          ctx.fillStyle = '#000000';
+          ctx.font = 'bold 9px JetBrains Mono';
+          ctx.fillText('PRESS [SPACE] TO GRIP', payloadX - 56, payloadY - 28);
+        } else if (distToPayload < 110) {
+          ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath(); ctx.arc(payloadX, payloadY, 32, 0, Math.PI * 2); ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      }
+
+      // 9. On-Canvas Telemetry HUD: All 3 Movements Live Feedback
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.90)';
+      ctx.fillRect(15, 15, 410, 48);
+      ctx.strokeStyle = '#06b6d4';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(15, 15, 410, 48);
+
+      ctx.fillStyle = '#06b6d4';
+      ctx.font = 'bold 9px JetBrains Mono';
+      ctx.fillText('3-DOF MOBILE AGV MANIPULATOR TELEMETRY', 24, 28);
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = '9px JetBrains Mono';
+      ctx.fillText(`TRACK X:${vehicleX}mm | SHOULDER θ₁:${shoulder}° | ELBOW θ₂:${elbow}° | ${clawOpen ? 'OPEN' : 'CLAMPED'}`, 24, 46);
+
+      requestAnimationFrame(draw);
+    }
+
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>

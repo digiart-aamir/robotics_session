@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 6: Autonomous Mars Drone | CS Technologies Day 2 Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060b14;
+      --card-bg: #0d1527;
+      --rob-orange: #f59e0b;
+      --mars-red: #ea580c;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1a2742;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #09101d;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .back-btn {
+      color: var(--rob-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.1);
+      transition: all 0.2s;
+    }
+    .back-btn:hover {
+      background: rgba(245, 158, 11, 0.2);
+    }
+    .main-wrap {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .stage-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 800px) { .stage-card { grid-template-columns: 1fr; } }
+    canvas {
+      width: 100%;
+      height: 330px;
+      background: #2d140e;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .controls-box {
+      background: #04070e;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+    .h-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .h-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .task-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .task-badge.done {
+      color: #22c55e;
+      border-color: rgba(34, 197, 94, 0.3);
+      background: rgba(34, 197, 94, 0.08);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-btn">← Back to Day 2 Lab Console</a>
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #a855f7;">● STANDALONE LAB UNIT 6 (MASTERY)</div>
+  </header>
+
+  <main class="main-wrap">
+    <div>
+      <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--rob-orange); font-weight: 700;">MODULE 06 · PLANETARY AEROSPACE ROBOTICS</span>
+      <h1 style="font-family: 'Outfit'; font-size: 2rem; margin-top: 0.2rem;">Autonomous Mars Drone &amp; Gyro Flight Controller</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem;">
+        NASA Ingenuity-inspired planetary drone. Coaxial counter-rotating blades overcome ultra-thin Martian atmosphere (0.020 kg/m³) while a 6-DOF IMU autopilot counters sudden dust devil wind shear.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <canvas id="marsCanvas" width="540" height="330"></canvas>
+
+      <div class="controls-box">
+        <h3 style="font-family: 'Outfit'; font-size: 1.1rem; color: #fff;">Avionics Flight Deck</h3>
+
+        <div class="ctrl-row">
+          <span>Rotor Throttle:</span>
+          <input type="range" id="throttleSlider" min="0" max="100" value="0" style="flex: 1;" oninput="updateThrottle(this.value)">
+          <span id="throttleChip" style="font-family: 'JetBrains Mono'; color: #06b6d4; min-width: 45px;">0%</span>
+        </div>
+
+        <div class="ctrl-row">
+          <span>6-DOF Autopilot:</span>
+          <button id="gyroBtn" class="h-btn" style="color: #22c55e; border-color: #22c55e;" onclick="toggleGyro()">
+            ✓ 6-DOF GYRO ON
+          </button>
+        </div>
+
+        <div class="ctrl-row">
+          <span>Atmospheric Hazard:</span>
+          <button class="h-btn" style="color: var(--rob-orange); border-color: var(--rob-orange); flex: 1; justify-content: center;" onclick="triggerGust()">
+            🌪️ Martian Dust Gust (32 km/h)
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.25rem;">
+          <div style="font-size: 0.75rem; text-transform: uppercase; color: #64748b; font-weight: 700;">Mission Verification Tasks</div>
+          <div id="t1" class="task-badge"><span>○</span> 1. Controlled Hover (8m – 14m)</div>
+          <div id="t2" class="task-badge"><span>○</span> 2. Weather Dust Gust with Gyro</div>
+          <div id="t3" class="task-badge"><span>○</span> 3. Soft Landing on Olympus Pad</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('marsCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let rotorRpm = 0;
+    let altitude = 0; // meters
+    let roll = 0; // degrees tilt
+    let windGust = 0;
+    let gyroActive = true;
+    let tasks = [false, false, false];
+
+    // Web Audio Synthesizer
+    let audioCtx = null;
+    function playTone(freq, dur = 0.1, type = 'sine') {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + dur);
+      } catch(e) {}
+    }
+
+    function updateThrottle(val) {
+      rotorRpm = parseInt(val);
+      document.getElementById('throttleChip').textContent = `${val}%`;
+      if (rotorRpm > 30) playTone(100 + rotorRpm * 3, 0.05, 'sawtooth');
+    }
+
+    function toggleGyro() {
+      gyroActive = !gyroActive;
+      const btn = document.getElementById('gyroBtn');
+      btn.textContent = gyroActive ? '✓ 6-DOF GYRO ON' : 'MANUAL DRIFT';
+      btn.style.color = gyroActive ? '#22c55e' : '#94a3b8';
+      btn.style.borderColor = gyroActive ? '#22c55e' : '#64748b';
+      playTone(600, 0.1);
+    }
+
+    function triggerGust() {
+      windGust = 35;
+      playTone(160, 0.35, 'sawtooth');
+      setTimeout(() => {
+        if (gyroActive && Math.abs(roll) < 14) {
+          completeTask(1, 't2');
+        }
+      }, 900);
+    }
+
+    function completeTask(idx, elemId) {
+      if (!tasks[idx]) {
+        tasks[idx] = true;
+        const el = document.getElementById(elemId);
+        el.className = 'task-badge done';
+        el.firstElementChild.textContent = '✓';
+        playTone(880, 0.2);
+      }
+    }
+
+    function updatePhysics() {
+      const targetAlt = (rotorRpm / 100) * 18;
+      const altDiff = targetAlt - altitude;
+      altitude += altDiff * 0.05;
+
+      if (windGust > 0) {
+        roll += (windGust * 0.08);
+        windGust *= 0.94;
+      }
+
+      if (gyroActive) {
+        roll *= 0.88; // Auto-leveling PID feedback
+      } else {
+        roll *= 0.98;
+      }
+
+      // Hover verification
+      if (altitude >= 8 && altitude <= 14) {
+        completeTask(0, 't1');
+      }
+
+      // Soft landing verification
+      if (altitude < 0.8 && rotorRpm < 15 && Math.abs(altDiff) < 0.25) {
+        completeTask(2, 't3');
+      }
+    }
+
+    function draw() {
+      const w = canvas.width;
+      const h = canvas.height;
+
+      updatePhysics();
+
+      // Martian Sky Gradient
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, '#2d140e');
+      grad.addColorStop(0.6, '#6b2d1d');
+      grad.addColorStop(1, '#b45309');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Distant Martian crater dunes
+      ctx.fillStyle = '#451a03';
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.78);
+      ctx.quadraticCurveTo(w * 0.25, h * 0.72, w * 0.5, h * 0.77);
+      ctx.quadraticCurveTo(w * 0.75, h * 0.82, w, h * 0.76);
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.fill();
+
+      // Ground Surface
+      ctx.fillStyle = '#270e06';
+      ctx.fillRect(0, h * 0.82, w, h * 0.18);
+
+      // Olympus Landing Pad
+      const padX = w * 0.55;
+      const padY = h * 0.81;
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(padX, padY, 120, 10);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(padX, padY, 120, 10);
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 9px JetBrains Mono';
+      ctx.fillText('OLYMPUS PAD', padX + 22, padY + 8);
+
+      // Drone Coordinates
+      const droneX = padX + 60;
+      const droneY = padY - (altitude * 12.5);
+
+      // Draw Mars Drone
+      ctx.save();
+      ctx.translate(droneX, droneY);
+      ctx.rotate((roll * Math.PI) / 180);
+
+      // Coaxial Rotor Blades (Spinning Blur)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
+      ctx.lineWidth = 3;
+      const blurW = rotorRpm > 15 ? 75 : 35;
+      ctx.beginPath(); ctx.moveTo(-blurW, -26); ctx.lineTo(blurW, -26); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-blurW, -14); ctx.lineTo(blurW, -14); ctx.stroke();
+
+      // Rotor Mast
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(-3, -26, 6, 26);
+
+      // Solar Panel Top Cap
+      ctx.fillStyle = '#0284c7';
+      ctx.fillRect(-16, -30, 32, 4);
+
+      // Avionics Core Chassis
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillRect(-14, 0, 28, 22);
+
+      // Sensor Camera / LiDAR Eye
+      ctx.fillStyle = '#22d3ee';
+      ctx.beginPath();
+      ctx.arc(0, 12, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Carbon-fiber Landing Struts
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(-10, 22); ctx.lineTo(-24, 38);
+      ctx.moveTo(10, 22); ctx.lineTo(24, 38);
+      ctx.stroke();
+
+      ctx.restore();
+
+      // 6-DOF Avionics HUD
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
+      ctx.fillRect(16, 16, 230, 85);
+      ctx.strokeStyle = '#06b6d4';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(16, 16, 230, 85);
+
+      ctx.fillStyle = '#06b6d4';
+      ctx.font = 'bold 10px JetBrains Mono';
+      ctx.fillText('MARS 6-DOF AVIONICS HUD', 26, 34);
+      ctx.fillStyle = '#fff';
+      ctx.fillText(`ALTITUDE: ${altitude.toFixed(1)} METERS`, 26, 54);
+      ctx.fillText(`ROLL TILT: ${roll.toFixed(1)}° | GYRO: ${gyroActive ? 'LOCKED' : 'OFF'}`, 26, 72);
+      ctx.fillText(`WIND GUST: ${Math.round(windGust)} km/h`, 26, 88);
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+</html>

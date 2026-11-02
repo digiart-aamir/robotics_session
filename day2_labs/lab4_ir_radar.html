@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 4: IR Obstacle Radar | CS Technologies Day 2 Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070d18;
+      --card-bg: #0f192c;
+      --rob-orange: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e2e4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #0f192c;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .back-btn {
+      color: var(--rob-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .main-wrap {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .stage-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 800px) { .stage-card { grid-template-columns: 1fr; } }
+    .controls-box {
+      background: #050a14;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-btn">← Back to Day 2 Lab Console</a>
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: #06b6d4;">● STANDALONE LAB UNIT 4</div>
+  </header>
+
+  <main class="main-wrap">
+    <div>
+      <span style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--rob-orange); font-weight: 700;">MODULE 10 · ACTIVE OPTICAL RADAR</span>
+      <h1 style="font-family: 'Outfit'; font-size: 2rem; margin-top: 0.2rem;">Infrared (IR) Obstacle Radar &amp; Auto-Braking</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem;">
+        940nm modulated optical reflection sensing with comparator threshold tuning and automated motor cutoff protection.
+      </p>
+    </div>
+
+    <div class="stage-card">
+      <div style="background: #050a14; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center;">
+        <svg viewBox="0 0 380 200" style="width: 100%; max-width: 380px;">
+          <!-- Sensor Module -->
+          <g transform="translate(30, 40)">
+            <rect width="80" height="110" rx="8" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+            <circle cx="25" cy="30" r="10" fill="#38bdf8"/>
+            <circle cx="55" cy="30" r="10" fill="#0f172a" stroke="#06b6d4"/>
+            <text x="40" y="65" fill="#94a3b8" font-size="8" text-anchor="middle">IR RADAR</text>
+            <circle id="detectLamp" cx="40" cy="85" r="7" fill="#475569" stroke="#ef4444"/>
+          </g>
+
+          <!-- Optical Beam -->
+          <polygon id="optBeam" points="80,70 250,30 250,150" fill="rgba(6, 182, 212, 0.25)" stroke="#06b6d4" stroke-dasharray="3 2"/>
+
+          <!-- Barrier Wall -->
+          <g id="svgWall" transform="translate(250, 20)">
+            <rect width="18" height="150" rx="4" fill="#f59e0b" stroke="#fbbf24"/>
+          </g>
+        </svg>
+
+        <div id="radarAlert" style="margin-top: 1rem; font-family: 'JetBrains Mono'; font-weight: 700; color: #22c55e;">
+          CLEAR PATH · Safety Relay Closed
+        </div>
+      </div>
+
+      <div class="controls-box">
+        <h3 style="font-family: 'Outfit'; font-size: 1.1rem; color: #fff;">Radar Calibration</h3>
+
+        <div class="ctrl-row">
+          <span>📏 Wall Distance:</span>
+          <input type="range" id="distRange" min="2" max="25" value="16" style="flex: 1;" oninput="updateRadar()">
+          <span id="distVal" style="font-family: 'JetBrains Mono'; color: #06b6d4; min-width: 45px;">16 cm</span>
+        </div>
+
+        <div class="ctrl-row">
+          <span>🎛️ Sensitivity Potentiometer:</span>
+          <input type="range" id="potRange" min="10" max="90" value="50" style="flex: 1;" oninput="updateRadar()">
+          <span id="potVal" style="font-family: 'JetBrains Mono'; color: #f59e0b; min-width: 45px;">50%</span>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.04); padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.4; color: #94a3b8;">
+          📡 <strong>Optical Detection:</strong> Bring the wall below the trimpot threshold to trip the onboard LM393 comparator and engage emergency auto-braking!
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function updateRadar() {
+      const dist = parseInt(document.getElementById('distRange').value);
+      const pot = parseInt(document.getElementById('potRange').value);
+      document.getElementById('distVal').textContent = dist + ' cm';
+      document.getElementById('potVal').textContent = pot + '%';
+
+      const wall = document.getElementById('svgWall');
+      const beam = document.getElementById('optBeam');
+      const lamp = document.getElementById('detectLamp');
+      const alertText = document.getElementById('radarAlert');
+
+      const wallX = 120 + (dist * 9);
+      wall.setAttribute('transform', `translate(${wallX}, 20)`);
+      beam.setAttribute('points', `80,70 ${wallX},30 ${wallX},150`);
+
+      const threshold = 4 + (pot / 5);
+      if (dist <= threshold) {
+        lamp.setAttribute('fill', '#ef4444');
+        alertText.textContent = `🚨 OBSTACLE AT ${dist}CM! AUTO-BRAKE CUTOFF ACTIVE.`;
+        alertText.style.color = '#ef4444';
+      } else {
+        lamp.setAttribute('fill', '#475569');
+        alertText.textContent = `CLEAR PATH (${dist}cm) · Safety Relay Engaged`;
+        alertText.style.color = '#22c55e';
+      }
+    }
+  </script>
+</body>
+</html>

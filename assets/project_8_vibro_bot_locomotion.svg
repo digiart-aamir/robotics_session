@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="50%" stop-color="#111c33"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#d946ef"/>
+    </linearGradient>
+    <filter id="glow8" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg8)"/>
+
+  <!-- Technical Grid -->
+  <g opacity="0.08" stroke="#a855f7" stroke-width="1.5">
+    <path d="M0,180 H1920 M0,360 H1920 M0,540 H1920 M0,720 H1920 M0,900 H1920"/>
+    <path d="M240,0 V1080 M480,0 V1080 M720,0 V1080 M960,0 V1080 M1200,0 V1080 M1440,0 V1080 M1680,0 V1080"/>
+  </g>
+
+  <!-- Header Badge -->
+  <rect x="120" y="90" width="380" height="48" rx="24" fill="#6b21a8" opacity="0.3"/>
+  <rect x="120" y="90" width="380" height="48" rx="24" fill="none" stroke="#a855f7" stroke-width="2"/>
+  <text x="310" y="122" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="700" fill="#c084fc" text-anchor="middle">DAY 2 · PROJECT 8 · BIOMIMETICS</text>
+
+  <!-- Main Title -->
+  <text x="120" y="210" font-family="'Outfit', sans-serif" font-size="64" font-weight="800" fill="#ffffff">Autonomous Vibro-Bot &amp; Kinetic Scribbler</text>
+  <text x="120" y="260" font-family="'Plus Jakarta Sans', sans-serif" font-size="26" fill="#cbd5e1">Eccentric Rotating Mass (ERM) Locomotion transforming DC motor rotation into kinetic skittering</text>
+
+  <!-- Canvas Box -->
+  <rect x="220" y="340" width="1480" height="580" rx="24" fill="#0f172a" stroke="#1e293b" stroke-width="3"/>
+
+  <!-- Vibro-Bot Chassis Vector Representation -->
+  <g transform="translate(620, 570)">
+    <!-- Bristle Skates Base -->
+    <path d="M-180,120 L180,120 L160,170 L-160,170 Z" fill="#334155"/>
+    <line x1="-150" y1="170" x2="-170" y2="210" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+    <line x1="-100" y1="170" x2="-120" y2="210" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+    <line x1="-50" y1="170" x2="-70" y2="210" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+    <line x1="0" y1="170" x2="-20" y2="210" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+    <line x1="50" y1="170" x2="30" y2="210" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+    <line x1="100" y1="170" x2="80" y2="210" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+    <line x1="150" y1="170" x2="130" y2="210" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- Main Chassis Shell -->
+    <rect x="-160" y="-40" width="320" height="160" rx="20" fill="#1e293b" stroke="#a855f7" stroke-width="4"/>
+
+    <!-- Battery Pack on Chassis -->
+    <rect x="-130" y="-10" width="120" height="80" rx="8" fill="#0369a1" stroke="#38bdf8" stroke-width="2"/>
+    <text x="-70" y="38" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">3V CELL</text>
+
+    <!-- DC Motor Assembly -->
+    <rect x="20" y="-20" width="110" height="90" rx="10" fill="#475569" stroke="#cbd5e1" stroke-width="3"/>
+    
+    <!-- Shaft & Eccentric Counterweight Cam -->
+    <rect x="130" y="10" width="40" height="30" fill="#94a3b8"/>
+    <!-- Unbalanced Cam Rotor -->
+    <g transform="translate(170, 25)">
+      <circle cx="0" cy="0" r="16" fill="#cbd5e1"/>
+      <path d="M0,-16 A16,16 0 0,1 36,0 L36,25 A20,20 0 0,1 0,35 Z" fill="#d946ef" filter="url(#glow8)"/>
+      <!-- Rotation Motion Arrows -->
+      <path d="M-25,-35 A45,45 0 0,1 45,-20" fill="none" stroke="#22c55e" stroke-width="4" stroke-dasharray="6 4"/>
+      <polygon points="45,-20 48,-32 36,-26" fill="#22c55e"/>
+    </g>
+
+    <!-- Kinetic Vibration Waveforms -->
+    <g stroke="#a855f7" stroke-width="3" opacity="0.6">
+      <path d="M-220,60 Q-240,40 -220,20 Q-200,0 -220,-20" fill="none"/>
+      <path d="M-245,60 Q-265,40 -245,20 Q-225,0 -245,-20" fill="none"/>
+      <path d="M220,60 Q240,40 220,20 Q200,0 220,-20" fill="none"/>
+      <path d="M245,60 Q265,40 245,20 Q225,0 245,-20" fill="none"/>
+    </g>
+  </g>
+
+  <!-- Explanatory Right Panel -->
+  <g transform="translate(1180, 430)">
+    <rect x="0" y="0" width="460" height="350" rx="16" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <text x="30" y="50" font-family="'Outfit', sans-serif" font-size="24" font-weight="700" fill="#38bdf8">HOW VIBRO-LOCOMOTION WORKS</text>
+    
+    <text x="30" y="105" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" fill="#cbd5e1">• High-speed DC Motor spins at 4,000+ RPM</text>
+    <text x="30" y="145" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" fill="#cbd5e1">• Off-center cam creates rapid centrifugal pulse</text>
+    <text x="30" y="185" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" fill="#cbd5e1">• Angled bristle skates direct energy forward</text>
+    <text x="30" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" fill="#cbd5e1">• Marker tips convert robot into self-drawing artist!</text>
+
+    <rect x="30" y="260" width="400" height="55" rx="8" fill="#0f172a" stroke="#22c55e"/>
+    <text x="230" y="295" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700" fill="#86efac" text-anchor="middle">AUTONOMOUS MOBILE ROBOTICS</text>
+  </g>
+
+  <!-- Bottom Spec Chips -->
+  <rect x="220" y="830" width="340" height="50" rx="10" fill="#020617" stroke="#334155"/>
+  <text x="390" y="862" font-family="'JetBrains Mono', monospace" font-size="16" fill="#38bdf8" text-anchor="middle">⚙️ ERM UNBALANCED ROTOR</text>
+
+  <rect x="590" y="830" width="360" height="50" rx="10" fill="#020617" stroke="#334155"/>
+  <text x="770" y="862" font-family="'JetBrains Mono', monospace" font-size="16" fill="#22c55e" text-anchor="middle">🎯 CONCEPT: VIBRATION HARMONICS</text>
+
+  <rect x="980" y="830" width="340" height="50" rx="10" fill="#020617" stroke="#334155"/>
+  <text x="1150" y="862" font-family="'JetBrains Mono', monospace" font-size="16" fill="#f59e0b" text-anchor="middle">⏱️ ESTIMATED BUILD: 35 MINS</text>
+
+  <rect x="1350" y="830" width="350" height="50" rx="10" fill="#020617" stroke="#334155"/>
+  <text x="1525" y="862" font-family="'JetBrains Mono', monospace" font-size="16" fill="#d946ef" text-anchor="middle">🏆 TANGIBLE: SKITTERING BUG-BOT</text>
+</svg>
+

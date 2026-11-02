@@ -1,0 +1,3281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 2 Robotics Simulation &amp; Autonomy Lab Range | CS Technologies</title>
+  <meta name="description" content="Next-Generation Interactive Robotics & Autonomy Simulation Suite for Primary & Middle Cadets (Grades 3–5 / Ages 8–12). Solar trackers, robotic arms, line rovers, LiDAR radar, hexapods, and Mars drones.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #060b14;
+      --card-bg: #0d1527;
+      --card-elevated: #15223c;
+      --panel-bg: #09101d;
+      --inner-bg: #04070e;
+      --header-bg: rgba(9, 16, 29, 0.96);
+      --subbar-bg: rgba(13, 21, 39, 0.92);
+      --rob-orange: #f59e0b;
+      --rob-amber: #d97706;
+      --rob-cyan: #06b6d4;
+      --rob-blue: #38bdf8;
+      --rob-green: #22c55e;
+      --rob-red: #ef4444;
+      --rob-purple: #a855f7;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --border: #1a2742;
+      --border-accent: rgba(245, 158, 11, 0.35);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-full: 9999px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-elevated: #f1f5f9;
+      --panel-bg: #ffffff;
+      --inner-bg: #e2e8f0;
+      --header-bg: rgba(255, 255, 255, 0.97);
+      --subbar-bg: rgba(241, 245, 249, 0.95);
+      --rob-orange: #d97706;
+      --rob-amber: #b45309;
+      --rob-cyan: #0891b2;
+      --rob-blue: #0284c7;
+      --rob-green: #16a34a;
+      --rob-red: #dc2626;
+      --rob-purple: #7e22ce;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --border: #cbd5e1;
+      --border-accent: rgba(217, 119, 6, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Matrix/Starfield Background Canvas */
+    #ambientCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.22;
+    }
+
+    /* Top Executive Header (52px) */
+    header {
+      position: relative;
+      z-index: 20;
+      height: 52px;
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 1.25rem;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+    }
+
+    .brand-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .brand-text span {
+      color: var(--rob-orange);
+    }
+
+    .brand-tag {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      margin-left: 0.4rem;
+      padding: 0.15rem 0.45rem;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius-sm);
+    }
+
+    /* Central Cadet Status Capsule */
+    .cadet-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-full);
+      padding: 0.25rem 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+    }
+
+    .cadet-status-title {
+      color: var(--rob-orange);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .b-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.3);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .b-dot.earned {
+      background: #22c55e;
+      border-color: #4ade80;
+      box-shadow: 0 0 8px #22c55e;
+    }
+
+    .btn-record-link {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: var(--rob-orange);
+      padding: 0.18rem 0.55rem;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .btn-record-link:hover {
+      background: var(--rob-orange);
+      color: #000;
+    }
+
+    /* Header Actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .h-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .h-btn:hover {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: var(--rob-orange);
+      color: var(--rob-orange);
+    }
+
+    /* Sub-Bar / Lab Switcher Tabs (42px) */
+    .lab-subbar {
+      position: relative;
+      z-index: 15;
+      height: 44px;
+      background: var(--subbar-bg);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.25rem;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .lab-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .lab-tabs::-webkit-scrollbar { display: none; }
+
+    .lab-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.32rem 0.8rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .lab-tab:hover {
+      color: var(--text);
+      border-color: var(--rob-orange);
+    }
+
+    .lab-tab.active {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.15));
+      color: #ffffff;
+      border-color: var(--rob-orange);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .lab-tab .diff-indicator {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .diff-basic { background: var(--rob-green); box-shadow: 0 0 6px var(--rob-green); }
+    .diff-inter { background: var(--rob-cyan); box-shadow: 0 0 6px var(--rob-cyan); }
+    .diff-adv { background: var(--rob-orange); box-shadow: 0 0 6px var(--rob-orange); }
+    .diff-master { background: var(--rob-purple); box-shadow: 0 0 6px var(--rob-purple); }
+
+    .standalone-launcher-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--rob-cyan);
+      text-decoration: none;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-sm);
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .standalone-launcher-link:hover {
+      background: rgba(6, 182, 212, 0.2);
+      border-color: var(--rob-cyan);
+    }
+
+    /* Main Viewport (Split Stage) Fit within 100vh */
+    .lab-viewport {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 370px 1fr;
+      gap: 1rem;
+      padding: 0.85rem 1.25rem;
+      overflow: hidden;
+      max-height: calc(100vh - 96px);
+    }
+
+    @media (max-width: 1080px) {
+      .lab-viewport {
+        grid-template-columns: 310px 1fr;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .lab-viewport {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+      }
+    }
+
+    /* Left Panel: Brief, Theory, & Interactive Tasks */
+    .brief-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .brief-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .brief-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pill-basic { background: rgba(34, 197, 94, 0.15); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .pill-inter { background: rgba(6, 182, 212, 0.15); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.3); }
+    .pill-adv { background: rgba(245, 158, 11, 0.15); color: #fde047; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .pill-master { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+    .brief-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .brief-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .theory-box {
+      background: var(--inner-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--rob-orange);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.8rem;
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
+    .theory-box strong {
+      color: var(--rob-orange);
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.78rem;
+    }
+
+    .task-checklist-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.2rem;
+    }
+
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .task-item {
+      background: var(--card-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.78rem;
+      transition: all 0.25s ease;
+    }
+
+    .task-item.completed {
+      border-color: rgba(34, 197, 94, 0.5);
+      background: rgba(34, 197, 94, 0.1);
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.12);
+    }
+
+    .task-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: transparent;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.25s ease;
+    }
+
+    .task-item.completed .task-check {
+      background: var(--rob-green);
+      border-color: var(--rob-green);
+      color: #000;
+      font-weight: 900;
+      box-shadow: 0 0 8px #22c55e;
+    }
+
+    .task-content strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+      font-size: 0.8rem;
+    }
+
+    .task-content span {
+      color: var(--text-dim);
+      font-size: 0.72rem;
+      line-height: 1.35;
+      display: block;
+    }
+
+    .btn-verify-mission {
+      margin-top: auto;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000000;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: var(--radius-md);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-verify-mission:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    }
+
+    /* Right Panel: Interactive Workbench Arena */
+    .workbench-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .workbench-topbar {
+      height: 40px;
+      background: var(--card-elevated);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .live-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.18rem 0.55rem;
+      border-radius: var(--radius-full);
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+      animation: pulseLive 1.5s infinite;
+    }
+
+    @keyframes pulseLive {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .workbench-stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .sim-arena-canvas-wrap {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, rgba(26, 39, 66, 0.35) 0%, rgba(6, 11, 20, 0.95) 100%);
+      overflow: hidden;
+    }
+
+    /* Controls Dock at bottom of workbench */
+    .workbench-controls-dock {
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .control-label {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .sim-slider {
+      -webkit-appearance: none;
+      width: 130px;
+      height: 6px;
+      background: var(--border);
+      border-radius: var(--radius-full);
+      outline: none;
+    }
+
+    .sim-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--rob-orange);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+    }
+
+    .val-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text);
+      background: var(--inner-bg);
+      border: 1px solid var(--border);
+      padding: 0.12rem 0.45rem;
+      border-radius: var(--radius-sm);
+      min-width: 48px;
+      text-align: center;
+    }
+
+    /* Modal Completion Record */
+    .record-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .record-modal.active { display: flex; }
+
+    .record-box {
+      background: var(--card-bg);
+      border: 1px solid var(--rob-orange);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 0 40px rgba(245, 158, 11, 0.25);
+      padding: 1.75rem;
+      position: relative;
+    }
+
+    .record-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+
+    .record-close-btn:hover { background: var(--rob-red); color: #fff; }
+
+    .record-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.8rem;
+    }
+
+    .record-table th, .record-table td {
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .record-table th {
+      background: var(--card-elevated);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .record-badge-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+    }
+
+    .status-locked { background: rgba(148, 163, 184, 0.15); color: #94a3b8; }
+    .status-mastered { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3); }
+
+    /* Interactive Simulation Canvases */
+    .sim-canvas {
+      width: 100%;
+      height: 100%;
+      max-height: 380px;
+      display: block;
+      cursor: crosshair;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Matrix Canvas -->
+  <canvas id="ambientCanvas"></canvas>
+
+  <!-- Top Executive Header -->
+  <header>
+    <a href="../index.html" class="brand">
+      <div class="brand-logo">⚡</div>
+      <div class="brand-text">
+        CS Technologies <span>Day 2 Autonomy Range</span>
+      </div>
+      <span class="brand-tag">PRO ROBOTICS LAB</span>
+    </a>
+
+    <!-- Central Cadet Status & Badges Capsule -->
+    <div class="cadet-status-pill">
+      <span class="cadet-status-title">CADET STATUS:</span>
+      <span id="masteredCountText">0 OF 6 LABS MASTERED</span>
+      <div class="badge-dots" id="headerBadgeDots">
+        <span class="b-dot" title="Lab 1: Solar Tracker"></span>
+        <span class="b-dot" title="Lab 2: Robot Arm"></span>
+        <span class="b-dot" title="Lab 3: Line Rover"></span>
+        <span class="b-dot" title="Lab 4: LiDAR Radar"></span>
+        <span class="b-dot" title="Lab 5: Bionic Hexapod"></span>
+        <span class="b-dot" title="Lab 6: Mars Drone"></span>
+      </div>
+      <button class="btn-record-link" onclick="openRecordModal()">📋 Cadet Record</button>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <a href="../robotics.html" class="h-btn">
+        <span>🤖 Presentation Hub</span>
+      </a>
+      <button class="h-btn" id="audioToggleBtn" onclick="toggleAudio()" title="Toggle Sound FX">
+        <span>🔊 Audio</span>
+      </button>
+      <button class="h-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span>☀️ Theme</span>
+      </button>
+      <button class="h-btn" onclick="toggleFullscreen()" title="Fullscreen Mode">
+        <span>⛶ Full</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sub-Bar / Lab Switcher Tabs -->
+  <nav class="lab-subbar">
+    <div class="lab-tabs" id="labTabsBar">
+      <button class="lab-tab active" onclick="switchLab(1)">
+        <span class="diff-indicator diff-basic"></span>
+        <span>1. 🌻 Solar Tracker</span>
+      </button>
+      <button class="lab-tab" onclick="switchLab(2)">
+        <span class="diff-indicator diff-inter"></span>
+        <span>2. 🦾 Robot Arm</span>
+      </button>
+      <button class="lab-tab" onclick="switchLab(3)">
+        <span class="diff-indicator diff-inter"></span>
+        <span>3. 🏎️ Line Rover</span>
+      </button>
+      <button class="lab-tab" onclick="switchLab(4)">
+        <span class="diff-indicator diff-adv"></span>
+        <span>4. 📡 LiDAR Radar</span>
+      </button>
+      <button class="lab-tab" onclick="switchLab(5)">
+        <span class="diff-indicator diff-adv"></span>
+        <span>5. 🕷️ Bionic Hexapod</span>
+      </button>
+      <button class="lab-tab" onclick="switchLab(6)">
+        <span class="diff-indicator diff-master"></span>
+        <span>6. 🚁 Mars Drone</span>
+      </button>
+    </div>
+
+    <a href="lab1_solar_tracker.html" class="standalone-launcher-link" id="standaloneLaunchLink" target="_blank" title="Launch this lab unit in an isolated standalone window">
+      <span>Open Standalone ↗</span>
+    </a>
+  </nav>
+
+  <!-- Main Viewport (Split Stage) -->
+  <main class="lab-viewport">
+    
+    <!-- Left Column: Mission Brief & Interactive Task Checklist -->
+    <section class="brief-panel" id="briefPanel">
+      <div class="brief-header">
+        <span class="brief-pill pill-basic" id="missionDiffBadge">Level 1 · Basic</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-dim);" id="missionTrackCode">ROB-01-SOLAR</span>
+      </div>
+
+      <h2 class="brief-title" id="missionTitle">Smart Solar Tracker &amp; Heliostat</h2>
+      <p class="brief-desc" id="missionDesc">
+        Dual-LDR differential phototropism. Align the photovoltaic panel perpendicular to the radiant sun vector to maximize solar watt harvest.
+      </p>
+
+      <div class="theory-box" id="theoryBox">
+        <strong>Differential Light Feedback:</strong>
+        When Left LDR &ne; Right LDR, error voltage &Delta;V drives the servo motor to turn until light balance is restored, yielding peak power output (P = V &times; I).
+      </div>
+
+      <div class="task-checklist-title">
+        <span>Hands-On Tasks to Achieve</span>
+        <span style="font-size: 0.72rem; color: var(--rob-orange);" id="taskCounterText">0/3 Completed</span>
+      </div>
+
+      <div class="task-list" id="taskListContainer">
+        <!-- Injected Tasks -->
+      </div>
+
+      <button class="btn-verify-mission" id="btnVerify" onclick="verifyCurrentMission()">
+        <span>⚡ Verify &amp; Award Lab Badge</span>
+      </button>
+    </section>
+
+    <!-- Right Column: Interactive Workbench Stage -->
+    <section class="workbench-panel">
+      <div class="workbench-topbar">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="color: var(--rob-orange);">⚡ LIVE PROTOTYPE WORKBENCH</span>
+          <span style="color: var(--text-dim);">·</span>
+          <span id="activeBenchTitle" style="color: var(--text-muted);">Solar Heliostat Closed-Loop Arena</span>
+        </div>
+        <div class="live-status-badge">
+          <span class="live-dot"></span>
+          <span id="workbenchStatusText">SIMULATION READY · 60 FPS</span>
+        </div>
+      </div>
+
+      <!-- Live Interactive Stage Area -->
+      <div class="workbench-stage">
+        <div class="sim-arena-canvas-wrap" id="simStageArea">
+          <canvas id="mainSimCanvas" class="sim-canvas"></canvas>
+        </div>
+
+        <!-- Dynamic Controls Dock -->
+        <div class="workbench-controls-dock" id="workbenchControlsDock">
+          <!-- Injected dynamically based on active lab -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Cadet Mission Completion Record Modal -->
+  <div class="record-modal" id="recordModal" onclick="closeRecordModal(event)">
+    <div class="record-box" onclick="event.stopPropagation()">
+      <button class="record-close-btn" onclick="closeRecordModal()">&times;</button>
+      
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+        <span style="font-size: 2.2rem;">🏆</span>
+        <div>
+          <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; color: var(--text);">Cadet Mission Completion Record</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">CS Technologies Applied Robotics &amp; Autonomy Range (Grades 3–5 / Ages 8–12)</p>
+        </div>
+      </div>
+
+      <div style="background: var(--inner-bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.85rem; margin: 1rem 0; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+        <div><strong>Cadet Status:</strong> <span style="color: var(--rob-orange);">Autonomous Robotics Engineer</span></div>
+        <div><strong>Standard:</strong> <span style="color: #22c55e;">Solderless 3V &amp; Kinematics Certified</span></div>
+        <div><strong>Instructors:</strong> Engr. Aamir Jamil &amp; Miss Zia Ul Ain</div>
+        <div><strong>Management:</strong> Awais Paracha</div>
+      </div>
+
+      <table class="record-table">
+        <thead>
+          <tr>
+            <th>Lab Unit</th>
+            <th>Robotics &amp; Autonomy Domain</th>
+            <th>Status</th>
+            <th>Earned Badge</th>
+          </tr>
+        </thead>
+        <tbody id="recordTableBody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+        <button class="h-btn" onclick="resetAllProgress()" style="color: var(--rob-red); border-color: rgba(239, 68, 68, 0.4);">
+          ↺ Reset Cadet Progress
+        </button>
+        <button class="btn-verify-mission" style="padding: 0.45rem 1rem; font-size: 0.8rem;" onclick="window.print()">
+          🖨️ Print / Save Record
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Synthesis & Dynamic Simulation Engine -->
+  <script>
+    // ========================================================================
+    // WEB AUDIO API SOUND SYNTHESIZER
+    // ========================================================================
+    let audioCtx = null;
+    let audioEnabled = true;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioCtx;
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const btn = document.getElementById('audioToggleBtn');
+      btn.innerHTML = audioEnabled ? '<span>🔊 Audio</span>' : '<span>🔇 Muted</span>';
+      if (audioEnabled) playTone(650, 0.1, 'sine');
+    }
+
+    function playTone(freq = 440, duration = 0.15, type = 'sine', vol = 0.08) {
+      if (!audioEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (ctx.state === 'suspended') ctx.resume();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(vol, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playServoSound() {
+      playTone(280, 0.08, 'sawtooth', 0.04);
+    }
+
+    function playDriveSound() {
+      playTone(170 + (((state && state.l2) ? state.l2.vehicleX : 200) % 50) * 2, 0.05, 'sawtooth', 0.025);
+    }
+
+    function playClawClick() {
+      playTone(1400, 0.05, 'triangle', 0.09);
+    }
+
+    function playSonarPing() {
+      playTone(980, 0.25, 'sine', 0.1);
+    }
+
+    function playSuccessChime() {
+      if (!audioEnabled) return;
+      playTone(523.25, 0.12, 'sine');
+      setTimeout(() => playTone(659.25, 0.12, 'sine'), 100);
+      setTimeout(() => playTone(783.99, 0.18, 'sine'), 200);
+      setTimeout(() => playTone(1046.50, 0.3, 'sine'), 320);
+    }
+
+    // ========================================================================
+    // THEME & FULLSCREEN HANDLERS
+    // ========================================================================
+    function initTheme() {
+      const saved = localStorage.getItem('cs_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      updateThemeButton(saved);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('cs_theme', next);
+      updateThemeButton(next);
+      playTone(900, 0.05, 'sine');
+    }
+
+    function updateThemeButton(theme) {
+      const btn = document.getElementById('themeToggleBtn');
+      if (btn) btn.innerHTML = theme === 'dark' ? '<span>☀️ Theme</span>' : '<span>🌙 Dark</span>';
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    // ========================================================================
+    // 6 REDESIGNED PROGRESSIVE LAB DEFINITIONS (BASIC TO ADVANCED)
+    // ========================================================================
+    const LAB_REGISTRY = [
+      {
+        id: 1,
+        name: "Smart Solar Tracker",
+        code: "ROB-01-SOLAR",
+        diff: "Basic",
+        diffClass: "pill-basic",
+        file: "lab1_solar_tracker.html",
+        badge: "🌻 Solar Heliostat Master",
+        domain: "Differential Optical Sensors & Servo Feedback",
+        desc: "Phototropism Sunflower Robot. Move the sun across the sky and use dual-LDR differential sensing to steer the solar panel for peak watt generation."
+      },
+      {
+        id: 2,
+        name: "3-Axis Robot Arm & Claw",
+        code: "ROB-02-ARM",
+        diff: "Intermediate",
+        diffClass: "pill-inter",
+        file: "lab2_robot_arm.html",
+        badge: "🦾 Mechatronics Specialist",
+        domain: "Inverse Kinematics & Pneumatic Pick-and-Place",
+        desc: "Industrial robotic manipulator. Articulate the shoulder, elbow, and pneumatic gripper claw to transfer energy cells from conveyor to cargo bay."
+      },
+      {
+        id: 3,
+        name: "Autonomous Line Rover",
+        code: "ROB-03-ROVER",
+        diff: "Intermediate",
+        diffClass: "pill-inter",
+        file: "lab3_line_rover.html",
+        badge: "🏎️ Autonomous AGV Pilot",
+        domain: "Optical Line Guidance & PID Differential Steering",
+        desc: "Warehouse AGV Robot. Tune proportional Kp steering and optical threshold to guide a 2-wheel rover through high-speed curves without losing track."
+      },
+      {
+        id: 4,
+        name: "LiDAR & Ultrasonic Radar",
+        code: "ROB-04-RADAR",
+        diff: "Advanced",
+        diffClass: "pill-adv",
+        file: "lab4_ultrasonic_radar.html",
+        badge: "📡 Sonar SLAM Navigator",
+        domain: "Time-of-Flight Radar & Automatic Emergency Braking (AEB)",
+        desc: "Autonomous car spatial perception. Emit sweeping 360° sonic waves to map obstacle perimeters and engage automatic collision safety braking."
+      },
+      {
+        id: 5,
+        name: "Bionic Hexapod Walker",
+        code: "ROB-05-HEXA",
+        diff: "Advanced",
+        diffClass: "pill-adv",
+        file: "lab5_hexapod_walker.html",
+        badge: "🕷️ Biomimetic Kineticist",
+        domain: "Multi-Legged Gait Kinematics & Stability Polygons",
+        desc: "Bio-inspired multi-legged robotics. Master Tripod and Ripple walking gaits while keeping Center of Mass (CoM) stable across rocky terrain."
+      },
+      {
+        id: 6,
+        name: "Autonomous Mars Drone",
+        code: "ROB-06-DRONE",
+        diff: "Mastery",
+        diffClass: "pill-master",
+        file: "lab6_mars_drone.html",
+        badge: "🚁 Mars Flight Controller",
+        domain: "Coaxial Rotor Aerodynamics & 6-DOF Gyro Stabilization",
+        desc: "Planetary aerospace robotics (NASA Ingenuity). Counter-rotating coaxial rotors with 6-DOF IMU gyro auto-stabilizer against Martian desert wind gusts."
+      }
+    ];
+
+    let masteredLabs = JSON.parse(localStorage.getItem('day2_redesigned_mastered') || '[]');
+
+    function updateBadgesUI() {
+      const count = masteredLabs.length;
+      document.getElementById('masteredCountText').textContent = `${count} OF 6 LABS MASTERED`;
+      const dots = document.querySelectorAll('#headerBadgeDots .b-dot');
+      dots.forEach((dot, idx) => {
+        if (masteredLabs.includes(idx + 1)) dot.classList.add('earned');
+        else dot.classList.remove('earned');
+      });
+    }
+
+    function recordLabMastered(labId) {
+      if (!masteredLabs.includes(labId)) {
+        masteredLabs.push(labId);
+        localStorage.setItem('day2_redesigned_mastered', JSON.stringify(masteredLabs));
+        updateBadgesUI();
+        playSuccessChime();
+      }
+    }
+
+    function openRecordModal() {
+      const tbody = document.getElementById('recordTableBody');
+      tbody.innerHTML = '';
+      LAB_REGISTRY.forEach(lab => {
+        const isMastered = masteredLabs.includes(lab.id);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${lab.id}. ${lab.name}</strong><br><span style="color: var(--text-dim); font-size: 0.72rem;">${lab.code}</span></td>
+          <td>${lab.domain}</td>
+          <td><span class="record-badge-pill ${isMastered ? 'status-mastered' : 'status-locked'}">${isMastered ? '✓ MASTERED' : 'PENDING'}</span></td>
+          <td>${isMastered ? lab.badge : '🔒 In Progress'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('recordModal').classList.add('active');
+      playTone(800, 0.08);
+    }
+
+    function closeRecordModal() {
+      document.getElementById('recordModal').classList.remove('active');
+    }
+
+    function resetAllProgress() {
+      if (confirm('Reset all Day 2 completed badges and restart cadet mission?')) {
+        masteredLabs = [];
+        localStorage.removeItem('day2_redesigned_mastered');
+        updateBadgesUI();
+        openRecordModal();
+      }
+    }
+
+    // ========================================================================
+    // SIMULATION STATE & DISPATCHER
+    // ========================================================================
+    let currentLab = 1;
+    let animFrame = null;
+
+    // Simulation Data Models
+    const state = {
+      // Lab 1: Solar Tracker
+      l1: {
+        sunAngle: 45, // degrees 0-180
+        panelAngle: 90,
+        autoTrack: true,
+        weather: 'clear', // clear, golden, cloud, night, space
+        cellTech: 'mono', // mono, poly, perov
+        chassisSkin: 'nasa', // nasa, carbon, cyber, orange
+        powerWatts: 0,
+        cumWh: 1.42,
+        isDraggingSun: false,
+        tasks: [false, false, false]
+      },
+      // Lab 2: 3-DOF Mobile Robot Arm Vehicle
+      l2: {
+        vehicleX: 250,
+        shoulder: 65,
+        elbow: 50,
+        clawOpen: true,
+        hasPayload: false,
+        payloadX: 100,
+        payloadY: 265,
+        wheelRotation: 0,
+        coresDelivered: 0,
+        skinType: 'kuka',
+        conveyorOffset: 0,
+        tasks: [false, false, false]
+      },
+      // Lab 3: Line Rover
+      l3: {
+        running: false,
+        kp: 2.4,
+        kd: 0.8,
+        speed: 2.8,
+        threshold: 50,
+        roverX: 0,
+        roverY: 0,
+        roverAngle: 0,
+        lapTime: 0,
+        bestLap: null,
+        lapsCompleted: 0,
+        lastLapTimestamp: 0,
+        trackType: 'oval',
+        skinType: 'kiva',
+        sensorType: 'dual',
+        prevError: 0,
+        steerOutput: 0,
+        sensorL: 0.05,
+        sensorR: 0.05,
+        tireTrails: [],
+        tasks: [false, false, false]
+      },
+      // Lab 4: LiDAR Radar
+      l4: {
+        sweepAngle: 0,
+        obstacles: [
+          { x: 380, y: 140, r: 16, name: "Pylon A" },
+          { x: 280, y: 80, r: 20, name: "Barrier B" },
+          { x: 420, y: 220, r: 18, name: "Drone C" }
+        ],
+        draggedObstacle: null,
+        detectedCount: 0,
+        aebTriggered: false,
+        tasks: [false, false, false]
+      },
+      // Lab 5: Bionic Hexapod
+      l5: {
+        gait: 'tripod', // tripod, wave, ripple
+        stepHeight: 20,
+        walking: false,
+        distanceWalked: 0,
+        phase: 0,
+        tasks: [false, false, false]
+      },
+      // Lab 6: Mars Drone
+      l6: {
+        altitude: 0, // meters
+        rotorRpm: 0,
+        pitch: 0,
+        roll: 0,
+        windGust: 0,
+        gyroActive: true,
+        hovering: false,
+        tasks: [false, false, false]
+      }
+    };
+
+    function switchLab(id) {
+      currentLab = id;
+      if (animFrame) cancelAnimationFrame(animFrame);
+      playTone(500 + id * 60, 0.08);
+
+      // Tabs active styling
+      document.querySelectorAll('.lab-tab').forEach((tab, index) => {
+        if (index + 1 === id) tab.classList.add('active');
+        else tab.classList.remove('active');
+      });
+
+      const lab = LAB_REGISTRY.find(l => l.id === id);
+      document.getElementById('standaloneLaunchLink').href = lab.file;
+      document.getElementById('missionDiffBadge').textContent = `Level ${lab.id} · ${lab.diff}`;
+      document.getElementById('missionDiffBadge').className = `brief-pill ${lab.diffClass}`;
+      document.getElementById('missionTrackCode').textContent = lab.code;
+      document.getElementById('missionTitle').textContent = lab.name;
+      document.getElementById('missionDesc').textContent = lab.desc;
+      document.getElementById('activeBenchTitle').textContent = `${lab.name} Workbench`;
+
+      renderBrief(id);
+      renderControls(id);
+      startLabSimulation(id);
+    }
+
+    function renderBrief(id) {
+      const container = document.getElementById('taskListContainer');
+      const theory = document.getElementById('theoryBox');
+      const tasks = state[`l${id}`].tasks;
+
+      const completedCount = tasks.filter(Boolean).length;
+      document.getElementById('taskCounterText').textContent = `${completedCount}/3 Completed`;
+
+      const verifyBtn = document.getElementById('btnVerify');
+      if (verifyBtn) {
+        if (completedCount === 3) {
+          verifyBtn.innerHTML = `<span>🎉 3/3 TASKS COMPLETE! Claim Badge</span>`;
+          verifyBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+          verifyBtn.style.boxShadow = '0 0 20px rgba(34, 197, 94, 0.6)';
+          if (!masteredLabs.includes(id)) {
+            recordLabMastered(id);
+          }
+        } else {
+          verifyBtn.innerHTML = `<span>⚡ Verify &amp; Award Lab Badge (${completedCount}/3)</span>`;
+          verifyBtn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+          verifyBtn.style.boxShadow = '0 4px 15px rgba(245, 158, 11, 0.3)';
+        }
+      }
+
+      if (id === 1) {
+        theory.innerHTML = `<strong>Phototropism Heliostat Physics:</strong> As the sun arcs across the sky, Left &amp; Right LDR sensors measure sunlight variance. An analog comparator circuit rotates the servo to equalize resistance, keeping panel normal to incoming radiation to maximize Watt output ($P = V \\times I$).`;
+        container.innerHTML = `
+          <div class="task-item ${tasks[0] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>1. Morning Sun Vector Alignment</strong>
+              <span>Position sun at morning (30°–45°) and ensure servo auto-aligns panel within 5°.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[1] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>2. Peak Power Output (MPPT)</strong>
+              <span>Achieve peak generation &gt; 90 Watts by keeping panel perpendicular to sun.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[2] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>3. Customization &amp; Weather Stow</strong>
+              <span>Customize PV cell tech / chassis skin, or engage Night stow mode to safely park.</span>
+            </div>
+          </div>
+        `;
+      } else if (id === 2) {
+        theory.innerHTML = `<strong>3-DOF Mobile Manipulator AGV Kinematics:</strong> An autonomous mobile chassis translates along the factory floor track (<strong>Movement 1: $X$-axis</strong>). Mounted on the chassis deck, an articulated 2-link robotic arm features independent <strong>Movement 2 (Shoulder Joint $\theta_1$)</strong> and <strong>Movement 3 (Elbow Joint $\theta_2$)</strong>, empowering precise spatial reach for the pneumatic claw.`;
+        container.innerHTML = `
+          <div class="task-item ${tasks[0] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>1. Movement 1: Drive AGV to Conveyor</strong>
+              <span>Use <strong>Left / Right Arrow (← / →)</strong> or A/D to drive rover base ($X \\le 160\\text{ mm}$).</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[1] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>2. Movements 2 &amp; 3: Articulate Arm &amp; Grip</strong>
+              <span>Use <strong>Up/Down (↑/↓)</strong> for Shoulder &amp; <strong>W/S</strong> for Elbow, then <strong>[Space]</strong> to clamp.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[2] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>3. Transport to Target Cargo Bay</strong>
+              <span>Drive AGV right to bay ($X \\ge 390\\text{ mm}$) and press <strong>[Spacebar]</strong> to deliver cargo core!</span>
+            </div>
+          </div>
+        `;
+      } else if (id === 3) {
+        theory.innerHTML = `<strong>Differential Drive Kinematics &amp; Closed-Loop PID Guidance:</strong> Front phototransistors ($S_L, S_R$) detect the infrared contrast between dark guidance tape ($0.05$) and bright floor ($0.95$). An error signal $e(t) = S_R - S_L$ drives differential wheel velocities ($V_L = V - 0.55\Delta V, V_R = V + 0.55\Delta V$) using a PD controller ($\Delta V = K_p \cdot e(t) + K_d \cdot \frac{de}{dt}$). Proportional gain $K_p$ provides crisp turning authority while Derivative damping $K_d$ prevents oscillatory fishtailing on straightaways and hairpins.`;
+        container.innerHTML = `
+          <div class="task-item ${tasks[0] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>1. Optical Reflectance Threshold Calibration</strong>
+              <span>Tune comparator threshold between 40% and 60% to cleanly identify track boundary edges.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[1] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>2. PID Damping Calibration ($K_p$ &amp; $K_d$)</strong>
+              <span>Configure $K_p \ge 2.0$ and $K_d \ge 0.5$ for high-speed stability without hunting or overshoot.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[2] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>3. Clock High-Speed Autonomous Lap</strong>
+              <span>Engage drive and clock a complete lap across the checkered timing gate under 16.0s!</span>
+            </div>
+          </div>
+        `;
+      } else if (id === 4) {
+        theory.innerHTML = `<strong>Time-of-Flight (ToF) Ultrasonic Mapping:</strong> Ultrasonic sensor fires $40\\text{ kHz}$ acoustic chirps on a continuous sweep turntable. Echo time $\\Delta t$ calculates distance ($d = v \\times \\Delta t / 2$). Proximity $< 15\\text{cm}$ triggers Automatic Emergency Braking (AEB).`;
+        container.innerHTML = `
+          <div class="task-item ${tasks[0] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>1. Sector Perimeter Ping</strong>
+              <span>Drag an obstacle into Sector Alpha (0°–90°) and lock its echo distance.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[1] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>2. 360° LiDAR Occupancy Map</strong>
+              <span>Complete a full radar sweep that successfully detects all 3 field obstacles.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[2] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>3. Critical Emergency Braking (AEB)</strong>
+              <span>Move any obstacle into the red hazard perimeter (&lt; 15cm) to trip the AEB cutoff.</span>
+            </div>
+          </div>
+        `;
+      } else if (id === 5) {
+        theory.innerHTML = `<strong>Bio-Inspired Multi-Legged Locomotion:</strong> Hexapods utilize alternating Tripod or Ripple gaits. Three legs support the body while three legs step. The Center of Mass (CoM) must remain inside the support triangle to maintain continuous static stability.`;
+        container.innerHTML = `
+          <div class="task-item ${tasks[0] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>1. Tripod Gait Synchronization</strong>
+              <span>Select Tripod Gait and verify that the Center of Mass stays inside the green support triangle.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[1] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>2. Rocky Terrain Step Clearance</strong>
+              <span>Raise Step Height &ge; 25mm to clear surface boulders without stumbling.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[2] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>3. Exploration Beacon March</strong>
+              <span>Walk the hexapod forward 10 strides across the Martian terrain to the beacon!</span>
+            </div>
+          </div>
+        `;
+      } else if (id === 6) {
+        theory.innerHTML = `<strong>Planetary Coaxial Aerodynamics &amp; Gyro Stabilization:</strong> Coaxial counter-rotating rotors cancel torque in thin Martian atmosphere ($0.020\\text{ kg/m}^3$). A 6-DOF IMU gyroscope continuously calculates tilt angles and commands counter-cyclic thrust against wind gusts.`;
+        container.innerHTML = `
+          <div class="task-item ${tasks[0] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>1. Controlled Martian Hover</strong>
+              <span>Throttle rotors to maintain stable altitude hover between 8m and 14m.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[1] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>2. Weather Martian Dust Gust</strong>
+              <span>Trigger a 25+ km/h desert crosswind and withstand it with Gyro Auto-Stabilizer ON.</span>
+            </div>
+          </div>
+          <div class="task-item ${tasks[2] ? 'completed' : ''}">
+            <div class="task-check">✓</div>
+            <div class="task-content">
+              <strong>3. Precision Soft Touchdown</strong>
+              <span>Descend gently onto the Olympus Base landing pad with landing velocity &lt; 0.8 m/s!</span>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function renderControls(id) {
+      const dock = document.getElementById('workbenchControlsDock');
+
+      if (id === 1) {
+        // LAB 1: SOLAR TRACKER
+        dock.innerHTML = `
+          <div class="control-group">
+            <span class="control-label">☀️ Sun Angle:</span>
+            <input type="range" id="l1SunSlider" min="0" max="180" value="${state.l1.sunAngle}" class="sim-slider" oninput="setL1Sun(this.value)">
+            <span class="val-chip" id="l1SunChip">${state.l1.sunAngle}°</span>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🔄 Auto-Tracker:</span>
+            <button class="h-btn" id="l1AutoBtn" onclick="toggleL1Auto()" style="color: ${state.l1.autoTrack ? '#22c55e' : '#94a3b8'}; border-color: ${state.l1.autoTrack ? '#22c55e' : 'var(--border)'};">
+              ${state.l1.autoTrack ? '✓ AUTO-SERVO ON' : 'MANUAL OVERRIDE'}
+            </button>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">⚡ PV Cell Tech:</span>
+            <select style="background:#0f172a; color:#f8fafc; border:1px solid var(--border); padding:0.35rem 0.55rem; border-radius:6px; font-family:'JetBrains Mono'; font-size:0.75rem; cursor:pointer;" onchange="setL1CellTech(this.value)">
+              <option value="mono" ${state.l1.cellTech === 'mono' ? 'selected' : ''}>Monocrystalline (24% Eff · Obsidian)</option>
+              <option value="poly" ${state.l1.cellTech === 'poly' ? 'selected' : ''}>Polycrystalline (18% Eff · Sapphire)</option>
+              <option value="perov" ${state.l1.cellTech === 'perov' ? 'selected' : ''}>Perovskite Quantum (29% Eff · Emerald)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🎨 Chassis Skin:</span>
+            <select style="background:#0f172a; color:#f8fafc; border:1px solid var(--border); padding:0.35rem 0.55rem; border-radius:6px; font-family:'JetBrains Mono'; font-size:0.75rem; cursor:pointer;" onchange="setL1ChassisSkin(this.value)">
+              <option value="nasa" ${state.l1.chassisSkin === 'nasa' ? 'selected' : ''}>🚀 NASA Kapton Gold</option>
+              <option value="carbon" ${state.l1.chassisSkin === 'carbon' ? 'selected' : ''}>🛡️ Stealth Carbon Fiber</option>
+              <option value="cyber" ${state.l1.chassisSkin === 'cyber' ? 'selected' : ''}>⚡ Cyber Academy Teal</option>
+              <option value="orange" ${state.l1.chassisSkin === 'orange' ? 'selected' : ''}>🚜 Field Heavy-Duty</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">⛅ Sky Condition:</span>
+            <button class="h-btn" style="${state.l1.weather === 'clear' ? 'color:#22c55e; border-color:#22c55e;' : ''}" onclick="setL1Weather('clear')">☀️ Clear</button>
+            <button class="h-btn" style="${state.l1.weather === 'golden' ? 'color:#f59e0b; border-color:#f59e0b;' : ''}" onclick="setL1Weather('golden')">🌅 Sunset</button>
+            <button class="h-btn" style="${state.l1.weather === 'cloud' ? 'color:#06b6d4; border-color:#06b6d4;' : ''}" onclick="setL1Weather('cloud')">⛅ Cloud</button>
+            <button class="h-btn" style="${state.l1.weather === 'night' ? 'color:#a855f7; border-color:#a855f7;' : ''}" onclick="setL1Weather('night')">🌙 Night</button>
+            <button class="h-btn" style="${state.l1.weather === 'space' ? 'color:#38bdf8; border-color:#38bdf8;' : ''}" onclick="setL1Weather('space')">🌌 Space</button>
+          </div>
+        `;
+      } else if (id === 2) {
+        // LAB 2: 3-DOF MOBILE ROBOT ARM VEHICLE
+        dock.innerHTML = `
+          <div class="control-group">
+            <span class="control-label">🚜 Movement 1: Vehicle Base (X-Axis):</span>
+            <input type="range" id="l2VehSlider" min="110" max="470" value="${state.l2.vehicleX}" class="sim-slider" oninput="setL2VehicleX(this.value)">
+            <span class="val-chip" id="l2VehChip">${state.l2.vehicleX} mm</span>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🦾 Movement 2: Shoulder Boom (θ₁):</span>
+            <input type="range" id="l2ShoulderSlider" min="20" max="160" value="${state.l2.shoulder}" class="sim-slider" oninput="setL2Shoulder(this.value)">
+            <span class="val-chip" id="l2ShoulderChip">${state.l2.shoulder}°</span>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🦾 Movement 3: Elbow Forearm (θ₂):</span>
+            <input type="range" id="l2ElbowSlider" min="15" max="135" value="${state.l2.elbow}" class="sim-slider" oninput="setL2Elbow(this.value)">
+            <span class="val-chip" id="l2ElbowChip">${state.l2.elbow}°</span>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">⌨️ 3-Axis Tactile Navigation:</span>
+            <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+              <button class="h-btn" onclick="driveL2Vehicle(-14)" title="Left Arrow or A">◀ AGV Left (←)</button>
+              <button class="h-btn" onclick="driveL2Vehicle(+14)" title="Right Arrow or D">AGV Right (→) ▶</button>
+              <button class="h-btn" onclick="stepL2Shoulder(+4)" title="Up Arrow">▲ Shoulder (↑)</button>
+              <button class="h-btn" onclick="stepL2Shoulder(-4)" title="Down Arrow">▼ Shoulder (↓)</button>
+              <button class="h-btn" onclick="stepL2Elbow(+4)" title="W Key">⮥ Elbow (W)</button>
+              <button class="h-btn" onclick="stepL2Elbow(-4)" title="S Key">⮦ Elbow (S)</button>
+            </div>
+          </div>
+
+          <div class="control-group" style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+            <button class="btn-verify-mission" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" onclick="toggleL2Claw()">
+              ${state.l2.clawOpen ? '🗜️ GRIP CLAW (Space)' : '✋ RELEASE CLAW (Space)'}
+            </button>
+            <button class="h-btn" onclick="alignL2ToConveyor()" style="color:#06b6d4; border-color:rgba(6, 182, 212, 0.4);" title="Auto-align arm directly onto conveyor cargo core">
+              🎯 Auto-Align Core
+            </button>
+            <button class="h-btn" onclick="resetL2Payload()">↺ Reset Core</button>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🎨 Chassis Skin:</span>
+            <select style="background:#0f172a; color:#f8fafc; border:1px solid var(--border); padding:0.3rem 0.5rem; border-radius:6px; font-family:'JetBrains Mono'; font-size:0.75rem; cursor:pointer;" onchange="setL2Skin(this.value)">
+              <option value="kuka" ${state.l2.skinType === 'kuka' ? 'selected' : ''}>🏭 Industrial Orange</option>
+              <option value="artemis" ${state.l2.skinType === 'artemis' ? 'selected' : ''}>🚀 NASA Artemis White</option>
+              <option value="cyber" ${state.l2.skinType === 'cyber' ? 'selected' : ''}>⚡ Cyber Academy Teal</option>
+              <option value="hazard" ${state.l2.skinType === 'hazard' ? 'selected' : ''}>☣️ Hazard Stripes</option>
+            </select>
+          </div>
+        `;
+      } else if (id === 3) {
+        // LAB 3: AUTONOMOUS LINE ROVER AGV & DIFFERENTIAL PID
+        dock.innerHTML = `
+          <div class="control-group">
+            <span class="control-label">⚡ Proportional Steering Gain (Kp):</span>
+            <input type="range" id="l3KpSlider" min="0.5" max="4.5" step="0.1" value="${state.l3.kp}" class="sim-slider" oninput="setL3Kp(this.value)">
+            <span class="val-chip" id="l3KpChip">${state.l3.kp.toFixed(1)}</span>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🛑 Derivative Damping Gain (Kd):</span>
+            <input type="range" id="l3KdSlider" min="0.0" max="2.5" step="0.05" value="${state.l3.kd}" class="sim-slider" oninput="setL3Kd(this.value)">
+            <span class="val-chip" id="l3KdChip">${state.l3.kd.toFixed(2)}</span>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🚀 Chassis Cruise Speed:</span>
+            <input type="range" id="l3SpeedSlider" min="1.2" max="4.5" step="0.1" value="${state.l3.speed}" class="sim-slider" oninput="setL3Speed(this.value)">
+            <span class="val-chip" id="l3SpeedChip">${state.l3.speed.toFixed(1)} m/s</span>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🎯 Optical Floor Threshold:</span>
+            <input type="range" id="l3ThreshSlider" min="20" max="80" value="${state.l3.threshold}" class="sim-slider" oninput="setL3Threshold(this.value)">
+            <span class="val-chip" id="l3ThreshChip">${state.l3.threshold}%</span>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🏁 Circuit Track Layout:</span>
+            <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+              <button class="h-btn" style="${state.l3.trackType === 'oval' ? 'color:#f59e0b; border-color:#f59e0b;' : ''}" onclick="setL3Track('oval')">Warehouse Oval</button>
+              <button class="h-btn" style="${state.l3.trackType === 'figure8' ? 'color:#f59e0b; border-color:#f59e0b;' : ''}" onclick="setL3Track('figure8')">♾️ Figure-8 Hairpin</button>
+              <button class="h-btn" style="${state.l3.trackType === 'gp' ? 'color:#f59e0b; border-color:#f59e0b;' : ''}" onclick="setL3Track('gp')">🏎️ GP Slalom</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">🎨 AGV Chassis Livery:</span>
+            <select style="background:#0f172a; color:#f8fafc; border:1px solid var(--border); padding:0.3rem 0.5rem; border-radius:6px; font-family:'JetBrains Mono'; font-size:0.75rem; cursor:pointer;" onchange="setL3Skin(this.value)">
+              <option value="kiva" ${state.l3.skinType === 'kiva' ? 'selected' : ''}>📦 Amazon Kiva Orange</option>
+              <option value="formula" ${state.l3.skinType === 'formula' ? 'selected' : ''}>⚡ Cyber Formula Teal</option>
+              <option value="artemis" ${state.l3.skinType === 'artemis' ? 'selected' : ''}>🚀 Artemis Lunar White</option>
+              <option value="stealth" ${state.l3.skinType === 'stealth' ? 'selected' : ''}>🕶️ Stealth Carbon</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">⚙️ PID Calibration Presets:</span>
+            <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+              <button class="h-btn" onclick="applyL3Preset('safe')" title="Kp=2.2, Kd=0.8, Spd=2.4">🏭 Safe Warehouse AGV</button>
+              <button class="h-btn" onclick="applyL3Preset('formula')" title="Kp=3.6, Kd=1.4, Spd=3.8">🏎️ Formula Line-Seeker</button>
+            </div>
+          </div>
+
+          <div class="control-group" style="display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: center;">
+            <button class="btn-verify-mission" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" id="l3DriveBtn" onclick="toggleL3Drive()">
+              ${state.l3.running ? '🛑 PAUSE ROVER (Space)' : '⚡ ENGAGE DRIVE (Space)'}
+            </button>
+            <button class="h-btn" onclick="resetL3Rover()">↺ Reset Lap (R)</button>
+            <a href="lab3_line_rover.html" target="_blank" class="h-btn" style="color:#06b6d4; border-color:rgba(6, 182, 212, 0.4); text-decoration:none; display:inline-flex; align-items:center; gap:0.25rem;">
+              🚀 Fullscreen Studio ↗
+            </a>
+          </div>
+        `;
+      } else if (id === 4) {
+        // LAB 4: LIDAR RADAR
+        dock.innerHTML = `
+          <div class="control-group">
+            <span class="control-label">Radar Turntable:</span>
+            <span class="val-chip" id="l4AngleChip">0° SWEEP</span>
+            <button class="h-btn" onclick="triggerL4Ping()">📡 Force Ping</button>
+          </div>
+
+          <div class="control-group">
+            <span style="font-size: 0.75rem; color: #94a3b8;">💡 Tip: Drag obstacles on the radar screen to test echo reflections!</span>
+          </div>
+        `;
+      } else if (id === 5) {
+        // LAB 5: BIONIC HEXAPOD
+        dock.innerHTML = `
+          <div class="control-group">
+            <span class="control-label">Gait Mode:</span>
+            <button class="h-btn ${state.l5.gait === 'tripod' ? 'active' : ''}" style="${state.l5.gait === 'tripod' ? 'border-color: #22c55e; color: #22c55e;' : ''}" onclick="setL5Gait('tripod')">Tripod (Fast)</button>
+            <button class="h-btn ${state.l5.gait === 'wave' ? 'active' : ''}" style="${state.l5.gait === 'wave' ? 'border-color: #06b6d4; color: #06b6d4;' : ''}" onclick="setL5Gait('wave')">Wave (Rock Stable)</button>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">Step Clearance:</span>
+            <input type="range" min="10" max="35" value="${state.l5.stepHeight}" class="sim-slider" oninput="setL5Step(this.value)">
+            <span class="val-chip" id="l5StepChip">${state.l5.stepHeight} mm</span>
+          </div>
+
+          <div class="control-group">
+            <button class="btn-verify-mission" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;" onclick="stepL5Hexapod()">
+              🐾 Step Forward
+            </button>
+          </div>
+        `;
+      } else if (id === 6) {
+        // LAB 6: MARS DRONE
+        dock.innerHTML = `
+          <div class="control-group">
+            <span class="control-label">Rotor Throttle:</span>
+            <input type="range" min="0" max="100" value="${state.l6.rotorRpm}" class="sim-slider" oninput="setL6Throttle(this.value)">
+            <span class="val-chip" id="l6ThrottleChip">${state.l6.rotorRpm}%</span>
+          </div>
+
+          <div class="control-group">
+            <span class="control-label">Gyro Auto-Level:</span>
+            <button class="h-btn" onclick="toggleL6Gyro()" style="color: ${state.l6.gyroActive ? '#22c55e' : '#94a3b8'}; border-color: ${state.l6.gyroActive ? '#22c55e' : 'var(--border)'};">
+              ${state.l6.gyroActive ? '✓ 6-DOF GYRO ON' : 'MANUAL DRIFT'}
+            </button>
+          </div>
+
+          <div class="control-group">
+            <button class="h-btn" onclick="triggerL6Gust()" style="border-color: var(--rob-orange); color: var(--rob-orange);">
+              💨 30 km/h Martian Gust
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    // ========================================================================
+    // LAB 1: SMART SOLAR TRACKER ENGINE (UPGRADED UI & CUSTOMIZATION)
+    // ========================================================================
+    const l1Skins = {
+      nasa: { mast: '#0f172a', bracket: '#f59e0b', highlight: '#fef08a' },
+      carbon: { mast: '#18181b', bracket: '#3f3f46', highlight: '#71717a' },
+      cyber: { mast: '#082f49', bracket: '#0284c7', highlight: '#38bdf8' },
+      orange: { mast: '#451a03', bracket: '#d97706', highlight: '#fbbf24' }
+    };
+
+    const l1Cells = {
+      mono: { base: '#090d16', stroke: '#0284c7', grid: 'rgba(56, 189, 248, 0.4)', eff: 1.0 },
+      poly: { base: '#0c1b33', stroke: '#3b82f6', grid: 'rgba(96, 165, 250, 0.5)', eff: 0.85 },
+      perov: { base: '#042f2e', stroke: '#14b8a6', grid: 'rgba(45, 212, 191, 0.6)', eff: 1.22 }
+    };
+
+    let l1Gleam = 0;
+
+    function setL1Sun(val) {
+      state.l1.sunAngle = parseInt(val);
+      const chip = document.getElementById('l1SunChip');
+      if (chip) chip.textContent = `${val}°`;
+      if (state.l1.sunAngle >= 30 && state.l1.sunAngle <= 50) {
+        state.l1.tasks[0] = true;
+      }
+      renderBrief(1);
+    }
+
+    function toggleL1Auto() {
+      state.l1.autoTrack = !state.l1.autoTrack;
+      renderControls(1);
+      playServoSound();
+    }
+
+    function setL1Weather(w) {
+      state.l1.weather = w;
+      if (w === 'night') {
+        state.l1.tasks[2] = true;
+        playTone(300, 0.2);
+      }
+      renderControls(1);
+      renderBrief(1);
+      playTone(650, 0.08);
+    }
+
+    function setL1CellTech(tech) {
+      state.l1.cellTech = tech;
+      state.l1.tasks[2] = true;
+      renderBrief(1);
+      playTone(720, 0.08);
+    }
+
+    function setL1ChassisSkin(skin) {
+      state.l1.chassisSkin = skin;
+      state.l1.tasks[2] = true;
+      renderBrief(1);
+      playTone(780, 0.08);
+    }
+
+    function drawLab1(ctx, w, h) {
+      // 1. Dynamic Atmosphere Sky Gradient
+      const weather = state.l1.weather || 'clear';
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      if (weather === 'space') {
+        grad.addColorStop(0, '#020617');
+        grad.addColorStop(0.6, '#080d1a');
+        grad.addColorStop(1, '#0f172a');
+      } else if (weather === 'golden') {
+        grad.addColorStop(0, '#7c2d12');
+        grad.addColorStop(0.4, '#c2410c');
+        grad.addColorStop(0.7, '#ea580c');
+        grad.addColorStop(1, '#fef08a');
+      } else if (weather === 'cloud') {
+        grad.addColorStop(0, '#334155');
+        grad.addColorStop(0.5, '#475569');
+        grad.addColorStop(1, '#94a3b8');
+      } else if (weather === 'night') {
+        grad.addColorStop(0, '#030712');
+        grad.addColorStop(1, '#0b1329');
+      } else {
+        // Clear Day
+        grad.addColorStop(0, '#0284c7');
+        grad.addColorStop(0.65, '#38bdf8');
+        grad.addColorStop(1, '#fef08a');
+      }
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Stars in Space mode
+      if (weather === 'space') {
+        ctx.fillStyle = '#ffffff';
+        for (let i = 0; i < 35; i++) {
+          const sx = (Math.sin(i * 77) * 0.5 + 0.5) * w;
+          const sy = (Math.cos(i * 44) * 0.5 + 0.5) * (h * 0.65);
+          ctx.beginPath(); ctx.arc(sx, sy, 1.2, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+
+      // 2. Sun Coordinates (Smooth Celestial Arc)
+      const sunRad = (state.l1.sunAngle * Math.PI) / 180;
+      const sunX = w / 2 - Math.cos(sunRad) * (w * 0.42);
+      const sunY = (h * 0.74) - Math.sin(sunRad) * (h * 0.56);
+
+      const isNight = weather === 'night';
+      const baseX = w / 2;
+      const baseY = h * 0.75;
+      const pivotY = baseY - 50;
+
+      if (!isNight) {
+        // Volumetric Sunbeams to Tracker
+        ctx.save();
+        const beamGrad = ctx.createLinearGradient(sunX, sunY, baseX, pivotY);
+        beamGrad.addColorStop(0, weather === 'golden' ? 'rgba(251, 146, 60, 0.4)' : 'rgba(254, 240, 138, 0.35)');
+        beamGrad.addColorStop(1, 'rgba(254, 240, 138, 0.02)');
+        ctx.fillStyle = beamGrad;
+        ctx.beginPath();
+        ctx.moveTo(sunX - 16, sunY);
+        ctx.lineTo(baseX - 60, pivotY);
+        ctx.lineTo(baseX + 60, pivotY);
+        ctx.lineTo(sunX + 16, sunY);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+
+        // Sun Glow & Corona
+        const pulse = Math.sin(Date.now() * 0.003) * 3;
+        ctx.fillStyle = weather === 'golden' ? 'rgba(251, 146, 60, 0.4)' : 'rgba(254, 240, 138, 0.35)';
+        ctx.beginPath(); ctx.arc(sunX, sunY, 36 + pulse, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = weather === 'golden' ? '#fb923c' : '#fef08a';
+        ctx.beginPath(); ctx.arc(sunX, sunY, 20, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(sunX, sunY, 21, 0, Math.PI * 2); ctx.stroke();
+      }
+
+      // 3. Auto-Tracking Closed-Loop Servo Physics
+      if (state.l1.autoTrack) {
+        const targetAngle = isNight ? 90 : state.l1.sunAngle;
+        const diff = targetAngle - state.l1.panelAngle;
+        if (Math.abs(diff) > 0.4) {
+          state.l1.panelAngle += diff * 0.08;
+          playServoSound();
+        }
+      }
+
+      // 4. Ground Foundation & Tower Mount (with Chassis Skin)
+      ctx.fillStyle = weather === 'space' ? '#090d16' : '#1e293b';
+      ctx.fillRect(0, baseY, w, h - baseY);
+
+      const skin = l1Skins[state.l1.chassisSkin] || l1Skins.nasa;
+      const cell = l1Cells[state.l1.cellTech] || l1Cells.mono;
+
+      // Base Mounting Pad
+      ctx.fillStyle = '#334155';
+      ctx.fillRect(baseX - 35, baseY - 8, 70, 8);
+
+      // Tower Column (Chassis Skin)
+      ctx.fillStyle = skin.mast;
+      ctx.fillRect(baseX - 12, pivotY, 24, baseY - pivotY - 8);
+      ctx.strokeStyle = skin.bracket;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(baseX - 12, pivotY, 24, baseY - pivotY - 8);
+
+      // Micro-Servo Gearbox (Pivot Joint)
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath(); ctx.arc(baseX, pivotY, 15, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = skin.bracket;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.fillStyle = skin.highlight;
+      ctx.beginPath(); ctx.arc(baseX, pivotY, 5, 0, Math.PI * 2); ctx.fill();
+
+      // 5. Articulated Photovoltaic Panel Face
+      ctx.save();
+      ctx.translate(baseX, pivotY);
+      ctx.rotate(((state.l1.panelAngle - 90) * Math.PI) / 180);
+
+      // Frame & Backing
+      ctx.fillStyle = skin.bracket;
+      ctx.fillRect(-72, -12, 144, 24);
+      ctx.strokeStyle = skin.highlight;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(-72, -12, 144, 24);
+
+      // Photovoltaic Cell Face
+      ctx.fillStyle = cell.base;
+      ctx.fillRect(-68, -9, 136, 18);
+      ctx.strokeStyle = cell.stroke;
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(-68, -9, 136, 18);
+
+      // Busbars & Grid
+      ctx.strokeStyle = cell.grid;
+      ctx.lineWidth = 1;
+      for (let px = -50; px <= 50; px += 20) {
+        ctx.beginPath(); ctx.moveTo(px, -9); ctx.lineTo(px, 9); ctx.stroke();
+      }
+
+      // Specular Gleam Glint (when facing sun)
+      const angleDelta = Math.abs(state.l1.panelAngle - state.l1.sunAngle);
+      if (!isNight && angleDelta < 18) {
+        l1Gleam = (l1Gleam + 2) % 150;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+        ctx.fillRect(-75 + l1Gleam, -9, 16, 18);
+      }
+
+      // Dual LDR Sensor Horns (Left & Right)
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath(); ctx.arc(-64, -15, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(64, -15, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(-64, -15, 2, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(64, -15, 2, 0, Math.PI * 2); ctx.fill();
+
+      ctx.restore();
+
+      // 6. Power Calculations & HUD Overlay
+      let baseIrrad = 100;
+      if (weather === 'golden') baseIrrad = 65;
+      else if (weather === 'cloud') baseIrrad = 35;
+      else if (weather === 'space') baseIrrad = 135;
+      else if (weather === 'night') baseIrrad = 0;
+
+      const cosFactor = Math.max(0, Math.cos((angleDelta * Math.PI) / 180));
+      state.l1.powerWatts = Math.round(cosFactor * baseIrrad * cell.eff);
+
+      if (state.l1.powerWatts >= 90 && weather === 'clear') {
+        state.l1.tasks[1] = true;
+        renderBrief(1);
+      }
+
+      // Dual LDR Telemetry Overlay (Top Left)
+      const ldrL = (2.4 + Math.sin(((state.l1.sunAngle - 35) * Math.PI) / 180) * 1.5).toFixed(2);
+      const ldrR = (2.4 + Math.sin(((145 - state.l1.sunAngle) * Math.PI) / 180) * 1.5).toFixed(2);
+      const isLocked = Math.abs(state.l1.panelAngle - state.l1.sunAngle) < 4;
+
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.fillRect(15, 15, 250, 48);
+      ctx.strokeStyle = isLocked ? '#22c55e' : '#f59e0b';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(15, 15, 250, 48);
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 9px JetBrains Mono';
+      ctx.fillText('DUAL-LDR OP-AMP COMPARATOR', 24, 28);
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = '9px JetBrains Mono';
+      ctx.fillText(`L: ${ldrL}kΩ | R: ${ldrR}kΩ | ${isLocked ? '● LOCKED' : '◀ SEEKING'}`, 24, 46);
+
+      // Power Generation HUD (Top Right)
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.fillRect(w - 200, 15, 185, 68);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(w - 200, 15, 185, 68);
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 10px JetBrains Mono';
+      ctx.fillText('SOLAR POWER GENERATION', w - 188, 32);
+      ctx.fillStyle = state.l1.powerWatts > 85 ? '#22c55e' : '#f8fafc';
+      ctx.font = 'bold 20px JetBrains Mono';
+      ctx.fillText(`${state.l1.powerWatts} WATTS`, w - 188, 56);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '8px JetBrains Mono';
+      ctx.fillText(`MPPT: ${(cosFactor * 100).toFixed(0)}% · ${cell.eff > 1.1 ? 'PEROVSKITE' : 'SILICON'}`, w - 188, 72);
+    }
+
+    // ========================================================================
+    // LAB 2: MOBILE ROBOT ARM VEHICLE (DRIVE VEHICLE WITH LEFT/RIGHT ARROWS)
+    // ========================================================================
+    const l2ArmSkins = {
+      kuka: { body: '#f59e0b', frame: '#d97706', accent: '#ffffff', wheel: '#1e293b' },
+      artemis: { body: '#f1f5f9', frame: '#cbd5e1', accent: '#0284c7', wheel: '#334155' },
+      cyber: { body: '#0f172a', frame: '#1e293b', accent: '#06b6d4', wheel: '#0284c7' },
+      hazard: { body: '#eab308', frame: '#ca8a04', accent: '#000000', wheel: '#18181b' }
+    };
+
+    function setL2VehicleX(val) {
+      const oldX = state.l2.vehicleX;
+      state.l2.vehicleX = Math.max(110, Math.min(470, parseInt(val)));
+      state.l2.wheelRotation = (state.l2.wheelRotation || 0) + (state.l2.vehicleX - oldX) * 0.15;
+      const chip = document.getElementById('l2VehChip');
+      if (chip) chip.textContent = `${state.l2.vehicleX} mm`;
+      const slider = document.getElementById('l2VehSlider');
+      if (slider) slider.value = state.l2.vehicleX;
+      playDriveSound();
+      checkL2Tasks();
+    }
+
+    function driveL2Vehicle(delta) {
+      setL2VehicleX(state.l2.vehicleX + delta);
+    }
+
+    // Movement 2: Shoulder Joint Boom (θ₁)
+    function setL2Shoulder(val) {
+      state.l2.shoulder = Math.max(20, Math.min(160, parseInt(val)));
+      const chip = document.getElementById('l2ShoulderChip');
+      if (chip) chip.textContent = `${state.l2.shoulder}°`;
+      const slider = document.getElementById('l2ShoulderSlider');
+      if (slider) slider.value = state.l2.shoulder;
+      playTone(220 + state.l2.shoulder * 2.4, 0.04, 'sine', 0.02);
+      checkL2Tasks();
+    }
+
+    function stepL2Shoulder(delta) {
+      setL2Shoulder((state.l2.shoulder || 65) + delta);
+    }
+
+    // Movement 3: Elbow Joint Forearm (θ₂)
+    function setL2Elbow(val) {
+      state.l2.elbow = Math.max(15, Math.min(135, parseInt(val)));
+      const chip = document.getElementById('l2ElbowChip');
+      if (chip) chip.textContent = `${state.l2.elbow}°`;
+      const slider = document.getElementById('l2ElbowSlider');
+      if (slider) slider.value = state.l2.elbow;
+      playTone(360 + state.l2.elbow * 3.1, 0.04, 'triangle', 0.02);
+      checkL2Tasks();
+    }
+
+    function stepL2Elbow(delta) {
+      setL2Elbow((state.l2.elbow || 50) + delta);
+    }
+
+    function setL2Skin(skin) {
+      state.l2.skinType = skin;
+      playTone(650, 0.08);
+    }
+
+    // Quick auto-alignment helper for conveyor pick
+    function alignL2ToConveyor() {
+      setL2VehicleX(210);
+      setL2Shoulder(50);
+      setL2Elbow(95);
+      playTone(750, 0.12);
+    }
+
+    function toggleL2Claw() {
+      state.l2.clawOpen = !state.l2.clawOpen;
+      playClawClick();
+      renderControls(2);
+
+      const k = getL2EndEffector();
+      const distTip = Math.hypot(k.clawTipX - state.l2.payloadX, k.clawTipY - state.l2.payloadY);
+      const distWrist = Math.hypot(k.endX - state.l2.payloadX, k.endY - state.l2.payloadY);
+      const dist = Math.min(distTip, distWrist);
+
+      // Generous 65px magnetic grasp radius
+      if (!state.l2.clawOpen && dist < 65) {
+        state.l2.hasPayload = true;
+        state.l2.payloadX = k.clawTipX;
+        state.l2.payloadY = k.clawTipY;
+        state.l2.tasks[1] = true;
+        renderBrief(2);
+        playTone(950, 0.15);
+      } else if (state.l2.clawOpen && state.l2.hasPayload) {
+        state.l2.hasPayload = false;
+        // Dropped over cargo bay on right side (vehicleX >= 370 or payloadX >= 370)
+        if (state.l2.vehicleX >= 370 || state.l2.payloadX >= 370) {
+          state.l2.coresDelivered = (state.l2.coresDelivered || 0) + 1;
+          state.l2.tasks[2] = true;
+          renderBrief(2);
+          playTone(880, 0.2);
+          setTimeout(() => playTone(1175, 0.3), 150);
+
+          // Respawn next energy core on conveyor
+          if (state.l2.coresDelivered < 3) {
+            setTimeout(() => {
+              state.l2.payloadX = 100;
+              state.l2.payloadY = k.baseY - 32;
+              playTone(600, 0.1);
+            }, 600);
+          }
+        } else {
+          // Drops to factory floor
+          state.l2.payloadY = k.baseY - 14;
+        }
+      }
+    }
+
+    function resetL2Payload() {
+      const k = getL2EndEffector();
+      state.l2.payloadX = 100;
+      state.l2.payloadY = k.baseY - 32;
+      state.l2.hasPayload = false;
+      state.l2.clawOpen = true;
+      renderControls(2);
+      playTone(500, 0.1);
+    }
+
+    function checkL2Tasks() {
+      // Task 1: Drive AGV into conveyor pick zone
+      if (state.l2.vehicleX <= 240) {
+        if (!state.l2.tasks[0]) {
+          state.l2.tasks[0] = true;
+          renderBrief(2);
+          playTone(720, 0.1);
+        }
+      }
+    }
+
+    function getL2EndEffector(w, h) {
+      const canvas = document.getElementById('mainSimCanvas');
+      if (!w && canvas) w = canvas.width || 680;
+      if (!h && canvas) h = canvas.height || 380;
+      if (!w) w = 680;
+      if (!h) h = 380;
+
+      const baseY = h * 0.77;
+      const vehDeckY = baseY - 26;
+      const armBaseX = state.l2.vehicleX;
+      const armBaseY = vehDeckY;
+
+      const L1 = 80;
+      const L2 = 68;
+
+      const th1 = ((state.l2.shoulder || 65) * Math.PI) / 180;
+      const j1x = armBaseX - L1 * Math.cos(th1);
+      const j1y = armBaseY - L1 * Math.sin(th1);
+
+      const th2 = ((state.l2.elbow || 50) * Math.PI) / 180;
+      const forearmAngle = th1 - th2;
+      const endX = j1x - L2 * Math.cos(forearmAngle);
+      const endY = j1y - L2 * Math.sin(forearmAngle);
+
+      const armAngle = Math.atan2(endY - j1y, endX - j1x);
+      const clawTipX = endX + Math.cos(armAngle) * 18;
+      const clawTipY = endY + Math.sin(armAngle) * 18;
+
+      return { armBaseX, armBaseY, j1x, j1y, endX, endY, baseY, forearmAngle, armAngle, clawTipX, clawTipY };
+    }
+
+    function drawLab2(ctx, w, h) {
+      ctx.fillStyle = '#060a14';
+      ctx.fillRect(0, 0, w, h);
+
+      // Ground Surface & Grid
+      ctx.fillStyle = '#111827';
+      ctx.fillRect(0, h * 0.77, w, h * 0.23);
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(0, h * 0.77); ctx.lineTo(w, h * 0.77); ctx.stroke();
+
+      // Guide track for vehicle wheels
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(80, h * 0.77 + 2); ctx.lineTo(510, h * 0.77 + 2); ctx.stroke();
+
+      const k = getL2EndEffector(w, h);
+
+      // Conveyor Belt (Left: X=25 to 160, grounded relative to floor)
+      state.l2.conveyorOffset = ((state.l2.conveyorOffset || 0) + 0.5) % 20;
+      const convY = k.baseY - 20;
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(25, convY, 135, 20);
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(25, convY, 135, 20);
+
+      // Rollers
+      ctx.fillStyle = '#38bdf8';
+      for (let rx = 30 + state.l2.conveyorOffset; rx < 160; rx += 20) {
+        ctx.fillRect(rx, convY + 1, 4, 18);
+      }
+      ctx.fillStyle = '#0284c7';
+      ctx.font = 'bold 9px JetBrains Mono';
+      ctx.fillText('INCOMING CONVEYOR', 32, convY + 14);
+
+      // Target Cargo Bay (Right: X=400 to 570)
+      const bayY = k.baseY - 60;
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.12)';
+      ctx.fillRect(400, bayY, 170, 60);
+      ctx.strokeStyle = '#22c55e';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(400, bayY, 170, 60);
+
+      const delivered = state.l2.coresDelivered || 0;
+      ctx.fillStyle = '#22c55e';
+      ctx.font = 'bold 10px JetBrains Mono';
+      ctx.fillText(`TARGET CARGO BAY [${delivered}/3]`, 412, bayY + 18);
+
+      // Delivered cores stack in cargo bay
+      for (let c = 0; c < Math.min(delivered, 3); c++) {
+        const slotX = 416 + (c * 48);
+        ctx.fillStyle = '#15803d';
+        ctx.fillRect(slotX, k.baseY - 30, 36, 28);
+        ctx.strokeStyle = '#86efac';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(slotX, k.baseY - 30, 36, 28);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 8px JetBrains Mono';
+        ctx.fillText('CORE', slotX + 6, k.baseY - 13);
+      }
+
+      // If holding payload, move with claw tip; else ground resting on conveyor
+      if (state.l2.hasPayload) {
+        state.l2.payloadX = k.clawTipX;
+        state.l2.payloadY = k.clawTipY;
+      } else if (state.l2.payloadX === 100) {
+        state.l2.payloadY = convY - 14;
+      }
+
+      // Draw Battery Payload
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillRect(state.l2.payloadX - 14, state.l2.payloadY - 14, 28, 28);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(state.l2.payloadX - 14, state.l2.payloadY - 14, 28, 28);
+      ctx.fillStyle = '#000000';
+      ctx.font = 'bold 8px JetBrains Mono';
+      ctx.fillText('CORE', state.l2.payloadX - 12, state.l2.payloadY + 3);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(state.l2.payloadX - 14, state.l2.payloadY - 14, 28, 28);
+      ctx.fillStyle = '#000000';
+      ctx.font = 'bold 8px JetBrains Mono';
+      ctx.fillText('CORE', state.l2.payloadX - 12, state.l2.payloadY + 3);
+
+      // Draw WHOLE VEHICLE (Mobile AGV Rover Chassis)
+      const skin = l2ArmSkins[state.l2.skinType] || l2ArmSkins.kuka;
+      const vehW = 92;
+      const vehH = 26;
+      const vehY = k.baseY - vehH;
+
+      // Ground shadow
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+      ctx.beginPath();
+      ctx.ellipse(state.l2.vehicleX, k.baseY + 2, 56, 6, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Headlight Beam
+      const beamDir = (state.l2.vehicleX < 260) ? -1 : 1;
+      const headGrad = ctx.createLinearGradient(state.l2.vehicleX, vehY, state.l2.vehicleX + beamDir * 70, vehY);
+      headGrad.addColorStop(0, 'rgba(6, 182, 212, 0.4)');
+      headGrad.addColorStop(1, 'rgba(6, 182, 212, 0)');
+      ctx.fillStyle = headGrad;
+      ctx.beginPath();
+      ctx.moveTo(state.l2.vehicleX + beamDir * (vehW / 2), vehY + 8);
+      ctx.lineTo(state.l2.vehicleX + beamDir * (vehW / 2 + 70), vehY + 2);
+      ctx.lineTo(state.l2.vehicleX + beamDir * (vehW / 2 + 70), vehY + 22);
+      ctx.closePath();
+      ctx.fill();
+
+      // Vehicle Chassis Body
+      ctx.fillStyle = skin.body;
+      ctx.fillRect(state.l2.vehicleX - vehW / 2, vehY, vehW, vehH);
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 2.5;
+      ctx.strokeRect(state.l2.vehicleX - vehW / 2, vehY, vehW, vehH);
+
+      // Bumper Guard
+      ctx.fillStyle = skin.frame;
+      ctx.fillRect(state.l2.vehicleX - vehW / 2, vehY + vehH - 6, vehW, 6);
+
+      // Status LED badge
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(state.l2.vehicleX - 25, vehY + 4, 50, 10);
+      ctx.fillStyle = skin.accent;
+      ctx.font = 'bold 7px JetBrains Mono';
+      ctx.fillText(`AGV·${state.l2.vehicleX}`, state.l2.vehicleX - 21, vehY + 12);
+
+      // Rolling Wheels with rotating rim spokes
+      const wheelR = 11;
+      const rot = state.l2.wheelRotation || 0;
+      [-vehW / 2 + 14, vehW / 2 - 14].forEach(offset => {
+        const wx = state.l2.vehicleX + offset;
+        const wy = k.baseY;
+
+        ctx.fillStyle = skin.wheel;
+        ctx.beginPath(); ctx.arc(wx, wy, wheelR, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = skin.frame;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.strokeStyle = skin.accent;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(wx - Math.cos(rot) * (wheelR - 3), wy - Math.sin(rot) * (wheelR - 3));
+        ctx.lineTo(wx + Math.cos(rot) * (wheelR - 3), wy + Math.sin(rot) * (wheelR - 3));
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(wx - Math.sin(rot) * (wheelR - 3), wy + Math.cos(rot) * (wheelR - 3));
+        ctx.lineTo(wx + Math.sin(rot) * (wheelR - 3), wy - Math.cos(rot) * (wheelR - 3));
+        ctx.stroke();
+      });
+
+      // 7. Articulated Robotic Arm (3 MOVEMENTS: Vehicle base + Shoulder + Elbow)
+      // Shoulder Swivel turntable
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath(); ctx.arc(k.armBaseX, k.armBaseY, 14, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // MOVEMENT 2: Main Boom Link 1 (Shoulder θ₁)
+      ctx.strokeStyle = skin.body;
+      ctx.lineWidth = 14;
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(k.armBaseX, k.armBaseY); ctx.lineTo(k.j1x, k.j1y); ctx.stroke();
+
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 6;
+      ctx.beginPath(); ctx.moveTo(k.armBaseX, k.armBaseY); ctx.lineTo(k.j1x, k.j1y); ctx.stroke();
+
+      // Joint 2: Elbow Servo Pivot
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath(); ctx.arc(k.j1x, k.j1y, 11, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // MOVEMENT 3: Forearm Link 2 (Elbow θ₂)
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 11;
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(k.j1x, k.j1y); ctx.lineTo(k.endX, k.endY); ctx.stroke();
+
+      // Claw Gripper Wrist
+      ctx.fillStyle = '#e2e8f0';
+      ctx.beginPath(); ctx.arc(k.endX, k.endY, 7, 0, Math.PI * 2); ctx.fill();
+
+      // 8. End-Effector Fingers (Articulated with forearm)
+      ctx.save();
+      ctx.translate(k.endX, k.endY);
+      ctx.rotate(armAngle - Math.PI / 2);
+
+      const clawSpread = state.l2.clawOpen ? 18 : 8;
+      ctx.strokeStyle = state.l2.clawOpen ? '#22c55e' : '#ef4444';
+      ctx.lineWidth = 3.5;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(-clawSpread, 20); ctx.lineTo(-clawSpread, 4); ctx.lineTo(0, 0);
+      ctx.lineTo(clawSpread, 4); ctx.lineTo(clawSpread, 20);
+      ctx.stroke();
+      ctx.restore();
+
+      // Proximity Alignment Reticle & Visual Grab Guidance
+      const distTip = Math.hypot(k.clawTipX - state.l2.payloadX, k.clawTipY - state.l2.payloadY);
+      const distWrist = Math.hypot(k.endX - state.l2.payloadX, k.endY - state.l2.payloadY);
+      const distToPayload = Math.min(distTip, distWrist);
+
+      if (!state.l2.hasPayload) {
+        if (distToPayload < 65) {
+          // In range: pulsating bright green reticle
+          const pulse = Math.sin(Date.now() * 0.008) * 4;
+          ctx.strokeStyle = '#22c55e';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.arc(state.l2.payloadX, state.l2.payloadY, 26 + pulse, 0, Math.PI * 2); ctx.stroke();
+
+          // Green guidance laser line from claw tip to cargo
+          ctx.strokeStyle = 'rgba(34, 197, 94, 0.6)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          ctx.moveTo(k.clawTipX, k.clawTipY);
+          ctx.lineTo(state.l2.payloadX, state.l2.payloadY);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Prompt pill badge
+          ctx.fillStyle = 'rgba(34, 197, 94, 0.9)';
+          ctx.fillRect(state.l2.payloadX - 62, state.l2.payloadY - 42, 124, 20);
+          ctx.fillStyle = '#000000';
+          ctx.font = 'bold 9px JetBrains Mono';
+          ctx.fillText('PRESS [SPACE] TO GRIP', state.l2.payloadX - 56, state.l2.payloadY - 28);
+        } else if (distToPayload < 110) {
+          ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath(); ctx.arc(state.l2.payloadX, state.l2.payloadY, 32, 0, Math.PI * 2); ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      }
+
+      // Telemetry HUD Overlay: All 3 Movements Live Feedback
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.90)';
+      ctx.fillRect(15, 15, 410, 48);
+      ctx.strokeStyle = '#06b6d4';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(15, 15, 410, 48);
+
+      ctx.fillStyle = '#06b6d4';
+      ctx.font = 'bold 9px JetBrains Mono';
+      ctx.fillText('3-DOF MOBILE AGV MANIPULATOR TELEMETRY', 24, 28);
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = '9px JetBrains Mono';
+      ctx.fillText(`TRACK X:${state.l2.vehicleX}mm | SHOULDER θ₁:${state.l2.shoulder}° | ELBOW θ₂:${state.l2.elbow}° | ${state.l2.clawOpen ? 'OPEN' : 'CLAMPED'}`, 24, 46);
+    }
+
+    // ========================================================================
+    // LAB 3: AUTONOMOUS LINE ROVER ENGINE (PID GUIDANCE)
+    // ========================================================================
+    const l3RoverSkins = {
+      kiva: { body: '#f59e0b', frame: '#78350f', wheel: '#0f172a', accent: '#fbbf24', text: '#000000' },
+      formula: { body: '#06b6d4', frame: '#164e63', wheel: '#1e293b', accent: '#22d3ee', text: '#ffffff' },
+      artemis: { body: '#f8fafc', frame: '#475569', wheel: '#0284c7', accent: '#38bdf8', text: '#0f172a' },
+      stealth: { body: '#1e1e24', frame: '#ef4444', wheel: '#09090b', accent: '#dc2626', text: '#ffffff' }
+    };
+
+    function setL3Kp(val) {
+      state.l3.kp = parseFloat(val);
+      const chip = document.getElementById('l3KpChip');
+      if (chip) chip.textContent = state.l3.kp.toFixed(1);
+      checkL3Tasks();
+    }
+
+    function setL3Kd(val) {
+      state.l3.kd = parseFloat(val);
+      const chip = document.getElementById('l3KdChip');
+      if (chip) chip.textContent = state.l3.kd.toFixed(2);
+      checkL3Tasks();
+    }
+
+    function setL3Speed(val) {
+      state.l3.speed = parseFloat(val);
+      const chip = document.getElementById('l3SpeedChip');
+      if (chip) chip.textContent = state.l3.speed.toFixed(1) + ' m/s';
+      const slider = document.getElementById('l3SpeedSlider');
+      if (slider) slider.value = state.l3.speed;
+    }
+
+    function setL3Threshold(val) {
+      state.l3.threshold = parseInt(val);
+      const chip = document.getElementById('l3ThreshChip');
+      if (chip) chip.textContent = val + '%';
+      checkL3Tasks();
+    }
+
+    function setL3Track(type) {
+      state.l3.trackType = type;
+      resetL3Rover();
+      renderControls(3);
+      playTone(520, 0.08);
+    }
+
+    function setL3Skin(skin) {
+      state.l3.skinType = skin;
+      playTone(600, 0.06);
+    }
+
+    function applyL3Preset(preset) {
+      if (preset === 'safe') {
+        state.l3.kp = 2.2;
+        state.l3.kd = 0.8;
+        state.l3.speed = 2.4;
+      } else if (preset === 'formula') {
+        state.l3.kp = 3.6;
+        state.l3.kd = 1.4;
+        state.l3.speed = 3.8;
+      }
+      renderControls(3);
+      checkL3Tasks();
+      playTone(680, 0.1);
+    }
+
+    function checkL3Tasks() {
+      if (state.l3.threshold >= 40 && state.l3.threshold <= 60 && !state.l3.tasks[0]) {
+        state.l3.tasks[0] = true;
+        renderBrief(3);
+      }
+      if (state.l3.kp >= 2.0 && state.l3.kd >= 0.5 && !state.l3.tasks[1]) {
+        state.l3.tasks[1] = true;
+        renderBrief(3);
+      }
+    }
+
+    function toggleL3Drive() {
+      state.l3.running = !state.l3.running;
+      const btn = document.getElementById('l3DriveBtn');
+      if (btn) btn.textContent = state.l3.running ? '🛑 PAUSE ROVER (Space)' : '⚡ ENGAGE DRIVE (Space)';
+      playTone(state.l3.running ? 620 : 380, 0.1);
+    }
+
+    function resetL3Rover() {
+      state.l3.roverX = 0;
+      state.l3.roverY = 0;
+      state.l3.roverAngle = 0;
+      state.l3.lapTime = 0;
+      state.l3.prevError = 0;
+      state.l3.steerOutput = 0;
+      state.l3.tireTrails = [];
+      playTone(400, 0.08);
+    }
+
+    function l3DistToSegment(px, py, x1, y1, x2, y2) {
+      const dx = x2 - x1, dy = y2 - y1;
+      const lenSq = dx * dx + dy * dy;
+      if (lenSq === 0) return Math.hypot(px - x1, py - y1);
+      let t = ((px - x1) * dx + (py - y1) * dy) / lenSq;
+      t = Math.max(0, Math.min(1, t));
+      return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
+    }
+
+    function getL3TrackPoints(w, h, trackType) {
+      const pts = [];
+      const cx = w / 2, cy = h / 2;
+
+      if (trackType === 'figure8') {
+        const rx = w * 0.38, ry = h * 0.35;
+        for (let i = 0; i < 72; i++) {
+          const t = (i / 72) * Math.PI * 2;
+          pts.push({ x: cx + rx * Math.sin(t), y: cy + ry * Math.sin(2 * t) / 2 });
+        }
+      } else if (trackType === 'gp') {
+        const rx = w * 0.39, ry = h * 0.35;
+        for (let i = 0; i < 84; i++) {
+          const t = (i / 84) * Math.PI * 2;
+          const r = 1 + 0.22 * Math.sin(3 * t) - 0.16 * Math.cos(2 * t);
+          pts.push({ x: cx + rx * r * Math.cos(t), y: cy + ry * r * Math.sin(t) });
+        }
+      } else {
+        // Warehouse Oval Circuit
+        const rx = w * 0.38, ry = h * 0.33;
+        for (let i = 0; i < 64; i++) {
+          const t = (i / 64) * Math.PI * 2;
+          const cosT = Math.cos(t), sinT = Math.sin(t);
+          const x = cx + rx * Math.sign(cosT) * Math.pow(Math.abs(cosT), 0.6);
+          const y = cy + ry * Math.sign(sinT) * Math.pow(Math.abs(sinT), 0.6);
+          pts.push({ x, y });
+        }
+      }
+      return pts;
+    }
+
+    function getL3MinDistToTrack(px, py, trackPts) {
+      if (!trackPts || trackPts.length < 2) return 999;
+      let minD = 9999;
+      for (let i = 0; i < trackPts.length; i++) {
+        const p1 = trackPts[i];
+        const p2 = trackPts[(i + 1) % trackPts.length];
+        const d = l3DistToSegment(px, py, p1.x, p1.y, p2.x, p2.y);
+        if (d < minD) minD = d;
+      }
+      return minD;
+    }
+
+    function getL3SensorReflectance(sx, sy, trackPts) {
+      const d = getL3MinDistToTrack(sx, sy, trackPts);
+      if (d <= 7) return 0.06;
+      if (d >= 15) return 0.94;
+      return 0.06 + 0.88 * ((d - 7) / 8);
+    }
+
+    function drawLab3(ctx, w, h) {
+      // 1. Dark epoxy factory floor
+      ctx.fillStyle = '#060a14';
+      ctx.fillRect(0, 0, w, h);
+
+      // Floor grid
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < w; x += 30) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+      for (let y = 0; y < h; y += 30) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+
+      // 2. Track generation
+      const pts = getL3TrackPoints(w, h, state.l3.trackType);
+
+      if (pts.length >= 2) {
+        // Outer asphalt border
+        ctx.strokeStyle = 'rgba(6, 182, 212, 0.2)';
+        ctx.lineWidth = 58;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Asphalt road surface
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 52;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Black Guidance Tape Line
+        ctx.strokeStyle = '#050505';
+        ctx.lineWidth = 15;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Checkered Start / Finish Line Timing Gate
+        const startIdx = Math.floor(pts.length * 0.25);
+        const sPt = pts[startIdx];
+        const nextPt = pts[(startIdx + 1) % pts.length];
+        const gateAngle = Math.atan2(nextPt.y - sPt.y, nextPt.x - sPt.x) + Math.PI / 2;
+
+        ctx.save();
+        ctx.translate(sPt.x, sPt.y);
+        ctx.rotate(gateAngle);
+        for (let b = -22; b < 22; b += 7) {
+          ctx.fillStyle = (b % 14 === 0) ? '#ffffff' : '#000000';
+          ctx.fillRect(b, -3, 7, 3);
+          ctx.fillStyle = (b % 14 === 0) ? '#000000' : '#ffffff';
+          ctx.fillRect(b, 0, 7, 3);
+        }
+        ctx.fillStyle = '#22c55e';
+        ctx.font = 'bold 8px JetBrains Mono';
+        ctx.fillText('FINISH / TIMING GATE', -45, -7);
+        ctx.restore();
+
+        // Initialize rover position onto gate if unset
+        if (state.l3.roverX === 0 && state.l3.roverY === 0) {
+          state.l3.roverX = sPt.x;
+          state.l3.roverY = sPt.y;
+          state.l3.roverAngle = Math.atan2(nextPt.y - sPt.y, nextPt.x - sPt.x);
+        }
+      }
+
+      // 3. Dynamic Tire Skid Trails
+      if (state.l3.tireTrails && state.l3.tireTrails.length > 0) {
+        for (let i = 0; i < state.l3.tireTrails.length; i++) {
+          const t = state.l3.tireTrails[i];
+          t.alpha -= 0.008;
+          if (t.alpha <= 0) continue;
+          ctx.fillStyle = 'rgba(0, 0, 0, ' + (t.alpha * 0.45) + ')';
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        state.l3.tireTrails = state.l3.tireTrails.filter(t => t.alpha > 0);
+      }
+
+      // 4. Optical Sensor Bar Math & Differential PID Kinematics
+      const d_sensor = 9;
+      const L_sensor = 20;
+
+      const cx = state.l3.roverX + L_sensor * Math.cos(state.l3.roverAngle);
+      const cy = state.l3.roverY + L_sensor * Math.sin(state.l3.roverAngle);
+      const sLx = cx - d_sensor * Math.sin(state.l3.roverAngle);
+      const sLy = cy + d_sensor * Math.cos(state.l3.roverAngle);
+      const sRx = cx + d_sensor * Math.sin(state.l3.roverAngle);
+      const sRy = cy - d_sensor * Math.cos(state.l3.roverAngle);
+
+      state.l3.sensorL = getL3SensorReflectance(sLx, sLy, pts);
+      state.l3.sensorR = getL3SensorReflectance(sRx, sRy, pts);
+
+      // Differential Error (Right - Left)
+      const error = state.l3.sensorR - state.l3.sensorL;
+      const dError = error - state.l3.prevError;
+      state.l3.steerOutput = state.l3.kp * error + state.l3.kd * dError;
+      state.l3.prevError = error;
+
+      // Wheel differential velocities
+      const steerGain = 0.55;
+      const vl = state.l3.speed - steerGain * state.l3.steerOutput;
+      const vr = state.l3.speed + steerGain * state.l3.steerOutput;
+
+      if (state.l3.running) {
+        state.l3.lapTime += 0.016;
+
+        // Apply angular and linear motion
+        state.l3.roverAngle += (state.l3.steerOutput * 0.05);
+        state.l3.roverX += Math.cos(state.l3.roverAngle) * state.l3.speed;
+        state.l3.roverY += Math.sin(state.l3.roverAngle) * state.l3.speed;
+
+        // Tire skid marks on sharp turns
+        if (Math.abs(state.l3.steerOutput) > 0.6) {
+          state.l3.tireTrails.push({
+            x: state.l3.roverX - 10 * Math.cos(state.l3.roverAngle),
+            y: state.l3.roverY - 10 * Math.sin(state.l3.roverAngle),
+            alpha: 0.75
+          });
+        }
+
+        // Timing Gate Checkpoint Detection
+        const startIdx = Math.floor(pts.length * 0.25);
+        const sPt = pts[startIdx];
+        const distToGate = Math.hypot(state.l3.roverX - sPt.x, state.l3.roverY - sPt.y);
+
+        if (distToGate < 24 && (Date.now() - state.l3.lastLapTimestamp > 4500)) {
+          state.l3.lastLapTimestamp = Date.now();
+          if (state.l3.lapTime > 3.0) {
+            state.l3.lapsCompleted++;
+            if (!state.l3.bestLap || state.l3.lapTime < state.l3.bestLap) {
+              state.l3.bestLap = state.l3.lapTime;
+            }
+            playTone(880, 0.15);
+            if (state.l3.lapTime <= 16.0) {
+              state.l3.tasks[2] = true;
+              renderBrief(3);
+            }
+          }
+          state.l3.lapTime = 0;
+        }
+      }
+
+      // 5. Optical Sensor Light Projection Beams onto Floor
+      [
+        { x: sLx, y: sLy, val: state.l3.sensorL },
+        { x: sRx, y: sRy, val: state.l3.sensorR }
+      ].forEach(s => {
+        const isLock = s.val < (state.l3.threshold / 100);
+        ctx.fillStyle = isLock ? 'rgba(34, 197, 94, 0.35)' : 'rgba(239, 68, 68, 0.25)';
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = isLock ? '#22c55e' : '#ef4444';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      });
+
+      // 6. Draw Autonomous AGV Rover Body
+      const skin = l3RoverSkins[state.l3.skinType] || l3RoverSkins.kiva;
+
+      ctx.save();
+      ctx.translate(state.l3.roverX, state.l3.roverY);
+      ctx.rotate(state.l3.roverAngle);
+
+      // Rover Ground Shadow
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+      ctx.beginPath();
+      ctx.ellipse(0, 2, 20, 14, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Independent Differential Drive Wheels (Left & Right)
+      ctx.fillStyle = skin.wheel;
+      ctx.fillRect(-12, -16, 14, 5);
+      ctx.fillRect(-12, 11, 14, 5);
+
+      // Wheel Rim Accents
+      ctx.fillStyle = skin.accent;
+      ctx.fillRect(-8, -15, 6, 3);
+      ctx.fillRect(-8, 12, 6, 3);
+
+      // Chassis Main Frame
+      ctx.fillStyle = skin.body;
+      ctx.fillRect(-16, -12, 32, 24);
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 2.2;
+      ctx.strokeRect(-16, -12, 32, 24);
+
+      // Status Indicator Cockpit LED
+      ctx.fillStyle = state.l3.running ? '#22c55e' : '#ef4444';
+      ctx.beginPath();
+      ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Front Sensor Boom Arm
+      ctx.strokeStyle = skin.frame;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(10, 0);
+      ctx.lineTo(L_sensor, 0);
+      ctx.stroke();
+
+      // Optical Sensor Crossbar
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(L_sensor, -d_sensor);
+      ctx.lineTo(L_sensor, d_sensor);
+      ctx.stroke();
+
+      // Left & Right Sensor Lenses
+      ctx.fillStyle = state.l3.sensorL < (state.l3.threshold / 100) ? '#22c55e' : '#ef4444';
+      ctx.beginPath(); ctx.arc(L_sensor, -d_sensor, 3, 0, Math.PI * 2); ctx.fill();
+
+      ctx.fillStyle = state.l3.sensorR < (state.l3.threshold / 100) ? '#22c55e' : '#ef4444';
+      ctx.beginPath(); ctx.arc(L_sensor, d_sensor, 3, 0, Math.PI * 2); ctx.fill();
+
+      ctx.restore();
+
+      // 7. On-Canvas Telemetry HUD Box
+      const hudW = Math.min(420, w - 24);
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.90)';
+      ctx.fillRect(12, 12, hudW, 48);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(12, 12, hudW, 48);
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 8.5px JetBrains Mono';
+      ctx.fillText('DIFFERENTIAL PID GUIDANCE TELEMETRY', 20, 25);
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = '8.5px JetBrains Mono';
+      ctx.fillText(
+        'KP:' + state.l3.kp.toFixed(1) + ' | KD:' + state.l3.kd.toFixed(2) + ' | SPD:' + state.l3.speed.toFixed(1) + 'm/s | VL:' + vl.toFixed(1) + ' VR:' + vr.toFixed(1),
+        20, 40
+      );
+      ctx.fillText(
+        'LAP:' + state.l3.lapTime.toFixed(1) + 's (BEST:' + (state.l3.bestLap ? state.l3.bestLap.toFixed(1) + 's' : '--') + ') | ' + (state.l3.running ? 'LOCKED ON LINE' : 'PAUSED'),
+        20, 52
+      );
+
+      // Mini Sensor Bar Visualizer in HUD
+      if (hudW >= 360) {
+        const oscX = hudW - 65, oscY = 24;
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(oscX, oscY, 55, 22);
+        ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+        ctx.strokeRect(oscX, oscY, 55, 22);
+
+        // SL Bar
+        ctx.fillStyle = state.l3.sensorL < 0.5 ? '#22c55e' : '#ef4444';
+        ctx.fillRect(oscX + 5, oscY + 18, 18, -(state.l3.sensorL * 15));
+        // SR Bar
+        ctx.fillStyle = state.l3.sensorR < 0.5 ? '#22c55e' : '#ef4444';
+        ctx.fillRect(oscX + 30, oscY + 18, 18, -(state.l3.sensorR * 15));
+      }
+    }
+
+    // LAB 4: LIDAR & ULTRASONIC RADAR ENGINE
+    // ========================================================================
+    function triggerL4Ping() {
+      playSonarPing();
+      state.l4.detectedCount++;
+      if (state.l4.detectedCount >= 3) {
+        state.l4.tasks[1] = true;
+        renderBrief(4);
+      }
+    }
+
+    function drawLab4(ctx, w, h) {
+      ctx.fillStyle = '#050c16';
+      ctx.fillRect(0, 0, w, h);
+
+      const radarX = w / 2;
+      const radarY = h / 2;
+      const maxRadius = Math.min(w, h) * 0.42;
+
+      // Concentric Radar Rings
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.25)';
+      ctx.lineWidth = 1;
+      for (let r = 1; r <= 4; r++) {
+        ctx.beginPath();
+        ctx.arc(radarX, radarY, (maxRadius / 4) * r, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // Crosshairs
+      ctx.beginPath(); ctx.moveTo(radarX - maxRadius, radarY); ctx.lineTo(radarX + maxRadius, radarY); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(radarX, radarY - maxRadius); ctx.lineTo(radarX, radarY + maxRadius); ctx.stroke();
+
+      // Critical AEB Danger Circle (Inner ring)
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(radarX, radarY, maxRadius * 0.35, 0, Math.PI * 2); ctx.stroke();
+
+      // Rotate Sweep Beam
+      state.l4.sweepAngle = (state.l4.sweepAngle + 0.03) % (Math.PI * 2);
+      document.getElementById('l4AngleChip').textContent = `${Math.round((state.l4.sweepAngle * 180) / Math.PI)}°`;
+
+      // Radar Sweep Fan
+      ctx.save();
+      ctx.translate(radarX, radarY);
+      ctx.rotate(state.l4.sweepAngle);
+      const sweepGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, maxRadius);
+      sweepGrad.addColorStop(0, 'rgba(6, 182, 212, 0.6)');
+      sweepGrad.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+      ctx.fillStyle = sweepGrad;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, maxRadius, -0.25, 0);
+      ctx.fill();
+      ctx.restore();
+
+      // Draw & Check Obstacles
+      let hazardNear = false;
+      state.l4.obstacles.forEach(obs => {
+        const dist = Math.hypot(obs.x - radarX, obs.y - radarY);
+        const isCritical = dist < maxRadius * 0.35;
+        if (isCritical) hazardNear = true;
+
+        // Obstacle body
+        ctx.fillStyle = isCritical ? '#ef4444' : '#f59e0b';
+        ctx.beginPath(); ctx.arc(obs.x, obs.y, obs.r, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 9px JetBrains Mono';
+        ctx.fillText(obs.name, obs.x - 18, obs.y - obs.r - 4);
+
+        // Echo Ping Ripple
+        ctx.strokeStyle = isCritical ? '#ef4444' : '#06b6d4';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(obs.x, obs.y, obs.r + 6, 0, Math.PI * 2); ctx.stroke();
+
+        // Check task 1 (Sector Alpha: x > radarX, y < radarY)
+        if (obs.x > radarX && obs.y < radarY) {
+          state.l4.tasks[0] = true;
+          renderBrief(4);
+        }
+      });
+
+      if (hazardNear) {
+        state.l4.tasks[2] = true;
+        renderBrief(4);
+      }
+
+      // Center Sonar Transducer
+      ctx.fillStyle = '#06b6d4';
+      ctx.beginPath(); ctx.arc(radarX, radarY, 8, 0, Math.PI * 2); ctx.fill();
+
+      // Alert Banner
+      ctx.fillStyle = hazardNear ? '#ef4444' : '#22c55e';
+      ctx.font = 'bold 11px JetBrains Mono';
+      ctx.fillText(hazardNear ? '⚠️ AEB ACTIVE: COLLISION THREAT < 15CM' : 'PERIMETER SCAN: 360° CLEAR', 20, 25);
+    }
+
+    // Interactive Canvas Dragging (Lab 1: Sun & Lab 4: Obstacles)
+    const canvasEl = document.getElementById('mainSimCanvas');
+    canvasEl.addEventListener('mousedown', e => {
+      const rect = canvasEl.getBoundingClientRect();
+      const mx = (e.clientX - rect.left) * (canvasEl.width / rect.width);
+      const my = (e.clientY - rect.top) * (canvasEl.height / rect.height);
+
+      if (currentLab === 1) {
+        const sunRad = (state.l1.sunAngle * Math.PI) / 180;
+        const sunX = canvasEl.width / 2 - Math.cos(sunRad) * (canvasEl.width * 0.42);
+        const sunY = (canvasEl.height * 0.74) - Math.sin(sunRad) * (canvasEl.height * 0.56);
+        if (Math.hypot(mx - sunX, my - sunY) < 45) {
+          state.l1.isDraggingSun = true;
+          playTone(600, 0.05);
+        }
+      } else if (currentLab === 4) {
+        state.l4.obstacles.forEach(obs => {
+          if (Math.hypot(mx - obs.x, my - obs.y) < obs.r + 10) {
+            state.l4.draggedObstacle = obs;
+            playTone(850, 0.05);
+          }
+        });
+      }
+    });
+
+    window.addEventListener('mousemove', e => {
+      const rect = canvasEl.getBoundingClientRect();
+      const mx = (e.clientX - rect.left) * (canvasEl.width / rect.width);
+      const my = (e.clientY - rect.top) * (canvasEl.height / rect.height);
+
+      if (currentLab === 1 && state.l1.isDraggingSun) {
+        const cx = canvasEl.width / 2;
+        const cy = canvasEl.height * 0.75;
+        let angleRad = Math.atan2(cy - my, -(mx - cx));
+        if (angleRad < 0) angleRad = 0;
+        if (angleRad > Math.PI) angleRad = Math.PI;
+        state.l1.sunAngle = Math.round((angleRad * 180) / Math.PI);
+        const chip = document.getElementById('l1SunChip');
+        if (chip) chip.textContent = `${state.l1.sunAngle}°`;
+        const slider = document.getElementById('l1SunSlider');
+        if (slider) slider.value = state.l1.sunAngle;
+        if (state.l1.sunAngle >= 30 && state.l1.sunAngle <= 50) {
+          state.l1.tasks[0] = true;
+          renderBrief(1);
+        }
+      } else if (currentLab === 4 && state.l4.draggedObstacle) {
+        state.l4.draggedObstacle.x = mx;
+        state.l4.draggedObstacle.y = my;
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      state.l1.isDraggingSun = false;
+      state.l4.draggedObstacle = null;
+    });
+
+    // Global Keyboard Navigation (Lab 2: 3-DOF Movements: Left/Right Track, Up/Down Shoulder, W/S Elbow, Space Claw)
+    window.addEventListener('keydown', e => {
+      if (currentLab === 2) {
+        const k = e.key.toLowerCase();
+        if (e.key === 'ArrowLeft' || k === 'a') {
+          e.preventDefault();
+          driveL2Vehicle(-14);
+        } else if (e.key === 'ArrowRight' || k === 'd') {
+          e.preventDefault();
+          driveL2Vehicle(+14);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          stepL2Shoulder(+4);
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          stepL2Shoulder(-4);
+        } else if (k === 'w') {
+          e.preventDefault();
+          stepL2Elbow(+4);
+        } else if (k === 's') {
+          e.preventDefault();
+          stepL2Elbow(-4);
+        } else if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          toggleL2Claw();
+        }
+      } else if (currentLab === 3) {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          toggleL3Drive();
+        } else if (e.key.toLowerCase() === 'r') {
+          e.preventDefault();
+          resetL3Rover();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          setL3Speed(Math.min(4.5, state.l3.speed + 0.3));
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          setL3Speed(Math.max(1.2, state.l3.speed - 0.3));
+        }
+      }
+    });
+
+    // ========================================================================
+    // LAB 5: BIONIC HEXAPOD ENGINE
+    // ========================================================================
+    function setL5Gait(g) {
+      state.l5.gait = g;
+      if (g === 'tripod') {
+        state.l5.tasks[0] = true;
+        renderBrief(5);
+      }
+      renderControls(5);
+      playTone(550, 0.1);
+    }
+
+    function setL5Step(val) {
+      state.l5.stepHeight = parseInt(val);
+      document.getElementById('l5StepChip').textContent = `${val} mm`;
+      if (state.l5.stepHeight >= 25) {
+        state.l5.tasks[1] = true;
+        renderBrief(5);
+      }
+    }
+
+    function stepL5Hexapod() {
+      state.l5.phase += 1;
+      state.l5.distanceWalked += 25;
+      playTone(320 + (state.l5.phase % 6) * 30, 0.08);
+
+      if (state.l5.distanceWalked >= 200) {
+        state.l5.tasks[2] = true;
+        renderBrief(5);
+      }
+    }
+
+    function drawLab5(ctx, w, h) {
+      ctx.fillStyle = '#140d0a';
+      ctx.fillRect(0, 0, w, h);
+
+      // Rocky Terrain Course
+      ctx.fillStyle = '#26160e';
+      ctx.fillRect(0, h * 0.7, w, h * 0.3);
+
+      // Terrain Boulders
+      ctx.fillStyle = '#442819';
+      for (let bx = 60; bx < w; bx += 100) {
+        ctx.beginPath();
+        ctx.arc(bx, h * 0.72, 14, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Survey Beacon (Target Destination)
+      ctx.fillStyle = '#22c55e';
+      ctx.fillRect(w - 70, h * 0.45, 12, h * 0.25);
+      ctx.beginPath(); ctx.arc(w - 64, h * 0.45, 12, 0, Math.PI * 2); ctx.fill();
+      ctx.font = 'bold 9px JetBrains Mono';
+      ctx.fillText('BEACON', w - 85, h * 0.4);
+
+      // Hexapod Body Position
+      const hexX = 100 + state.l5.distanceWalked;
+      const hexY = h * 0.52;
+
+      // Draw Center of Mass (CoM) Stability Polygon (Triangle)
+      ctx.fillStyle = 'rgba(34, 197, 94, 0.25)';
+      ctx.strokeStyle = '#22c55e';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(hexX - 40, hexY + 40);
+      ctx.lineTo(hexX + 40, hexY + 30);
+      ctx.lineTo(hexX, hexY - 40);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // CoM Indicator Point
+      ctx.fillStyle = '#22c55e';
+      ctx.beginPath(); ctx.arc(hexX, hexY, 6, 0, Math.PI * 2); ctx.fill();
+
+      // 6 Articulated Legs
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 4;
+      for (let i = -1; i <= 1; i++) {
+        // Left legs
+        const liftL = (state.l5.phase % 2 === 0) ? state.l5.stepHeight : 0;
+        ctx.beginPath();
+        ctx.moveTo(hexX + i * 25, hexY - 10);
+        ctx.lineTo(hexX + i * 35 - 30, hexY - 20 - liftL);
+        ctx.lineTo(hexX + i * 35 - 50, hexY + 35);
+        ctx.stroke();
+
+        // Right legs
+        const liftR = (state.l5.phase % 2 === 1) ? state.l5.stepHeight : 0;
+        ctx.beginPath();
+        ctx.moveTo(hexX + i * 25, hexY + 10);
+        ctx.lineTo(hexX + i * 35 + 30, hexY + 20 - liftR);
+        ctx.lineTo(hexX + i * 35 + 50, hexY + 35);
+        ctx.stroke();
+      }
+
+      // Hexapod Central Chassis
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#06b6d4';
+      ctx.lineWidth = 2;
+      ctx.fillRect(hexX - 35, hexY - 18, 70, 36);
+      ctx.strokeRect(hexX - 35, hexY - 18, 70, 36);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 9px JetBrains Mono';
+      ctx.fillText('BIONIC HEXA', hexX - 30, hexY + 3);
+
+      // Kinematic Status HUD
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px JetBrains Mono';
+      ctx.fillText(`GAIT: ${state.l5.gait.toUpperCase()} | STABILITY: 100% STATIC LOCK | PROGRESS: ${state.l5.distanceWalked}px`, 20, 25);
+    }
+
+    // ========================================================================
+    // LAB 6: AUTONOMOUS MARS DRONE ENGINE
+    // ========================================================================
+    function setL6Throttle(val) {
+      state.l6.rotorRpm = parseInt(val);
+      document.getElementById('l6ThrottleChip').textContent = `${val}%`;
+      if (state.l6.rotorRpm > 40) playTone(120 + state.l6.rotorRpm * 4, 0.05, 'sawtooth', 0.03);
+    }
+
+    function toggleL6Gyro() {
+      state.l6.gyroActive = !state.l6.gyroActive;
+      renderControls(6);
+      playTone(700, 0.1);
+    }
+
+    function triggerL6Gust() {
+      state.l6.windGust = 32;
+      playTone(180, 0.3, 'sawtooth');
+      setTimeout(() => {
+        if (state.l6.gyroActive && Math.abs(state.l6.roll) < 12) {
+          state.l6.tasks[1] = true;
+          renderBrief(6);
+        }
+      }, 1000);
+    }
+
+    function drawLab6(ctx, w, h) {
+      // Martian Sky & Dust Horizon
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, '#2d140e');
+      grad.addColorStop(0.6, '#6b2d1d');
+      grad.addColorStop(1, '#b45309');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Martian Surface
+      ctx.fillStyle = '#3c180f';
+      ctx.fillRect(0, h * 0.8, w, h * 0.2);
+
+      // Olympus Landing Pad (Center-Right)
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(w * 0.6, h * 0.78, 110, 10);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.strokeRect(w * 0.6, h * 0.78, 110, 10);
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 9px JetBrains Mono';
+      ctx.fillText('OLYMPUS PAD', w * 0.6 + 18, h * 0.76);
+
+      // Drone Flight Dynamics
+      const targetAlt = (state.l6.rotorRpm / 100) * 18;
+      const altDiff = targetAlt - state.l6.altitude;
+      state.l6.altitude += altDiff * 0.05;
+
+      // Gyro Stabilization against wind gust
+      if (state.l6.windGust > 0) {
+        state.l6.roll += (state.l6.windGust * 0.08);
+        state.l6.windGust *= 0.94;
+      }
+      if (state.l6.gyroActive) {
+        state.l6.roll *= 0.88; // Gyro auto-levels roll to 0
+      }
+
+      // Check tasks
+      if (state.l6.altitude >= 8 && state.l6.altitude <= 14) {
+        state.l6.tasks[0] = true;
+        renderBrief(6);
+      }
+
+      // Soft touchdown check
+      if (state.l6.altitude < 1 && state.l6.rotorRpm < 15 && Math.abs(altDiff) < 0.2) {
+        state.l6.tasks[2] = true;
+        renderBrief(6);
+      }
+
+      // Drone Coordinates
+      const droneX = w * 0.65;
+      const droneY = (h * 0.75) - (state.l6.altitude * 12);
+
+      // Draw Drone
+      ctx.save();
+      ctx.translate(droneX, droneY);
+      ctx.rotate((state.l6.roll * Math.PI) / 180);
+
+      // Coaxial Rotor Blades (Spinning Blur)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.lineWidth = 3;
+      const blurW = state.l6.rotorRpm > 20 ? 80 : 40;
+      ctx.beginPath(); ctx.moveTo(-blurW, -25); ctx.lineTo(blurW, -25); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-blurW, -15); ctx.lineTo(blurW, -15); ctx.stroke();
+
+      // Rotor Mast
+      ctx.fillStyle = '#000';
+      ctx.fillRect(-3, -25, 6, 25);
+
+      // Avionics Box
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillRect(-14, 0, 28, 22);
+
+      // Landing Legs
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-10, 22); ctx.lineTo(-24, 38);
+      ctx.moveTo(10, 22); ctx.lineTo(24, 38);
+      ctx.stroke();
+
+      ctx.restore();
+
+      // Artificial Horizon & Altitude HUD
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.fillRect(20, 15, 220, 80);
+      ctx.strokeStyle = '#06b6d4';
+      ctx.strokeRect(20, 15, 220, 80);
+
+      ctx.fillStyle = '#06b6d4';
+      ctx.font = 'bold 10px JetBrains Mono';
+      ctx.fillText('MARS 6-DOF AVIONICS HUD', 30, 32);
+      ctx.fillStyle = '#fff';
+      ctx.fillText(`ALTITUDE: ${state.l6.altitude.toFixed(1)} METERS`, 30, 52);
+      ctx.fillText(`ROLL TILT: ${state.l6.roll.toFixed(1)}° | GYRO: ${state.l6.gyroActive ? 'LOCKED' : 'OFF'}`, 30, 70);
+      ctx.fillText(`WIND GUST: ${Math.round(state.l6.windGust)} km/h`, 30, 86);
+    }
+
+    // ========================================================================
+    // MAIN CANVAS LOOP
+    // ========================================================================
+    function startLabSimulation(id) {
+      const canvas = document.getElementById('mainSimCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      function mainLoop() {
+        // Resize canvas to match display container
+        if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+          canvas.width = canvas.clientWidth;
+          canvas.height = canvas.clientHeight;
+        }
+
+        if (currentLab === 1) drawLab1(ctx, canvas.width, canvas.height);
+        else if (currentLab === 2) drawLab2(ctx, canvas.width, canvas.height);
+        else if (currentLab === 3) drawLab3(ctx, canvas.width, canvas.height);
+        else if (currentLab === 4) drawLab4(ctx, canvas.width, canvas.height);
+        else if (currentLab === 5) drawLab5(ctx, canvas.width, canvas.height);
+        else if (currentLab === 6) drawLab6(ctx, canvas.width, canvas.height);
+
+        animFrame = requestAnimationFrame(mainLoop);
+      }
+
+      animFrame = requestAnimationFrame(mainLoop);
+    }
+
+    // ========================================================================
+    // VERIFY MISSION & AWARD BADGE
+    // ========================================================================
+    function verifyCurrentMission() {
+      recordLabMastered(currentLab);
+      const lab = LAB_REGISTRY.find(l => l.id === currentLab);
+      alert(`🎉 EXCELLENT ENGINEERING CADET!\nYou have officially mastered ${lab.name} and earned the [${lab.badge}]!`);
+    }
+
+    // Ambient Starfield Canvas
+    function initAmbientCanvas() {
+      const c = document.getElementById('ambientCanvas');
+      const ctx = c.getContext('2d');
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+      const stars = Array.from({ length: 65 }, () => ({
+        x: Math.random() * c.width,
+        y: Math.random() * c.height,
+        r: Math.random() * 1.5,
+        a: Math.random()
+      }));
+
+      function drawAmbient() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.fillStyle = '#38bdf8';
+        stars.forEach(s => {
+          ctx.globalAlpha = 0.2 + Math.sin(Date.now() * 0.002 + s.x) * 0.2;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(drawAmbient);
+      }
+      drawAmbient();
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      initAmbientCanvas();
+      updateBadgesUI();
+      switchLab(1);
+    });
+  </script>
+</body>
+</html>
