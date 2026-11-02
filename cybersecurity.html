@@ -1501,6 +1501,279 @@
       color: #38bdf8;
       border-color: rgba(56, 189, 248, 0.3);
     }
+  
+    /* ========================================================================
+       SOCIAL STUDIES ETHICAL CITIZENSHIP & DIGITAL SAFETY STYLES
+       ======================================================================== */
+    .kw-hl {
+      background: linear-gradient(120deg, rgba(37, 99, 235, 0.15) 0%, rgba(6, 182, 212, 0.22) 100%);
+      color: #1d4ed8;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      border-bottom: 2px solid #2563eb;
+      display: inline;
+    }
+
+    .kw-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.25);
+      color: #1d4ed8;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .citizenship-pills-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 1.5rem 0 2.5rem;
+    }
+
+    .citizenship-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .citizen-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .citizen-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #2563eb, #06b6d4);
+      opacity: 0.85;
+    }
+
+    .citizen-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+
+    .citizen-card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .citizen-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .citizen-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .citizen-meta-tag {
+      margin-top: auto;
+      padding-top: 0.85rem;
+      border-top: 1px dashed var(--border-subtle);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Stop Block Save Tell Protocol */
+    .protocol-container {
+      background: #ffffff;
+      border: 2px solid rgba(239, 68, 68, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 2rem;
+      box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.08);
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .protocol-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 2rem;
+    }
+
+    .protocol-tag {
+      display: inline-block;
+      background: rgba(239, 68, 68, 0.1);
+      color: #dc2626;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 0.25rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stop-block-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .stop-block-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 550px) {
+      .stop-block-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stop-block-card {
+      background: #fef2f2;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      position: relative;
+      transition: all var(--transition-normal);
+    }
+
+    .stop-block-card:nth-child(2) {
+      background: #eff6ff;
+      border-color: rgba(37, 99, 235, 0.2);
+    }
+    .stop-block-card:nth-child(3) {
+      background: #f0fdf4;
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+    .stop-block-card:nth-child(4) {
+      background: #faf5ff;
+      border-color: rgba(168, 85, 247, 0.2);
+    }
+
+    .stop-block-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .stop-block-step {
+      font-size: 0.75rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: #991b1b;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+    .stop-block-card:nth-child(2) .stop-block-step { color: #1e40af; }
+    .stop-block-card:nth-child(3) .stop-block-step { color: #166534; }
+    .stop-block-card:nth-child(4) .stop-block-step { color: #6b21a8; }
+
+    .stop-block-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .stop-block-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .stop-block-desc {
+      font-size: 0.825rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Dual Panels: Chromebook & National Law */
+    .dual-panels-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 850px) {
+      .dual-panels-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .duty-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .duty-card h4 {
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .duty-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .duty-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .duty-bullet {
+      background: rgba(37, 99, 235, 0.1);
+      color: #2563eb;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
   </style>
 </head>
 <body>
@@ -1552,6 +1825,8 @@
     <div class="subnav-bar">
       <div class="container subnav-inner">
         <a href="#overview" class="subnav-link">📌 Overview</a>
+        <a href="#citizenship" class="subnav-link" style="color: #2563eb; font-weight: 700;">🤝 Social Studies Citizenship</a>
+        <a href="#protocol" class="subnav-link" style="color: #ef4444; font-weight: 700;">🛑 Stop–Block–Save–Tell</a>
         <a href="#labs" class="subnav-link">⚡ 6 Live Labs</a>
         <a href="#schedule" class="subnav-link">⏱️ Schedule</a>
         <a href="#outcomes" class="subnav-link">🏆 Outcomes &amp; Licence</a>
@@ -1578,6 +1853,8 @@
       <div class="drawer-section-title">In-Page Quick Jumps</div>
       <div class="drawer-links">
         <a href="#overview" class="drawer-link" onclick="toggleCyberDrawer(false)">📌 Overview &amp; Meta</a>
+        <a href="#citizenship" class="drawer-link" onclick="toggleCyberDrawer(false)">🤝 Social Studies Citizenship</a>
+        <a href="#protocol" class="drawer-link" onclick="toggleCyberDrawer(false)">🛑 Stop–Block–Save–Tell Protocol</a>
         <a href="#labs" class="drawer-link" onclick="toggleCyberDrawer(false)">⚡ 6 Live Defense Labs</a>
         <a href="#schedule" class="drawer-link" onclick="toggleCyberDrawer(false)">⏱️ 4-Hour Schedule</a>
         <a href="#outcomes" class="drawer-link" onclick="toggleCyberDrawer(false)">🏆 Cadet Licence</a>
@@ -1596,10 +1873,10 @@
   <section class="hero" id="overview">
     <div class="container hero-grid">
       <div class="hero-content">
-        <div class="hero-tag">🛡️ 4-Hour Primary Defense Programme (Grades 3–5)</div>
+        <div class="hero-tag">🛡️ Social Studies Ethical Citizenship &amp; Digital Defense (Grades 3–5)</div>
         <h2 class="hero-title">Defend Your Data. <span>Protect Your Device.</span></h2>
         <p class="hero-subtitle">
-          An interactive, hands-on cybersecurity and safe device defense programme for students aged 8–12 and parents. Features 6 live animated simulators, password cracking defense, phishing traps, and Chromebook session lockdown.
+          A comprehensive anti-cyberbullying, digital citizenship, and safe device defense programme aligned with <mark class="kw-hl">Social Studies Ethical Citizenship</mark> and the <mark class="kw-hl">Grade 5 Chromebook Acceptable Use Agreement</mark>. Features the <mark class="kw-hl">Stop – Block – Save – Tell</mark> protocol, <mark class="kw-hl">Upstander</mark> habit training, and 6 live hands-on browser simulations.
         </p>
 
         <div class="meta-pills">
@@ -1649,6 +1926,239 @@
       </div>
     </div>
   </section>
+
+  <!-- ========================================================================
+       SOCIAL STUDIES ETHICAL CITIZENSHIP & DIGITAL SAFETY FRAMEWORK
+       (Aligned with Anti-Cyberbullying Programme Proposal by Faryal Anwar)
+       ======================================================================== -->
+  <section class="section" id="citizenship" style="background: linear-gradient(180deg, #f8fafc 0%, #edf4fc 100%); border-bottom: 1px solid var(--border-subtle); padding: 4.5rem 0 3.5rem;">
+    <div class="container">
+      <div class="section-header" style="max-width: 820px; margin: 0 auto 1.5rem;">
+        <span class="section-tag" style="background: rgba(37, 99, 235, 0.1); color: #2563eb; border: 1px solid rgba(37, 99, 235, 0.25);">
+          📚 Primary Social Studies Curriculum Integration · Grades 3–5
+        </span>
+        <h2 class="section-title">
+          Social Studies Ethical Citizenship &amp; Digital Safety
+        </h2>
+        <p class="section-desc">
+          Directly implementing the pedagogical foundation drafted by <strong>Faryal Anwar</strong> in <em>"Safe Online, Kind Online"</em>. This curriculum extends core citizenship values into the virtual world, equipping primary cadets with <mark class="kw-hl">Help-Seeking First</mark> confidence and <mark class="kw-hl">Upstander</mark> ethical action.
+        </p>
+      </div>
+
+      <!-- Prominent Highlighted Keywords Banner -->
+      <div class="citizenship-pills-bar">
+        <span class="kw-badge">🤝 Social Studies Ethical Citizenship</span>
+        <span class="kw-badge">⚖️ Rights &amp; Responsibilities</span>
+        <span class="kw-badge">🛡️ Upstander vs. Bystander</span>
+        <span class="kw-badge">🛑 Stop – Block – Save – Tell</span>
+        <span class="kw-badge">💻 Grade 5 Chromebook AUA</span>
+        <span class="kw-badge">📜 PECA 2016 Cyber Law</span>
+        <span class="kw-badge">📞 NCCIA Helpline 1799</span>
+        <span class="kw-badge">👨‍👩‍👧 Family Media Agreement</span>
+      </div>
+
+      <!-- 5-Strand Social Studies Curriculum Extension Grid -->
+      <div class="citizenship-grid">
+        <!-- Strand 1 -->
+        <div class="citizen-card">
+          <span class="citizen-card-icon">⚖️</span>
+          <h3>1. Rights &amp; Responsibilities of a Citizen</h3>
+          <p>
+            In civic life, rights are balanced by duties. Online, children have the <mark class="kw-hl">Right to be safe online</mark> in game chats, messaging groups, and video portals, matched with the direct responsibility <strong>never to cyberbully, mock, or exclude peers</strong>.
+          </p>
+          <div class="citizen-meta-tag">
+            <span>STRAND: CIVIC DUTY</span>
+            <span style="color:#2563eb; font-weight:700;">Simulated in Lab 5</span>
+          </div>
+        </div>
+
+        <!-- Strand 2 -->
+        <div class="citizen-card">
+          <span class="citizen-card-icon">🏛️</span>
+          <h3>2. Rules and Laws in the Community</h3>
+          <p>
+            Communities thrive on shared rules. Students explore platform age limits (<mark class="kw-hl">Minimum age 13+</mark> on mainstream apps), the school's <mark class="kw-hl">Acceptable Use Agreement (AUA)</mark>, and national cyber harassment protections under <mark class="kw-hl">PECA 2016</mark>.
+          </p>
+          <div class="citizen-meta-tag">
+            <span>STRAND: LEGAL LITERACY</span>
+            <span style="color:#2563eb; font-weight:700;">Simulated in Lab 6</span>
+          </div>
+        </div>
+
+        <!-- Strand 3 -->
+        <div class="citizen-card">
+          <span class="citizen-card-icon">🤝</span>
+          <h3>3. Respect, Tolerance &amp; Good Manners</h3>
+          <p>
+            Translating the golden rule to keyboards. Cadets master <mark class="kw-hl">Netiquette</mark>, positive collaboration in shared Google Docs, and eliminate toxic "trash-talk" in multiplayer gaming lobbies (Roblox, Minecraft).
+          </p>
+          <div class="citizen-meta-tag">
+            <span>STRAND: DIGITAL KINDNESS</span>
+            <span style="color:#2563eb; font-weight:700;">Simulated in Lab 3</span>
+          </div>
+        </div>
+
+        <!-- Strand 4 -->
+        <div class="citizen-card">
+          <span class="citizen-card-icon">🦸‍♂️</span>
+          <h3>4. The Upstander: Active Community Member</h3>
+          <p>
+            When witnessing unkindness, silent <mark class="kw-hl">Bystanders</mark> empower bullies. We train students to become active <mark class="kw-hl">Upstanders</mark> who reach out privately to comfort the target, refuse to forward harmful memes, and report abuse.
+          </p>
+          <div class="citizen-meta-tag">
+            <span>STRAND: UPSTANDER ETHICS</span>
+            <span style="color:#2563eb; font-weight:700;">Simulated in Lab 2</span>
+          </div>
+        </div>
+
+        <!-- Strand 5 -->
+        <div class="citizen-card">
+          <span class="citizen-card-icon">🐾</span>
+          <h3>5. Media Literacy &amp; Digital Footprint</h3>
+          <p>
+            Every click leaves a trail. Cadets learn to evaluate if messages are true before sharing, keep <mark class="kw-hl">Personally Identifiable Information (PII)</mark> private, and understand that digital actions carry permanent social weight.
+          </p>
+          <div class="citizen-meta-tag">
+            <span>STRAND: DIGITAL FOOTPRINT</span>
+            <span style="color:#2563eb; font-weight:700;">Simulated in Lab 4 &amp; 5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stop Block Save Tell Interactive Action Strip -->
+      <div class="protocol-container" id="protocol">
+        <div class="protocol-header">
+          <span class="protocol-tag">🚨 Golden Behavioral Protocol</span>
+          <h3 style="font-size: 1.75rem; margin-bottom: 0.5rem;">The "Stop – Block – Save – Tell" Action Plan</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary);">
+            The universal 4-step emergency reflex taught to all Grade 3–5 students when encountering unkind, threatening, or suspicious behavior online.
+          </p>
+        </div>
+
+        <div class="stop-block-grid">
+          <!-- Step 1 -->
+          <div class="stop-block-card">
+            <div class="stop-block-step">STEP 01 · PAUSE</div>
+            <span class="stop-block-icon">✋</span>
+            <div class="stop-block-title">STOP</div>
+            <div class="stop-block-desc">
+              Take a deep breath and step back. <strong>Do not reply in anger or retaliate</strong>. Bullies look for an emotional reaction—silence denies them power.
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="stop-block-card">
+            <div class="stop-block-step">STEP 02 · SEVER</div>
+            <span class="stop-block-icon">🚫</span>
+            <div class="stop-block-title">BLOCK</div>
+            <div class="stop-block-desc">
+              Sever digital contact immediately. Mute or block the harasser on WhatsApp, game chat, Discord, or learning portals to halt further incoming messages.
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="stop-block-card">
+            <div class="stop-block-step">STEP 03 · RECORD</div>
+            <span class="stop-block-icon">📸</span>
+            <div class="stop-block-title">SAVE</div>
+            <div class="stop-block-desc">
+              Preserve unedited evidence. Capture clean screenshots displaying sender usernames, messages, and timestamps. Never delete proof before reporting.
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="stop-block-card">
+            <div class="stop-block-step">STEP 04 · CONFIDE</div>
+            <span class="stop-block-icon">🗣️</span>
+            <div class="stop-block-title">TELL</div>
+            <div class="stop-block-desc">
+              Approach a trusted adult (Teacher, Counsellor, Parent) immediately. <strong>Zero-Punishment Guarantee:</strong> You will never lose your device for reporting harm!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dual Strategic Panels: Grade 5 Chromebook AUA & National Reporting -->
+      <div class="dual-panels-grid">
+        <!-- Panel 1: Grade 5 Chromebook Component -->
+        <div class="duty-card">
+          <h4>
+            <span>💻</span>
+            <span>Grade 5 Chromebook Acceptable Use Agreement (AUA)</span>
+          </h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            Because Grade 5 students utilize school-managed Chromebooks daily, our training reinforces strict hardware and account duty of care:
+          </p>
+          <ul class="duty-list">
+            <li class="duty-item">
+              <span class="duty-bullet">✓</span>
+              <div>
+                <strong>Individual Account Security:</strong> Log in solely with your own school email. Never share passwords or leave accounts open on shared cart devices.
+              </div>
+            </li>
+            <li class="duty-item">
+              <span class="duty-bullet">✓</span>
+              <div>
+                <strong>Curriculum-Only Operations:</strong> Treat devices as academic scientific tools. Only access authorized learning software and approved classroom websites.
+              </div>
+            </li>
+            <li class="duty-item">
+              <span class="duty-bullet">✓</span>
+              <div>
+                <strong>Kind Collaboration in Docs &amp; Slides:</strong> Adhere to school discipline rules in comments, shared presentations, and collaborative breakout spaces.
+              </div>
+            </li>
+            <li class="duty-item">
+              <span class="duty-bullet">✓</span>
+              <div>
+                <strong>Instant Screen Lock Mastery:</strong> Always execute the <kbd style="background:#0f172a; color:#38bdf8; padding:2px 6px; border-radius:4px; font-family:'JetBrains Mono'; font-size:0.75rem;">Search + L</kbd> key combo before stepping away from your workspace.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Panel 2: National Legal Framework & Reporting Pathways -->
+        <div class="duty-card" style="border-left: 4px solid #2563eb;">
+          <h4>
+            <span>📜</span>
+            <span>Pakistan Cyber Law (PECA) &amp; Incident Escalation</span>
+          </h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            A structured, trauma-informed escalation architecture aligning internal school restorative support with federal cybercrime channels:
+          </p>
+          <ul class="duty-list">
+            <li class="duty-item">
+              <span class="duty-bullet" style="background: rgba(34, 197, 94, 0.15); color: #16a34a;">1</span>
+              <div>
+                <strong>Tier 1 · Internal Resolution (School Level):</strong> Class Teacher &amp; School Counsellor. Safe, confidential mediation with zero victim blame.
+              </div>
+            </li>
+            <li class="duty-item">
+              <span class="duty-bullet" style="background: rgba(245, 158, 11, 0.15); color: #d97706;">2</span>
+              <div>
+                <strong>Tier 2 · Platform Moderation:</strong> In-app reporting, user blocking, and account safety triage on gaming and chat services.
+              </div>
+            </li>
+            <li class="duty-item">
+              <span class="duty-bullet" style="background: rgba(239, 68, 68, 0.15); color: #dc2626;">3</span>
+              <div>
+                <strong>Tier 3 · Federal Legal Escalation:</strong> For threats, blackmail, or non-consensual images under <mark class="kw-hl">PECA 2016</mark>, report to the <strong>National Cyber Crime Investigation Agency (NCCIA Helpline 1799)</strong> or <strong>Police Helpline 15</strong>.
+              </div>
+            </li>
+            <li class="duty-item">
+              <span class="duty-bullet" style="background: rgba(168, 85, 247, 0.15); color: #9333ea;">4</span>
+              <div>
+                <strong>Day 2 Co-Regulation:</strong> Parents and children co-sign a customized <mark class="kw-hl">Family Media Agreement</mark> establishing shared charging docks and screen-free family meal times.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
 
   <!-- Interactive Animated Labs Section -->
   <section class="section" id="labs">
@@ -2143,27 +2653,27 @@
               <tbody>
                 <tr>
                   <td><strong>0–15 min</strong></td>
-                  <td>Introduction to Cybersecurity, Ethical Rules & Threat Landscape</td>
+                  <td><mark class="kw-hl">Social Studies Ethical Citizenship</mark> Briefing, Civic Duty &amp; <mark class="kw-hl">Upstander vs. Bystander</mark> Mindset</td>
                 </tr>
                 <tr>
                   <td><strong>15–30 min</strong></td>
-                  <td>Threat Identification & Simulator Environment Setup</td>
+                  <td>Threat Landscape, Multiplayer Game Risks &amp; Simulator Environment Setup</td>
                 </tr>
                 <tr>
                   <td><strong>30–55 min</strong></td>
-                  <td><strong>Lab 1:</strong> The Password Cracker Challenge & Entropy Rule</td>
+                  <td><strong>Lab 1:</strong> Password Cracker Challenge, <mark class="kw-hl">Entropy Rule</mark> &amp; 3-Word Passphrases</td>
                 </tr>
                 <tr>
                   <td><strong>55–80 min</strong></td>
-                  <td><strong>Lab 2:</strong> Phish Hunter & URL X-Ray Inspection</td>
+                  <td><strong>Lab 2:</strong> Phish Hunter, Social Engineering Scams &amp; Fake Game Links</td>
                 </tr>
                 <tr>
                   <td><strong>80–105 min</strong></td>
-                  <td><strong>Lab 3:</strong> The Secret Code Breakers & Wi-Fi Encryption</td>
+                  <td><strong>Lab 3:</strong> Secret Code Breakers, Ciphers &amp; Wi-Fi Privacy Defense</td>
                 </tr>
                 <tr>
                   <td><strong>105–120 min</strong></td>
-                  <td>Testing, Daily Defense Badge Assessment & Q&A</td>
+                  <td>Testing, Daily Defense Badge Assessment &amp; Help-Seeking Q&amp;A</td>
                 </tr>
               </tbody>
             </table>
@@ -2187,27 +2697,27 @@
               <tbody>
                 <tr>
                   <td><strong>0–15 min</strong></td>
-                  <td>Review of Lesson 1 Concepts & Emerging Game Scams Briefing</td>
+                  <td>The <mark class="kw-hl">Stop – Block – Save – Tell</mark> Reflex Drill &amp; Emerging Game Scams</td>
                 </tr>
                 <tr>
                   <td><strong>15–40 min</strong></td>
-                  <td><strong>Lab 4:</strong> Trojan Horse & The Fake Download Minefield</td>
+                  <td><strong>Lab 4:</strong> Trojan Horse, Malicious Extensions &amp; Download Minefield</td>
                 </tr>
                 <tr>
                   <td><strong>40–70 min</strong></td>
-                  <td><strong>Lab 5:</strong> The OSINT Detective & Privacy Shield (PII)</td>
+                  <td><strong>Lab 5:</strong> OSINT Detective, <mark class="kw-hl">Personally Identifiable Information (PII)</mark> &amp; Digital Footprint</td>
                 </tr>
                 <tr>
                   <td><strong>70–100 min</strong></td>
-                  <td><strong>Lab 6:</strong> The Two-Lock Safe Room & Chromebook Lockdown</td>
+                  <td><strong>Lab 6:</strong> <mark class="kw-hl">Grade 5 Chromebook AUA</mark> Compliance, 2FA Vault &amp; <kbd>Search + L</kbd> Lockdown</td>
                 </tr>
                 <tr>
                   <td><strong>100–115 min</strong></td>
-                  <td>Joint Parent–Student Defense Drill & Family Agreement</td>
+                  <td>Joint Parent–Cadet Co-Regulation Drill &amp; <mark class="kw-hl">Family Media Agreement</mark> Pacts</td>
                 </tr>
                 <tr>
                   <td><strong>115–120 min</strong></td>
-                  <td>Junior Cyber Defender Licence Presentation & Wrap-up</td>
+                  <td><mark class="kw-hl">Digital Citizen Licence</mark> Presentation Ceremony &amp; Badges</td>
                 </tr>
               </tbody>
             </table>
@@ -2241,39 +2751,39 @@
           <tbody>
             <tr>
               <td><strong>1. Password Cracker Challenge</strong></td>
-              <td>Entropy, Brute-Force Math, Credential Stuffing</td>
+              <td><mark class="kw-hl">Entropy</mark>, Brute-Force Math, Credential Defense</td>
               <td>Crack-proof 3-word passphrase formula created</td>
-              <td>Protection against automated bot attacks</td>
+              <td>Account privacy on school &amp; personal devices</td>
             </tr>
             <tr>
-              <td><strong>2. Phish Hunter</strong></td>
-              <td>Social Engineering, Urgency, Typosquatting</td>
-              <td>Completed URL inspection checklist</td>
-              <td>Prevents account hijacking in gaming & school accounts</td>
+              <td><strong>2. Phish Hunter &amp; URL X-Ray</strong></td>
+              <td>Social Engineering, Urgency Traps, <mark class="kw-hl">Upstander Ethics</mark></td>
+              <td>Completed URL inspection checklist &amp; scam defense</td>
+              <td>Prevents account theft in multiplayer games &amp; email</td>
             </tr>
             <tr>
               <td><strong>3. Secret Code Breakers</strong></td>
-              <td>Symmetric Encryption, Ciphers, HTTPS</td>
-              <td>Encrypted/Decrypted cipher message</td>
-              <td>Safe communication over public Wi-Fi hotspots</td>
+              <td>Symmetric Encryption, Ciphers, <mark class="kw-hl">Netiquette</mark></td>
+              <td>Encrypted/Decrypted cipher message &amp; polite chat</td>
+              <td>Protects communications across public Wi-Fi networks</td>
             </tr>
             <tr>
               <td><strong>4. Fake Download Minefield</strong></td>
-              <td>Malware, Adware, Browser Extensions</td>
-              <td>Safe download verification seal & extension audit</td>
-              <td>Defends school Chromebooks from spyware & keyloggers</td>
+              <td>Malware, Adware, Malicious Browser Extensions</td>
+              <td>Safe download verification seal &amp; extension audit</td>
+              <td>Protects school Chromebooks from spyware &amp; keyloggers</td>
             </tr>
             <tr>
-              <td><strong>5. OSINT Detective</strong></td>
-              <td>Personally Identifiable Information (PII)</td>
-              <td>Redacted public profile & privacy shield</td>
-              <td>Compliance with child digital safety & PECA 2016</td>
+              <td><strong>5. OSINT Detective &amp; Privacy</strong></td>
+              <td><mark class="kw-hl">Personally Identifiable Information (PII)</mark> &amp; Footprint</td>
+              <td>Redacted public profile &amp; privacy shield</td>
+              <td>Compliance with <mark class="kw-hl">PECA 2016</mark> &amp; Child Safety Laws</td>
             </tr>
             <tr>
-              <td><strong>6. Two-Lock Safe Room</strong></td>
-              <td>Multi-Factor Authentication (MFA), Screen Lock</td>
-              <td>2FA drill passed & <code>Search + L</code> lockdown mastery</td>
-              <td>Incident escalation protocol (NCCIA Helpline 1799)</td>
+              <td><strong>6. Two-Lock Safe Room &amp; Lockdown</strong></td>
+              <td>MFA, <mark class="kw-hl">Chromebook AUA</mark>, <kbd>Search + L</kbd> Lock</td>
+              <td>2FA drill passed, session lockdown &amp; <mark class="kw-hl">Stop-Block-Save-Tell</mark></td>
+              <td>Direct escalation to <mark class="kw-hl">NCCIA Helpline 1799</mark> &amp; Police 15</td>
             </tr>
           </tbody>
         </table>
