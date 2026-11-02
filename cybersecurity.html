@@ -1774,6 +1774,221 @@
       flex-shrink: 0;
       margin-top: 2px;
     }
+  
+    /* ========================================================================
+       PRINT & PROPOSAL EXPORT STYLESHEET
+       ======================================================================== */
+    @page {
+      size: A4;
+      margin: 1.6cm 1.4cm;
+    }
+
+    @media print {
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        font-size: 10.5pt !important;
+        line-height: 1.5 !important;
+      }
+
+      /* Hide interactive navigation, drawer, and screen-only controls */
+      .header,
+      .subnav-bar,
+      .mobile-drawer,
+      .mobile-drawer-overlay,
+      .labs-nav,
+      .btn-header-pdf,
+      .hero-actions,
+      .badge-counter,
+      .back-to-top-btn,
+      .sim-action-btn,
+      .h-btn,
+      .tab-btn {
+        display: none !important;
+      }
+
+      .container {
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      .section {
+        padding: 1.5rem 0 !important;
+      }
+
+      .hero {
+        padding: 1.5rem 0 !important;
+        border-bottom: 2px solid #e2e8f0 !important;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+      }
+
+      .hero-title {
+        font-size: 24pt !important;
+        color: #0f172a !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      .hero-subtitle {
+        font-size: 11pt !important;
+        color: #334155 !important;
+      }
+
+      .meta-pills {
+        gap: 0.5rem !important;
+        margin: 1rem 0 !important;
+      }
+
+      .meta-pill {
+        border: 1px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+        color: #0f172a !important;
+        font-size: 9pt !important;
+        padding: 0.25rem 0.65rem !important;
+      }
+
+      .trainers-badge-box {
+        border: 1px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+      }
+
+      /* UNHIDE ALL 6 LAB PANELS FOR FORMAL PROPOSAL PRINTING */
+      .lab-panel {
+        display: block !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        margin-bottom: 2rem !important;
+        border-radius: var(--radius-md) !important;
+      }
+
+      .lab-panel-header {
+        background: #f8fafc !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        padding: 1rem 1.25rem !important;
+      }
+
+      .lab-status-badge {
+        background: #eff6ff !important;
+        color: #1d4ed8 !important;
+        border: 1px solid #bfdbfe !important;
+      }
+
+      .lab-panel-body {
+        grid-template-columns: 1fr 1.2fr !important;
+        gap: 1.25rem !important;
+        padding: 1.25rem !important;
+      }
+
+      .sim-card {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        color: #0f172a !important;
+      }
+
+      .sim-card * {
+        color: #0f172a !important;
+      }
+
+      .matrix-terminal {
+        background: #0f172a !important;
+      }
+      .matrix-terminal * {
+        color: #38bdf8 !important;
+      }
+
+      /* Social Studies Citizenship & Cards */
+      .citizen-card,
+      .stop-block-card,
+      .duty-card {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+
+      .citizenship-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+      }
+
+      .stop-block-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+      }
+
+      .dual-panels-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.25rem !important;
+      }
+
+      /* Custom Schedule & Outcomes Tables */
+      .table-responsive {
+        overflow: visible !important;
+      }
+
+      .custom-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        page-break-inside: avoid !important;
+      }
+
+      .custom-table th,
+      .custom-table td {
+        padding: 0.6rem 0.75rem !important;
+        border: 1px solid #cbd5e1 !important;
+        font-size: 9.5pt !important;
+      }
+
+      .custom-table th {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+      }
+
+      /* Certificate */
+      .cert-preview {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        border: 2px solid #2563eb !important;
+        box-shadow: none !important;
+        background: #ffffff !important;
+        margin-top: 1.5rem !important;
+        padding: 2rem !important;
+      }
+
+      /* Footer */
+      .footer {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        border-top: 2px solid #e2e8f0 !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        padding: 1.5rem 0 !important;
+      }
+
+      .footer h5, .footer p, .footer span, .footer strong {
+        color: #0f172a !important;
+      }
+
+      .footer-trust-pill {
+        border-color: #cbd5e1 !important;
+        background: #f8fafc !important;
+        color: #0f172a !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1830,6 +2045,7 @@
         <a href="#labs" class="subnav-link">⚡ 6 Live Labs</a>
         <a href="#schedule" class="subnav-link">⏱️ Schedule</a>
         <a href="#outcomes" class="subnav-link">🏆 Outcomes &amp; Licence</a>
+        <a href="parent_cyber_guide.html" class="subnav-link" style="color: #16a34a; font-weight: 700;">👨‍👩‍👧 Parent Session Guide ↗</a>
       </div>
     </div>
   </header>
@@ -1858,6 +2074,7 @@
         <a href="#labs" class="drawer-link" onclick="toggleCyberDrawer(false)">⚡ 6 Live Defense Labs</a>
         <a href="#schedule" class="drawer-link" onclick="toggleCyberDrawer(false)">⏱️ 4-Hour Schedule</a>
         <a href="#outcomes" class="drawer-link" onclick="toggleCyberDrawer(false)">🏆 Cadet Licence</a>
+        <a href="parent_cyber_guide.html" class="drawer-link" style="color: #16a34a; font-weight: 700;">👨‍👩‍👧 Parent Cyber Safety Guide ↗</a>
       </div>
     </div>
     <div>
@@ -2815,6 +3032,7 @@
           <li><a href="index.html">🏠 Academy Hub Portal</a></li>
           <li><a href="robotics.html">🤖 Robotics STEM Masterclass</a></li>
           <li><a href="cybersecurity.html">🛡️ CyberGuard Defense &amp; Labs</a></li>
+          <li><a href="parent_cyber_guide.html">👨‍👩‍👧 Parent Cyber Safety Guide (HTML)</a></li>
           <li><a href="robotics_proposal.md" target="_blank">📄 Robotics Proposal (.md)</a></li>
           <li><a href="cyber_plan.md" target="_blank">📄 Cyber Defense Plan (.md)</a></li>
         </ul>

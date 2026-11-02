@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Cyber Safety Guide · Empowering Safe Digital Homes | CS Technologies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e40af;
+      --primary-light: #eff6ff;
+      --accent-cyan: #0284c7;
+      --success: #15803d;
+      --success-light: #f0fdf4;
+      --warning: #b45309;
+      --warning-light: #fffbeb;
+      --danger: #b91c1c;
+      --danger-light: #fef2f2;
+      --purple: #6b21a8;
+      --purple-light: #faf5ff;
+
+      --bg-page: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+      --border-dark: #cbd5e1;
+
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-light: #64748b;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Top Navigation Header */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.75rem 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+    .brand-badge {
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-full);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-full);
+      font-size: 0.825rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+    }
+    .btn-print {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.25);
+    }
+    .btn-print:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: #ffffff;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 0 3rem;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(29, 78, 216, 0.08);
+      color: var(--primary);
+      border: 1px solid rgba(29, 78, 216, 0.25);
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--text-main);
+      max-width: 840px;
+      margin: 0 auto 1rem;
+    }
+    .hero-title span {
+      color: var(--primary);
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.65;
+    }
+
+    /* Core Trust Alert Callout */
+    .callout-trust {
+      background: var(--warning-light);
+      border: 1.5px solid #fde68a;
+      border-left: 5px solid var(--warning);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      max-width: 780px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-sm);
+    }
+    .callout-trust h4 {
+      font-size: 1.05rem;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+    .callout-trust p {
+      font-size: 0.9rem;
+      color: #78350f;
+      line-height: 1.55;
+    }
+
+    /* Section Styling */
+    section {
+      padding: 3.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-header {
+      margin-bottom: 2rem;
+    }
+    .section-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-size: 1.75rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 680px;
+    }
+
+    /* Highlight badge */
+    .kw-pill {
+      background: rgba(29, 78, 216, 0.1);
+      color: var(--primary);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    /* 3-Card Grid for Labs 4, 5, 6 */
+    .labs-recap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 880px) {
+      .labs-recap-grid { grid-template-columns: 1fr; }
+    }
+    .recap-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease;
+    }
+    .recap-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-dark);
+    }
+    .recap-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+    .recap-card.lab-4::before { background: #dc2626; }
+    .recap-card.lab-5::before { background: #0284c7; }
+    .recap-card.lab-6::before { background: #15803d; }
+
+    .recap-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+    }
+    .recap-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+    .recap-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.55;
+    }
+    .parent-takeaway-box {
+      margin-top: auto;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      font-size: 0.825rem;
+      color: var(--text-main);
+    }
+    .parent-takeaway-box strong {
+      display: block;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Google & Parental Controls Setup Cards */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 800px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+    .control-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .control-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .control-icon {
+      font-size: 1.75rem;
+    }
+    .control-card h4 {
+      font-size: 1.15rem;
+    }
+    .control-steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .control-step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .step-num {
+      background: #eff6ff;
+      color: var(--primary);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.725rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Anti-Cyberbullying & Stop-Block-Save-Tell */
+    .bullying-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 2rem;
+    }
+    @media (max-width: 850px) {
+      .bullying-grid { grid-template-columns: 1fr; }
+    }
+    .red-flags-card {
+      background: var(--danger-light);
+      border: 1.5px solid #fecaca;
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+    }
+    .red-flags-card h4 {
+      color: var(--danger);
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .flag-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .flag-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: #7f1d1d;
+    }
+    .flag-dot {
+      color: var(--danger);
+      font-weight: 800;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .protocol-box {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .protocol-step-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 500px) {
+      .protocol-step-grid { grid-template-columns: 1fr; }
+    }
+    .proto-card {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+    .proto-card.s-stop { background: #fef2f2; border-color: #fecaca; }
+    .proto-card.s-block { background: #eff6ff; border-color: #bfdbfe; }
+    .proto-card.s-save { background: #f0fdf4; border-color: #bbf7d0; }
+    .proto-card.s-tell { background: #faf5ff; border-color: #e9d5ff; }
+
+    .proto-card strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+    .proto-card.s-stop strong { color: #991b1b; }
+    .proto-card.s-block strong { color: #1e40af; }
+    .proto-card.s-save strong { color: #166534; }
+    .proto-card.s-tell strong { color: #6b21a8; }
+    .proto-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Escalation Ladder Table */
+    .ladder-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .ladder-table th, .ladder-table td {
+      padding: 0.85rem 1.15rem;
+      text-align: left;
+      font-size: 0.875rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .ladder-table th {
+      background: #f1f5f9;
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+    .ladder-table tr:last-child td { border-bottom: none; }
+    .tier-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-full);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Family Media Agreement */
+    .agreement-container {
+      background: #ffffff;
+      border: 2px solid #3b82f6;
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .agreement-header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+    .agreement-header h3 {
+      font-size: 1.6rem;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+    .agreement-header p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .agreement-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .agreement-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .agreement-item:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .agreement-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      margin-top: 3px;
+      cursor: pointer;
+    }
+    .agreement-text strong {
+      display: block;
+      font-size: 0.925rem;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+    .agreement-text span {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .signature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px dashed var(--border);
+    }
+    @media (max-width: 650px) {
+      .signature-row { grid-template-columns: 1fr; }
+    }
+    .sign-field label {
+      display: block;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 0.35rem;
+    }
+    .sign-field input {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+      background: #ffffff;
+      outline: none;
+    }
+    .sign-field input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+    }
+
+    /* Footer Team */
+    footer {
+      background: #ffffff;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .footer-team-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .team-member-chip {
+      text-align: left;
+    }
+    .team-member-chip strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+    .team-member-chip span {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+    }
+
+    /* Print Stylesheet */
+    @page {
+      size: A4;
+      margin: 1.5cm 1.25cm;
+    }
+    @media print {
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      body {
+        background: #ffffff !important;
+        font-size: 10pt !important;
+      }
+      header, .btn-action {
+        display: none !important;
+      }
+      .hero {
+        padding: 1rem 0 !important;
+        background: none !important;
+      }
+      section {
+        padding: 1.25rem 0 !important;
+        break-inside: avoid !important;
+      }
+      .recap-card, .control-card, .red-flags-card, .protocol-box, .agreement-container {
+        break-inside: avoid !important;
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      .labs-recap-grid, .controls-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header>
+    <div class="container header-inner">
+      <a href="cybersecurity.html" class="brand">
+        <span>🛡️ CyberGuard</span>
+        <span class="brand-badge">PARENT PORTAL</span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="cybersecurity.html" class="btn-action btn-outline">
+          ← Back to Labs
+        </a>
+        <button class="btn-action btn-print" onclick="window.print()">
+          🖨️ Print / Save Guide (PDF)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner: Final Hour Parent Session -->
+  <div class="hero">
+    <div class="container">
+      <span class="hero-tag">👨‍👩‍👧 DAY 2 · FINAL HOUR PARENT SESSION GUIDE</span>
+      <h1 class="hero-title">
+        Empowering Safe, Confident <span>Digital Homes</span>
+      </h1>
+      <p class="hero-desc">
+        A practical, light-theme handbook for parents of Grades 3–5. Covering the last 3 classroom labs, Google Family Link setups, anti-bullying response protocols, and home illegal content filtering.
+      </p>
+
+      <!-- Trust-First Philosophy Box -->
+      <div class="callout-trust">
+        <h4><span>💡</span> The #1 Rule for Parents: Help-Seeking First</h4>
+        <p>
+          National research confirms that over <strong>50% of children who face online bullying tell nobody</strong>—chiefly because they fear their phone, tablet, or console will be confiscated. By assuring your child that reporting an issue will <em>never</em> lead to device bans, you establish the open-door trust essential for their safety.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- SECTION 1: WHAT YOUR CHILD MASTERED (LABS 4, 5 & 6) -->
+    <section id="labs-recap">
+      <div class="section-header">
+        <span class="section-tag" style="color: var(--primary);">Classroom Immersion</span>
+        <h2 class="section-title">What Your Child Mastered in Labs 4, 5 &amp; 6</h2>
+        <p class="section-desc">
+          In the final hours of the CyberGuard programme, your child practiced 3 critical hands-on defense simulations. Here is how those lessons protect your household:
+        </p>
+      </div>
+
+      <div class="labs-recap-grid">
+        <!-- Lab 4 -->
+        <div class="recap-card lab-4">
+          <div class="recap-number">SIMULATION 04</div>
+          <h3>Trojan Horse &amp; Fake Downloads</h3>
+          <p>
+            Children frequently see tempting popups promising <em>"Free Robux"</em>, <em>"Minecraft Mods"</em>, or <em>"Game Cheats"</em>. Cadets learned that fake download buttons hide adware, spyware, and keyloggers that steal passwords.
+          </p>
+          <div class="parent-takeaway-box">
+            <strong>Home Protection Rule:</strong>
+            Turn off <em>"Automatic Downloads"</em> in Chrome settings and audit installed browser extensions every month.
+          </div>
+        </div>
+
+        <!-- Lab 5 -->
+        <div class="recap-card lab-5">
+          <div class="recap-number">SIMULATION 05</div>
+          <h3>OSINT Detective &amp; PII Privacy</h3>
+          <p>
+            Cadets analyzed casual photos to spot hidden <span class="kw-pill">Personally Identifiable Information (PII)</span>: school crests, house numbers, street signs, and birth dates. They practiced redacting details before posting.
+          </p>
+          <div class="parent-takeaway-box">
+            <strong>The Billboard Test:</strong>
+            Ask your child: <em>"Would you put this photo on a public highway billboard?"</em> If not, do not post it online.
+          </div>
+        </div>
+
+        <!-- Lab 6 -->
+        <div class="recap-card lab-6">
+          <div class="recap-number">SIMULATION 06</div>
+          <h3>Session Lock &amp; Password Care</h3>
+          <p>
+            Cadets learned why passwords should never be shared with friends and mastered rapid screen locking on school Chromebooks using the <kbd style="background:#e2e8f0; padding:2px 6px; border-radius:4px; font-family:'JetBrains Mono';">Search + L</kbd> keyboard shortcut.
+          </p>
+          <div class="parent-takeaway-box">
+            <strong>The Friend Rule:</strong>
+            Explain that true friends never ask for passwords. Keep account credentials strictly between child and parents.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: GOOGLE PARENTAL CONTROLS & CONTENT FILTERING -->
+    <section id="parental-controls">
+      <div class="section-header">
+        <span class="section-tag" style="color: var(--accent-cyan);">Device Guardrails</span>
+        <h2 class="section-title">10-Minute Google &amp; Home Safety Setup</h2>
+        <p class="section-desc">
+          You do not need an IT degree to protect your home. Implement these four essential guardrails to shield children from illegal and inappropriate materials:
+        </p>
+      </div>
+
+      <div class="controls-grid">
+        <!-- Google Family Link -->
+        <div class="control-card">
+          <div class="control-card-header">
+            <span class="control-icon">📱</span>
+            <div>
+              <h4>Google Family Link (Android &amp; Chromebooks)</h4>
+              <span style="font-size:0.75rem; color:var(--text-light);">Free Google Management Suite</span>
+            </div>
+          </div>
+          <p style="font-size:0.875rem; color:var(--text-muted);">
+            Link your child's Google account to your phone to monitor activity, approve app installations, and prevent accidental purchases.
+          </p>
+          <ul class="control-steps">
+            <li class="control-step-item">
+              <span class="step-num">1</span>
+              <span>Install <strong>Google Family Link</strong> on your parent phone (Android or iOS).</span>
+            </li>
+            <li class="control-step-item">
+              <span class="step-num">2</span>
+              <span>Enable <strong>"Require approval for all app downloads"</strong> from the Play Store.</span>
+            </li>
+            <li class="control-step-item">
+              <span class="step-num">3</span>
+              <span>Set daily bedtime lockouts (e.g., devices automatically lock at 8:30 PM).</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Google SafeSearch & YouTube Kids -->
+        <div class="control-card">
+          <div class="control-card-header">
+            <span class="control-icon">🔍</span>
+            <div>
+              <h4>Google SafeSearch &amp; YouTube Kids</h4>
+              <span style="font-size:0.75rem; color:var(--text-light);">Filtering Search &amp; Video Streams</span>
+            </div>
+          </div>
+          <p style="font-size:0.875rem; color:var(--text-muted);">
+            Prevent explicit imagery, adult web pages, and violent content from appearing in casual Google and video searches.
+          </p>
+          <ul class="control-steps">
+            <li class="control-step-item">
+              <span class="step-num">1</span>
+              <span>Navigate to <code>google.com/safesearch</code> and toggle <strong>Filter</strong> on.</span>
+            </li>
+            <li class="control-step-item">
+              <span class="step-num">2</span>
+              <span>On YouTube, turn on <strong>Restricted Mode</strong> or switch children under 12 to <strong>YouTube Kids</strong>.</span>
+            </li>
+            <li class="control-step-item">
+              <span class="step-num">3</span>
+              <span>Select the <em>"Explore" (Ages 8–12)</em> content level for safe educational discovery.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Home Wi-Fi Router DNS Filter -->
+        <div class="control-card">
+          <div class="control-card-header">
+            <span class="control-icon">🌐</span>
+            <div>
+              <h4>Home Wi-Fi Router DNS Shield (Zero Cost)</h4>
+              <span style="font-size:0.75rem; color:var(--text-light);">Whole-House Automatic Protection</span>
+            </div>
+          </div>
+          <p style="font-size:0.875rem; color:var(--text-muted);">
+            Block adult, illegal, and malicious domains across every device connected to your home Wi-Fi router without installing extra apps.
+          </p>
+          <ul class="control-steps">
+            <li class="control-step-item">
+              <span class="step-num">1</span>
+              <span>Log into your home Wi-Fi router settings (usually <code>192.168.1.1</code>).</span>
+            </li>
+            <li class="control-step-item">
+              <span class="step-num">2</span>
+              <span>Change Primary DNS to <strong>1.1.1.3</strong> and Secondary to <strong>1.0.0.3</strong> (Cloudflare Family Safe).</span>
+            </li>
+            <li class="control-step-item">
+              <span class="step-num">3</span>
+              <span>Restart router: adult content and known phishing URLs are blocked network-wide.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chat & Gaming Guardrails -->
+        <div class="control-card">
+          <div class="control-card-header">
+            <span class="control-icon">💬</span>
+            <div>
+              <h4>WhatsApp &amp; Multiplayer Gaming Guardrails</h4>
+              <span style="font-size:0.75rem; color:var(--text-light);">Restricting Unsolicited Direct Contact</span>
+            </div>
+          </div>
+          <p style="font-size:0.875rem; color:var(--text-muted);">
+            Most harassment occurs in unmoderated group chats and game voice channels (Roblox, Minecraft, Fortnite).
+          </p>
+          <ul class="control-steps">
+            <li class="control-step-item">
+              <span class="step-num">1</span>
+              <span>In WhatsApp: Settings ➔ Privacy ➔ Groups ➔ Change to <strong>"My Contacts Only"</strong>.</span>
+            </li>
+            <li class="control-step-item">
+              <span class="step-num">2</span>
+              <span>In Roblox: Settings ➔ Privacy ➔ Set <em>"Who can chat with me in app"</em> to <strong>Friends Only</strong>.</span>
+            </li>
+            <li class="control-step-item">
+              <span class="step-num">3</span>
+              <span>Mute open public voice chat lobbies so children are not exposed to toxic speech.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ANTI-CYBERBULLYING & WARNING SIGNS -->
+    <section id="bullying-defense">
+      <div class="section-header">
+        <span class="section-tag" style="color: var(--danger);">Emotional Safeguarding</span>
+        <h2 class="section-title">Spotting &amp; Handling Online Bullying</h2>
+        <p class="section-desc">
+          How to recognize subtle distress signals at home and execute the school-taught behavioral protocol:
+        </p>
+      </div>
+
+      <div class="bullying-grid">
+        <!-- Left: Red Flags -->
+        <div class="red-flags-card">
+          <h4><span>🚩</span> 4 Warning Signs to Watch For</h4>
+          <ul class="flag-list">
+            <li class="flag-item">
+              <span class="flag-dot">•</span>
+              <div><strong>Sudden Screen Hiding:</strong> Quickly tilting devices away or switching tabs whenever a parent approaches the room.</div>
+            </li>
+            <li class="flag-item">
+              <span class="flag-dot">•</span>
+              <div><strong>Emotional Volatility:</strong> Showing visible distress, anger, or tears immediately after receiving notifications.</div>
+            </li>
+            <li class="flag-item">
+              <span class="flag-dot">•</span>
+              <div><strong>Reluctance for School:</strong> Complaining of frequent headaches or stomach aches to avoid attending class or clubs.</div>
+            </li>
+            <li class="flag-item">
+              <span class="flag-dot">•</span>
+              <div><strong>Withdrawal from Peers:</strong> Suddenly quitting games they previously loved or dropping out of class WhatsApp groups.</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: Stop Block Save Tell -->
+        <div class="protocol-box">
+          <h4>The 4-Step Student Action Plan</h4>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
+            Remind your child of the universal protocol they rehearsed in the classroom:
+          </p>
+          <div class="protocol-step-grid">
+            <div class="proto-card s-stop">
+              <strong>1. STOP ✋</strong>
+              <p>Take a breath. Do not reply or send angry messages back. Bullies thrive on reactions.</p>
+            </div>
+            <div class="proto-card s-block">
+              <strong>2. BLOCK 🚫</strong>
+              <p>Mute or block the person on the game, WhatsApp, or chat board immediately.</p>
+            </div>
+            <div class="proto-card s-save">
+              <strong>3. SAVE 📸</strong>
+              <p>Take clean screenshots showing usernames and timestamps. Never delete the evidence.</p>
+            </div>
+            <div class="proto-card s-tell">
+              <strong>4. TELL 🗣️</strong>
+              <p>Confide in a parent or teacher right away. You are safe and never in trouble for telling.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: REPORTING CHANNELS & NATIONAL LEGAL ESCALATION -->
+    <section id="reporting-escalation">
+      <div class="section-header">
+        <span class="section-tag" style="color: var(--purple);">Legal Architecture</span>
+        <h2 class="section-title">Incident Reporting &amp; Legal Framework</h2>
+        <p class="section-desc">
+          Clear, trauma-informed escalation pathways from classroom mediation up to federal cyber law protections under Pakistan's <strong>PECA 2016</strong>:
+        </p>
+      </div>
+
+      <table class="ladder-table">
+        <thead>
+          <tr>
+            <th>Tier Level</th>
+            <th>Type of Incident</th>
+            <th>Primary Reporting Channel</th>
+            <th>Recommended Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tier-badge" style="background:#f0fdf4; color:#166534;">TIER 1 · SCHOOL</span></td>
+            <td>Classroom teasing, exclusion in class WhatsApp groups, unkind game comments.</td>
+            <td><strong>Class Teacher &amp; School Counsellor</strong></td>
+            <td>Private, confidential restorative mediation. Zero victim blame or device confiscation.</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge" style="background:#eff6ff; color:#1e40af;">TIER 2 · PLATFORM</span></td>
+            <td>Persistent harassment, impersonation accounts, abusive gaming voice chat.</td>
+            <td><strong>In-App Safety Reporting &amp; Blocking</strong></td>
+            <td>Submit screenshot evidence via app settings (WhatsApp Report / Roblox Report Abuse).</td>
+          </tr>
+          <tr>
+            <td><span class="tier-badge" style="background:#fef2f2; color:#991b1b;">TIER 3 · LEGAL</span></td>
+            <td>Blackmail, severe physical threats, non-consensual image sharing, extortion.</td>
+            <td>
+              <strong>NCCIA Helpline: 1799</strong><br>
+              <small style="color:var(--text-light);">Police Emergency: 15 (Routes to NCCIA)</small>
+            </td>
+            <td>
+              Under Pakistan's <strong>PECA 2016</strong>, cyberstalking and harassment are punishable offenses investigated by the National Cyber Crime Investigation Agency.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SECTION 5: INTERACTIVE FAMILY MEDIA AGREEMENT -->
+    <section id="agreement">
+      <div class="agreement-container">
+        <div class="agreement-header">
+          <span style="font-size:2rem; margin-bottom:0.5rem; display:inline-block;">🤝</span>
+          <h3>Family Digital Media Agreement</h3>
+          <p>
+            Review these four mutual commitments together with your child, check the boxes, and sign to establish your home agreement.
+          </p>
+        </div>
+
+        <div class="agreement-checklist">
+          <label class="agreement-item">
+            <input type="checkbox" checked>
+            <div class="agreement-text">
+              <strong>1. Common Charging Station (Sleep Protection)</strong>
+              <span>All phones, tablets, and gaming consoles charge overnight in the living room or parent room—never in the child's bedroom.</span>
+            </div>
+          </label>
+
+          <label class="agreement-item">
+            <input type="checkbox" checked>
+            <div class="agreement-text">
+              <strong>2. Screen-Free Family Zones</strong>
+              <span>No devices during family meals and study hours. Parents also agree to model good behavior by putting their own phones away.</span>
+            </div>
+          </label>
+
+          <label class="agreement-item">
+            <input type="checkbox" checked>
+            <div class="agreement-text">
+              <strong>3. The Parent Promise: Help-Seeking Guarantee</strong>
+              <span>Parents promise: <em>"If you see something scary, mean, or inappropriate and tell me, I will stay calm, listen, and never confiscate your device as punishment."</em></span>
+            </div>
+          </label>
+
+          <label class="agreement-item">
+            <input type="checkbox" checked>
+            <div class="agreement-text">
+              <strong>4. The Student Promise: The Upstander Code</strong>
+              <span>Student promises: <em>"I will never bully or exclude others online, and if a friend is being picked on, I will be an Upstander and report it to a trusted adult."</em></span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Signature Fields -->
+        <div class="signature-row">
+          <div class="sign-field">
+            <label>STUDENT FULL NAME</label>
+            <input type="text" placeholder="e.g., Grade 5 Cyber Cadet" id="studentSign">
+          </div>
+          <div class="sign-field">
+            <label>PARENT / GUARDIAN NAME</label>
+            <input type="text" placeholder="e.g., Parent Signature" id="parentSign">
+          </div>
+          <div class="sign-field">
+            <label>DATE AGREED</label>
+            <input type="date" id="dateSign" value="2026-11-02">
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 1.75rem;">
+          <button class="btn-action btn-print" onclick="window.print()" style="font-size: 0.9rem; padding: 0.65rem 1.4rem;">
+            🖨️ Print Completed Family Agreement
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Instructional & Management Team Footer -->
+  <footer>
+    <div class="container">
+      <div style="font-weight: 800; font-family: 'Outfit'; color: var(--text-main); font-size: 1.1rem; margin-bottom: 0.5rem;">
+        CS Technologies · CyberGuard Academy
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 1.5rem;">
+        Delivering certified STEM, Robotics, and Ethical Cybersecurity instruction tailored for primary schools, parents, and community digital citizenship.
+      </p>
+
+      <div class="footer-team-row">
+        <div class="team-member-chip">
+          <strong>Engr. Aamir Jamil</strong>
+          <span>Lead AI, Robotics &amp; CEH Certified Trainer</span>
+        </div>
+        <div class="team-member-chip">
+          <strong>Miss Zia Ul Ain</strong>
+          <span>Supportive Trainer · Circuit &amp; Student Guidance</span>
+        </div>
+        <div class="team-member-chip">
+          <strong>Awais Paracha</strong>
+          <span>Manager · Operations, Quality &amp; Parent Relations</span>
+        </div>
+      </div>
+
+      <div style="font-size: 0.775rem; color: var(--text-light); border-top: 1px solid var(--border); padding-top: 1.25rem;">
+        © 2026 CS Technologies. In alignment with Pakistan PECA 2016 and School Digital Safeguarding Guidelines.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Auto-set today's date in agreement form
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      const dateEl = document.getElementById('dateSign');
+      if (dateEl) dateEl.value = today;
+    } catch(e) {}
+  </script>
+</body>
+</html>
+

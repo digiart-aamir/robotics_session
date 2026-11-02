@@ -1769,31 +1769,64 @@
     /* ==========================================================================
        PRINT STYLESHEET (CLEAN EXECUTIVE DOSSIER)
        ========================================================================== */
+    @page {
+      size: A4;
+      margin: 1.6cm 1.4cm;
+    }
+
     @media print {
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
       body {
         background: #ffffff !important;
-        color: #000000 !important;
-        font-size: 12pt;
+        color: #0f172a !important;
+        font-size: 11pt;
         padding-bottom: 0 !important;
       }
       .header, .hero-cta-group, .lab-widget-section, .filter-tabs-wrapper, .footer, .btn, .project-zoom-hint,
-      .mobile-bottom-bar, .mobile-app-drawer, .mobile-drawer-overlay, .mobile-fab, .mobile-menu-btn {
+      .mobile-bottom-bar, .mobile-app-drawer, .mobile-drawer-overlay, .mobile-fab, .mobile-menu-btn, .mobile-print-btn {
         display: none !important;
       }
       .section-spacing {
         padding-top: 1.5rem !important;
         padding-bottom: 1.5rem !important;
       }
-      .project-card, .trainer-card, .objective-card {
-        break-inside: avoid;
+      .project-card, .trainer-card, .objective-card, .components-card {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
         box-shadow: none !important;
-        border: 1px solid #cccccc !important;
+        border: 1px solid #cbd5e1 !important;
+        margin-bottom: 1.25rem !important;
       }
-      .projects-grid, .trainers-grid {
+      .projects-grid {
+        display: grid !important;
         grid-template-columns: 1fr 1fr !important;
+        gap: 1.25rem !important;
+      }
+      .trainers-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 1rem !important;
       }
       .project-image-box {
-        height: 180px !important;
+        height: 170px !important;
+      }
+      .project-card-body {
+        padding: 1rem !important;
+      }
+      .schedule-lessons-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.5rem !important;
+      }
+      .table-responsive {
+        overflow: visible !important;
+      }
+      table {
+        width: 100% !important;
+        page-break-inside: avoid !important;
       }
     }
 
